@@ -15,6 +15,6 @@
 ** INTERFAZ
 ****************
 
--Una clase Interfaz no se puede instanciar como una clase normal.
+- Interface class can´t be instantiated, a normal class can.
 
 
