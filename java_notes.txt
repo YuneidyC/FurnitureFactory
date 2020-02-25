@@ -1,0 +1,20 @@
+****************
+** STATIC
+****************
+
+- Call static function
+
+    Type.function();
+
+- Call non-static function
+
+    Type object = new Type();
+    object.function();
+
+****************
+** INTERFAZ
+****************
+
+-Una clase Interfaz no se puede instanciar como una clase normal.
+
+
