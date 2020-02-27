@@ -8,21 +8,14 @@ import people.PrivateCustomer;
 
 public class Test {
 
-	private boolean testResult = true;
-
-	public boolean getTestResult() {
-		return testResult;
-	}
-
 	public static void createPerson() {
-		// list<order> l;
-		// l.add(
 
-		PrivateCustomer p = new PrivateCustomer("ID1", "Order1");
+		PrivateCustomer p = new PrivateCustomer("ID1", "Julian");
 		WoodenCoffeeTable t = new WoodenCoffeeTable("Order1");
 		List<String> order = new LinkedList<String>();
 		order.add("Order1");
-
+		System.out.println(t.getId());
+		System.out.println(p.getDni() + " " + p.getName());
 	}
 
 	public void createAndModifyPerson() {

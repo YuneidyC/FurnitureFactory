@@ -3,11 +3,12 @@ package people;
 public class PrivateCustomer extends Client {
 
 	private String dni;
-	private String order;
+	private String name;
 
-	public PrivateCustomer(String dni, String order) {
+	public PrivateCustomer(String dni, String name) {
+		super(dni, name);
 		this.dni = dni;
-		this.order = order;
+		this.name = name;
 	}
 
 	public String getDni() {
@@ -18,12 +19,12 @@ public class PrivateCustomer extends Client {
 		this.dni = dni;
 	}
 
-	public String getOrder() {
-		return order;
+	public String getName() {
+		return name;
 	}
 
-	public void setOrder(String order) {
-		this.order = order;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

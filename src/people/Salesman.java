@@ -2,8 +2,8 @@ package people;
 
 public class Salesman extends Employee {
 
-	public Salesman() {
-		// TODO Auto-generated constructor stub
+	public Salesman(String id, String name) {
+		super(id, name);	
 	}
 
 }
