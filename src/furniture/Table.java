@@ -1,9 +1,9 @@
 package furniture;
 
-public class Table {
+public class Table extends Furniture {
 
-	public Table() {
-		// TODO Auto-generated constructor stub
+	public Table(String id, int price) {
+		super(id, price);
 	}
 
 }

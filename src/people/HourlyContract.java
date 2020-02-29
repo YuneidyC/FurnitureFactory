@@ -1,9 +1,9 @@
 package people;
 
-public class HourlyContract {
+public class HourlyContract extends Craftsman{
 
-	public HourlyContract() {
-		// TODO Auto-generated constructor stub
+	public HourlyContract(String id, String name) {
+		super(id, name);
 	}
 
 }

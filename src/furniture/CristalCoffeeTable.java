@@ -2,8 +2,8 @@ package furniture;
 
 public class CristalCoffeeTable extends CoffeeTable {
 
-	public CristalCoffeeTable() {
-		// TODO Auto-generated constructor stub
+	public CristalCoffeeTable(String id, int price) {
+		super(id, price);
 	}
 
 }

@@ -1,9 +1,9 @@
 package furniture;
 
-public class FoldingChair {
+public class FoldingChair extends Chair {
 
-	public FoldingChair() {
-		// TODO Auto-generated constructor stub
+	public FoldingChair(String id, int price) {
+		super(id, price);
 	}
 
 }

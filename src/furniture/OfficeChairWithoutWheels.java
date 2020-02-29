@@ -2,8 +2,8 @@ package furniture;
 
 public class OfficeChairWithoutWheels extends OfficeChair {
 
-	public OfficeChairWithoutWheels() {
-		// TODO Auto-generated constructor stub
+	public OfficeChairWithoutWheels(String id, int price) {
+		super(id, price);
 	}
 
 }

@@ -2,8 +2,8 @@ package furniture;
 
 public class DiningTable extends Table {
 
-	public DiningTable() {
-		// TODO Auto-generated constructor stub
+	public DiningTable(String id, int price) {
+		super(id, price);
 	}
 
 }

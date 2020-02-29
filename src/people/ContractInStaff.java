@@ -1,9 +1,9 @@
 package people;
 
-public class ContractInStaff {
+public class ContractInStaff extends Craftsman {
 
-	public ContractInStaff() {
-		
+	public ContractInStaff(String id, String name) {
+		super(id, name);
 	}
 
 }
