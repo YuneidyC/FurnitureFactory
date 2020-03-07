@@ -1,11 +1,18 @@
 package factory;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import people.Person;
+
 public class Factory {
 
-	public static void main(String[] args) {
+	private List<Person> people = new LinkedList<Person>();
+	private List<Order> orders = new LinkedList<Order>();
 
-		Test.createPerson();
-		Test.fillEmployeesList();
-		Test.createOrder();
+	public static void main(String[] args) {
+		Factory factory = new Factory();
+		Test.fillEmployeesList(factory.people);
+		Test.createOrder(factory.orders);
 	}
 }

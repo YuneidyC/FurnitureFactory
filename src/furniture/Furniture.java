@@ -3,10 +3,12 @@ package furniture;
 public class Furniture {
 
 	private String id;
+	private String furniture;
 	private int price;
 
-	public Furniture(String id, int price) {
+	public Furniture(String id, String furniture, int price) {
 		this.id = id;
+		this.furniture = furniture;
 		this.price = price;
 	}
 
@@ -16,6 +18,14 @@ public class Furniture {
 
 	public void setId(String id) {
 		this.id = id;
+	}
+
+	public String getFurniture() {
+		return furniture;
+	}
+
+	public void setFurniture(String furniture) {
+		this.furniture = furniture;
 	}
 
 	public int getPrice() {
@@ -28,6 +38,7 @@ public class Furniture {
 
 	// @Override
 	public String toString() {
-		return id + ": " + price;
+		return id + ": " + furniture + " " + price;
 	}
+
 }

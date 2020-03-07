@@ -2,8 +2,8 @@ package furniture;
 
 public class DiningTable extends Table {
 
-	public DiningTable(String id, int price) {
-		super(id, price);
+	public DiningTable(String id, String name, int price) {
+		super(id, name, price);
 	}
 
 }
