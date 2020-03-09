@@ -11,20 +11,27 @@ public class Boss extends Employee {
 		super(id, name);
 	}
 
-	public boolean assignCraftsman(Order order, List<Craftsman> artisanList) {
-		if (order == null || artisanList == null || artisanList.isEmpty()) {
-			return false;
-		}
-
-		if (order.getEmployeeAssigned() != null) {
+	public boolean assignCraftsman(Order order, List<Craftsman> craftsmans) {
+		if (craftsmans == null || craftsmans.isEmpty()) {
 			return false;
 		}
 
 		// We don't want to always assign orders to the same artisan.
-		int sizeCraftsmanList = artisanList.size();
+		int sizeCraftsmanList = craftsmans.size();
 		Random randomNumbers = new Random();
 		int randomIndex = randomNumbers.nextInt(sizeCraftsmanList);
-		Craftsman craftsman = artisanList.get(randomIndex);
+		Craftsman craftsman = craftsmans.get(randomIndex);
+		assignCraftsman(order, craftsman);
+		return true;
+	}
+
+	public boolean assignCraftsman(Order order, Craftsman craftsman) {
+		if (order == null || craftsman == null) {
+			return false;
+		}
+		if (order.getEmployeeAssigned() != null) {
+			return false;
+		}
 		order.setEmployeeAssigned(craftsman.getId());
 		craftsman.assignOrder(order);
 		return true;

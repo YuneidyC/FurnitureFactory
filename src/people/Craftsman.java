@@ -20,4 +20,5 @@ public class Craftsman extends Employee {
 	public void assignOrder(Order order) {
 		assignedOrders.add(order);
 	}
+
 }
