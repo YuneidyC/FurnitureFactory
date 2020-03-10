@@ -6,6 +6,7 @@ public class Order {
 	// lista de muebles
 	private String furniture;
 	private String employeeAssigned = null;
+	private String status;
 
 	private double price;
 
@@ -44,9 +45,16 @@ public class Order {
 	}
 
 	public void setEmployeeAssigned(String employeeAssigned) {
-
 		this.employeeAssigned = employeeAssigned;
 
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }
