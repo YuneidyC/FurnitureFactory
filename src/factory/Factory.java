@@ -17,15 +17,6 @@ public class Factory {
 	private List<Boss> bosses = new LinkedList<Boss>();
 	private List<Salesman> salesmans = new LinkedList<Salesman>();
 
-	public void addPerson(Person person) {
-		if (person instanceof Craftsman) {
-			people.add(person);
-			craftsmans.add((Craftsman) person);
-		} else {
-			people.add(person);
-		}
-	}
-
 	private static void mainFunction() {
 		System.out.println("Artisan Factory");
 		System.out.println("1. People");
@@ -85,6 +76,36 @@ public class Factory {
 		System.out.println("2. Modify order data");
 		System.out.println("3. Exit");
 		System.out.println("Enter the number: ");
+	}
+
+	public void addPerson(Person person) {
+		if (person instanceof Craftsman) {
+			people.add(person);
+			craftsmans.add((Craftsman) person);
+		} else if (person instanceof Boss) {
+			people.add(person);
+			bosses.add((Boss) person);
+		} else if (person instanceof Salesman) {
+			people.add(person);
+			salesmans.add((Salesman) person);
+		} else {
+			people.add(person);
+		}
+	}
+
+	public void addBoss() {
+		System.out.println("Insert name: ");
+		Scanner sc = new Scanner(System.in);
+		String name = sc.nextLine();
+		System.out.println("Insert DNI/PASSPORT: ");
+		Scanner scDni = new Scanner(System.in);
+		String dni = scDni.nextLine();
+		System.out.println("Type:");
+		Boss b = new Boss(name, dni);
+		addPerson((Person) b);
+		sc.close();
+		scDni.close();
+		peopleSwitch();
 	}
 
 	public static void main(String[] args) {
