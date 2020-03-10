@@ -4,14 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import people.Boss;
 import people.Craftsman;
 import people.Person;
+import people.Salesman;
 
 public class Factory {
 
 	private List<Order> orders = new LinkedList<Order>();
 	private List<Person> people = new LinkedList<Person>();
 	private List<Craftsman> craftsmans = new LinkedList<Craftsman>();
+	private List<Boss> bosses = new LinkedList<Boss>();
+	private List<Salesman> salesmans = new LinkedList<Salesman>();
 
 	public void addPerson(Person person) {
 		if (person instanceof Craftsman) {
@@ -20,7 +24,6 @@ public class Factory {
 		} else {
 			people.add(person);
 		}
-
 	}
 
 	private static void mainFunction() {
@@ -43,10 +46,45 @@ public class Factory {
 
 	private static void bossFunction() {
 		System.out.println("Boss Functions");
-		System.out.println("1. Add boss");
-		System.out.println("2. Assign Crafstman");
+		System.out.println("1. Add new boss");
+		System.out.println("2. Modify Boss data");
+		System.out.println("3. Assign Crafstman");
+		System.out.println("4. Exit");
+		System.out.println("Enter the number: ");
+	}
+
+	private static void salesmanFunction() {
+		System.out.println("Salesman Function");
+		System.out.println("1. Add new Salesman");
+		System.out.println("2. Modify commercial data");
+		System.out.println("3. Add new order");
+		System.out.println("4. Exit");
+		System.out.println("Enter the number: ");
+	}
+
+	private static void craftmanFunction() {
+		System.out.println("Craftman Function");
+		System.out.println("1. Add new Craftman");
+		System.out.println("2. Modify craftman data");
+		System.out.println("3. Add a new status of the order");
+		System.out.println("4. Exit");
+		System.out.println("Enter the number: ");
+	}
+
+	private static void furnitureFunction() {
+		System.out.println("Furniture Function");
+		System.out.println("1. Add new furniture");
+		System.out.println("2. Modify furniture data");
 		System.out.println("3. Exit");
-		// bossSwitch();
+		System.out.println("Enter the number: ");
+	}
+
+	private static void orderFunction() {
+		System.out.println("Order Function");
+		System.out.println("1. Add new order");
+		System.out.println("2. Modify order data");
+		System.out.println("3. Exit");
+		System.out.println("Enter the number: ");
 	}
 
 	public static void main(String[] args) {
@@ -60,11 +98,10 @@ public class Factory {
 				int integer = Integer.parseInt(str);
 				switch (integer) {
 				case 1:
-					System.out.println("People");
-					peopleFunction();
+					peopleSwitch();
 					break;
 				case 2:
-					System.out.println("Furniture");
+					furnitureSwitch();
 					break;
 				case 3:
 					System.out.println("Orders");
@@ -95,14 +132,13 @@ public class Factory {
 				int integer = Integer.parseInt(str);
 				switch (integer) {
 				case 1:
-					System.out.println("Boss");
-					bossFunction();
+					bossSwitch();
 					break;
 				case 2:
-					System.out.println("Salesman");
+					salesmanSwitch();
 					break;
 				case 3:
-					System.out.println("Craftsman");
+					craftmanSwitch();
 					break;
 				case 4:
 					System.out.println("Exit");
@@ -118,4 +154,162 @@ public class Factory {
 		}
 	}
 
+	public static void bossSwitch() {
+
+		boolean mustExit = false;
+		while (!mustExit) {
+			Factory.bossFunction();
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try {
+				int integer = Integer.parseInt(str);
+				switch (integer) {
+				case 1:
+					System.out.println("1. Add new boss");
+					break;
+				case 2:
+					System.out.println("2. Modify boss data");
+					break;
+				case 3:
+					System.out.println("3. Assign Craftsman");
+					break;
+				case 4:
+					System.out.println("4. Exit");
+					mustExit = true;
+					break;
+				default:
+					break;
+				}
+			} catch (NumberFormatException exception) {
+				System.out.println("this is not a number");
+			}
+			sc.close();
+		}
+	}
+
+	public static void salesmanSwitch() {
+
+		boolean mustExit = false;
+		while (!mustExit) {
+			Factory.salesmanFunction();
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try {
+				int integer = Integer.parseInt(str);
+				switch (integer) {
+				case 1:
+					System.out.println("1. Add new salesman");
+					break;
+				case 2:
+					System.out.println("2. Modify commercial data");
+					break;
+				case 3:
+					System.out.println("3. Add new order");
+					break;
+				case 4:
+					System.out.println("4. Exit");
+					mustExit = true;
+					break;
+				default:
+					break;
+				}
+			} catch (NumberFormatException exception) {
+				System.out.println("this is not a number");
+			}
+			sc.close();
+		}
+	}
+
+	public static void craftmanSwitch() {
+
+		boolean mustExit = false;
+		while (!mustExit) {
+			Factory.craftmanFunction();
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try {
+				int integer = Integer.parseInt(str);
+				switch (integer) {
+				case 1:
+					System.out.println("1. Add new craftman");
+					break;
+				case 2:
+					System.out.println("2. Modify craftman data");
+					break;
+				case 3:
+					System.out.println("3. Add a new status of the order");
+					break;
+				case 4:
+					System.out.println("4. Exit");
+					mustExit = true;
+					break;
+				default:
+					break;
+				}
+			} catch (NumberFormatException exception) {
+				System.out.println("this is not a number");
+			}
+			sc.close();
+		}
+	}
+
+	public static void furnitureSwitch() {
+
+		boolean mustExit = false;
+		while (!mustExit) {
+			Factory.furnitureFunction();
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try {
+				int integer = Integer.parseInt(str);
+				switch (integer) {
+				case 1:
+					System.out.println("1. Add new Furniture");
+					break;
+				case 2:
+					System.out.println("2. Modify furniture data");
+					break;
+				case 3:
+					System.out.println("Exit");
+					mustExit = true;
+					break;
+				default:
+					break;
+				}
+			} catch (NumberFormatException exception) {
+				System.out.println("this is not a number");
+			}
+			sc.close();
+		}
+	}
+
+	public static void orderSwitch() {
+
+		boolean mustExit = false;
+		while (!mustExit) {
+			Factory.orderFunction();
+			Scanner sc = new Scanner(System.in);
+			String str = sc.nextLine();
+			try {
+				int integer = Integer.parseInt(str);
+				switch (integer) {
+				case 1:
+					System.out.println("1. Add new order");
+					break;
+				case 2:
+					System.out.println("2. Modify order data");
+					break;
+				case 3:
+					System.out.println("Exit");
+					mustExit = true;
+					break;
+				default:
+					break;
+				}
+			} catch (NumberFormatException exception) {
+				System.out.println("this is not a number");
+			}
+			sc.close();
+		}
+	}
 }
