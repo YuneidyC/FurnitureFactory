@@ -27,4 +27,7 @@ public class PrivateCustomer extends Client {
 		this.name = name;
 	}
 
+	public void modifyData() {
+		super.modifyData();
+	}
 }

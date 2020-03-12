@@ -36,4 +36,8 @@ public class Boss extends Employee {
 		craftsman.assignOrder(order);
 		return true;
 	}
+
+	public void modifyData() {
+		super.modifyData();
+	}
 }

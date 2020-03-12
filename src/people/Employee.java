@@ -6,4 +6,7 @@ public class Employee extends Person {
 		super(id, name);
 	}
 
+	public void modifyData() {
+		super.modifyData();
+	}
 }

@@ -98,18 +98,31 @@ public class Factory {
 		Scanner sc = new Scanner(System.in);
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
-		Scanner scDni = new Scanner(System.in);
-		String dni = scDni.nextLine();
-		System.out.println("Type:");
+		String dni = sc.nextLine();
 		Boss b = new Boss(name, dni);
 		addPerson((Person) b);
 		sc.close();
+	}
+
+	public void modifyBossData() {
+		System.out.println("Insert DNI/PASSPORT: ");
+		Scanner scDni = new Scanner(System.in);
+		String dni = scDni.nextLine();
+		for (Boss boss : bosses) {
+			if (boss.getId() == dni) {
+				boss.modifyData();
+			}
+		}
 		scDni.close();
-		peopleSwitch();
+	}
+
+	public void addNewFurniture() {
+
 	}
 
 	public static void main(String[] args) {
 
+		Factory factory = new Factory();
 		boolean mustExit = false;
 		while (!mustExit) {
 			Factory.mainFunction();
@@ -119,10 +132,10 @@ public class Factory {
 				int integer = Integer.parseInt(str);
 				switch (integer) {
 				case 1:
-					peopleSwitch();
+					factory.peopleSwitch();
 					break;
 				case 2:
-					furnitureSwitch();
+					factory.furnitureSwitch();
 					break;
 				case 3:
 					System.out.println("Orders");
@@ -142,7 +155,7 @@ public class Factory {
 		}
 	}
 
-	public static void peopleSwitch() {
+	public void peopleSwitch() {
 
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -175,7 +188,7 @@ public class Factory {
 		}
 	}
 
-	public static void bossSwitch() {
+	public void bossSwitch() {
 
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -186,7 +199,7 @@ public class Factory {
 				int integer = Integer.parseInt(str);
 				switch (integer) {
 				case 1:
-					System.out.println("1. Add new boss");
+					addBoss();
 					break;
 				case 2:
 					System.out.println("2. Modify boss data");
@@ -208,7 +221,7 @@ public class Factory {
 		}
 	}
 
-	public static void salesmanSwitch() {
+	public void salesmanSwitch() {
 
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -241,7 +254,7 @@ public class Factory {
 		}
 	}
 
-	public static void craftmanSwitch() {
+	public void craftmanSwitch() {
 
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -274,7 +287,7 @@ public class Factory {
 		}
 	}
 
-	public static void furnitureSwitch() {
+	public void furnitureSwitch() {
 
 		boolean mustExit = false;
 		while (!mustExit) {

@@ -6,4 +6,7 @@ public class CompanyCustomer extends Client {
 		super(id, name);
 	}
 
+	public void modifyData() {
+		super.modifyData();
+	}
 }

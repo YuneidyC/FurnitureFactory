@@ -6,4 +6,7 @@ public class ContractInStaff extends Craftsman {
 		super(id, name);
 	}
 
+	public void modifyData() {
+		super.modifyData();
+	}
 }
