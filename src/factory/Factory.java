@@ -157,10 +157,9 @@ public class Factory {
 		String str = sc.nextLine();
 		String name = str;
 		Person p = null;
+		Printer.printTypesOfClient();
+		int integer = Integer.parseInt(str);
 		try {
-			System.out.println("Choose: 1. Private or 2. Company");
-			System.out.println("Insert: ");
-			int integer = Integer.parseInt(str);
 			switch (integer) {
 			case 1:
 				PrivateCustomer privateCustomer = new PrivateCustomer(personId, name);

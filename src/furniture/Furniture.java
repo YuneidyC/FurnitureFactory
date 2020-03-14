@@ -12,13 +12,13 @@ public class Furniture {
 		this.furniture = furniture;
 	}
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
+//	public String getId() {
+//		return id;
+//	}
+//
+//	public void setId(String id) {
+//		this.id = id;
+//	}
 
 	public String getFurniture() {
 		return furniture;
@@ -26,11 +26,6 @@ public class Furniture {
 
 	public void setFurniture(String furniture) {
 		this.furniture = furniture;
-	}
-
-//	ADD NEW FURNITURE 
-	public void addNewFurniture(Furniture furniture) {
-		furnitures.add(furniture);
 	}
 
 	// @Override
