@@ -1,17 +1,14 @@
 package furniture;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class Furniture {
 
-	private String id;
+	private static int nextId = 0;
+	private int id;
 	private String furniture;
 	private int price;
-	private List<Furniture> furnitures = new LinkedList<Furniture>();
 
-	public Furniture(String id, String furniture) {
-		this.id = id;
+	public Furniture(String furniture) {
+		this.id = nextId++;
 		this.furniture = furniture;
 	}
 
