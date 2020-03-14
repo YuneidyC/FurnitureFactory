@@ -2,8 +2,13 @@ package furniture;
 
 public class OfficeChairWithWheels extends OfficeChair {
 
-	public OfficeChairWithWheels(String id, String name, int price) {
-		super(id, name, price);
+	private int price;
+
+	public OfficeChairWithWheels(String id, String name) {
+		super(id, name);
 	}
 
+	public int getPrice() {
+		return price;
+	}
 }

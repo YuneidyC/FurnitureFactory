@@ -1,15 +1,18 @@
 package furniture;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Furniture {
 
 	private String id;
 	private String furniture;
 	private int price;
+	private List<Furniture> furnitures = new LinkedList<Furniture>();
 
-	public Furniture(String id, String furniture, int price) {
+	public Furniture(String id, String furniture) {
 		this.id = id;
 		this.furniture = furniture;
-		this.price = price;
 	}
 
 	public String getId() {
@@ -28,12 +31,9 @@ public class Furniture {
 		this.furniture = furniture;
 	}
 
-	public int getPrice() {
-		return price;
-	}
-
-	public void setPrice(int price) {
-		this.price = price;
+//	ADD NEW FURNITURE 
+	public void addNewFurniture(Furniture furniture) {
+		furnitures.add(furniture);
 	}
 
 	// @Override

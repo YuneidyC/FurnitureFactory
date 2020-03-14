@@ -21,6 +21,15 @@ public class Craftsman extends Employee {
 		assignedOrders.add(order);
 	}
 
+	// TODO
+	public void statusOrder() {
+		for (Order order : assignedOrders) {
+			if (order.getStatus() != "Done") {
+
+			}
+		}
+	}
+
 	public void modifyData() {
 		super.modifyData();
 	}

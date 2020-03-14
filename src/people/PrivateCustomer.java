@@ -1,30 +1,20 @@
 package people;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import factory.Order;
+
 public class PrivateCustomer extends Client {
 
-	private String dni;
-	private String name;
+	private List<Order> orders = new LinkedList<Order>();
 
 	public PrivateCustomer(String dni, String name) {
 		super(dni, name);
-		this.dni = dni;
-		this.name = name;
 	}
 
-	public String getDni() {
-		return dni;
-	}
-
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
+	public void addOrder(Order o) {
+		orders.add(o);
 	}
 
 	public void modifyData() {

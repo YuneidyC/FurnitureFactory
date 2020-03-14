@@ -2,8 +2,13 @@ package furniture;
 
 public class KitchenChair extends Chair {
 
-	public KitchenChair(String id, String name, int price) {
-		super(id, name, price);
+	private int price;
+
+	public KitchenChair(String id, String name) {
+		super(id, name);
 	}
 
+	public int getPrice() {
+		return price;
+	}
 }
