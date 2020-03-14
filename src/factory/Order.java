@@ -1,9 +1,12 @@
 package factory;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Order {
 
 	private String id;
-	// lista de muebles
+	private List<Order> orders = new LinkedList<Order>();
 	private String furniture;
 	private String employeeAssigned = null;
 	private String status;
