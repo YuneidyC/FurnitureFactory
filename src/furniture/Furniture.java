@@ -1,36 +1,52 @@
 package furniture;
 
+import java.util.Scanner;
+
 public class Furniture {
 
 	private static int nextId = 0;
 	private int id;
-	private String furniture;
+	private String furnitureModel;
 	private int price;
 
-	public Furniture(String furniture) {
+	public Furniture(String furnitureModel, int price) {
 		this.id = nextId++;
-		this.furniture = furniture;
+		this.furnitureModel = furnitureModel;
+		this.price = price;
 	}
 
-//	public String getId() {
-//		return id;
-//	}
-//
-//	public void setId(String id) {
-//		this.id = id;
-//	}
+	public int getId() {
+		return id;
+	}
 
 	public String getFurniture() {
-		return furniture;
+		return furnitureModel;
 	}
 
 	public void setFurniture(String furniture) {
-		this.furniture = furniture;
+		this.furnitureModel = furniture;
+	}
+
+//	If an attribute to be modify is empty, it'll be left unchanged 
+	public void modifyData() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Insert Furniture model: ");
+		String str = sc.nextLine();
+		if (!str.isEmpty()) {
+			furnitureModel = str;
+		}
+		System.out.println("Insert price: ");
+		str = sc.nextLine();
+		int priceFurniture = Integer.parseInt(str);
+		if (!str.isEmpty()) {
+			price = priceFurniture;
+		}
+		sc.close();
 	}
 
 	// @Override
 	public String toString() {
-		return id + ": " + furniture + " " + price;
+		return id + ": " + furnitureModel + " " + price;
 	}
 
 }

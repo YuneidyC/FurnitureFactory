@@ -2,18 +2,11 @@ package furniture;
 
 public class BedroomTable extends Table {
 
-	private int price;
-
-	public BedroomTable(String id, String name) {
-		super(id, name);
+	public BedroomTable(String name, int price) {
+		super(name, price);
 	}
 
-	public int getPrice() {
-		return price;
+	public void modifyData() {
+		super.modifyData();
 	}
-
-	public void setPrice(int price) {
-		this.price = price;
-	}
-
 }

@@ -2,8 +2,11 @@ package furniture;
 
 public class Chair extends Furniture {
 
-	public Chair(String id, String name) {
-		super(id, name);
+	public Chair(String name, int price) {
+		super(name, price);
 	}
 
+	public void modifyData() {
+		super.modifyData();
+	}
 }

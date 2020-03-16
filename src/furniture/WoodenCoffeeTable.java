@@ -2,14 +2,11 @@ package furniture;
 
 public class WoodenCoffeeTable extends CoffeeTable {
 
-	private int price;
-
-	public WoodenCoffeeTable(String id, String name) {
-		super(id, name);
+	public WoodenCoffeeTable(String name, int price) {
+		super(name, price);
 	}
 
-	public int getPrice() {
-		return price;
+	public void modifyData() {
+		super.modifyData();
 	}
-
 }

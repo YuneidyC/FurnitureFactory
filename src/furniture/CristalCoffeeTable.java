@@ -2,14 +2,11 @@ package furniture;
 
 public class CristalCoffeeTable extends CoffeeTable {
 
-	private int price;
-
-	public CristalCoffeeTable(String id, String name) {
-		super(id, name);
+	public CristalCoffeeTable(String name, int price) {
+		super(name, price);
 	}
 
-	public int getPrice() {
-		return price;
+	public void modifyData() {
+		super.modifyData();
 	}
-
 }

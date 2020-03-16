@@ -2,7 +2,11 @@ package furniture;
 
 public class CoffeeTable extends Table {
 
-	public CoffeeTable(String id, String name) {
-		super(id, name);
+	public CoffeeTable(String name, int price) {
+		super(name, price);
+	}
+
+	public void modifyData() {
+		super.modifyData();
 	}
 }
