@@ -4,7 +4,16 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
 
+import furniture.BedroomTable;
+import furniture.CristalCoffeeTable;
+import furniture.DiningTable;
+import furniture.FoldingChair;
 import furniture.Furniture;
+import furniture.KitchenChair;
+import furniture.OfficeChairWithWheels;
+import furniture.OfficeChairWithoutWheels;
+import furniture.WoodenCoffeeTable;
+import javafx.util.Pair;
 import people.Boss;
 import people.CompanyCustomer;
 import people.Craftsman;
@@ -43,70 +52,124 @@ public class Factory {
 		}
 	}
 
-	public void searchTypesOfChair() {
+	private Pair<String, Integer> newFurniture() {
+		Pair<String, Integer> newFurniture = null;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Insert furniture model: ");
+		String furnitureModel = sc.nextLine();
+		System.out.println("Insert price: ");
+		String str = sc.nextLine();
+		try {
+			int price = Integer.parseInt(str);
+			Pair<String, Integer> ans = new Pair<String, Integer>(furnitureModel, price);
+			newFurniture = ans;
+		} catch (Exception e) {
+			System.out.println("This is not a number");
+		}
+		sc.close();
+		return newFurniture;
+	}
+
+	public void typesOfChair() {
+		Pair<String, Integer> furniture = null;
+		String model;
+		int price;
 		Scanner sc = new Scanner(System.in);
 		Printer.printTypesOfChairs();
 		String str = sc.nextLine();
 		int typeChair = Integer.parseInt(str);
 		switch (typeChair) {
 		case 1:
-
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new FoldingChair(model, price));
 			break;
 		case 2:
-
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new KitchenChair(model, price));
 			break;
 		case 3:
-			searchTypesOfficeChair();
+			typesOfficeChair();
 		}
 		sc.close();
 	}
 
-	public void searchTypesOfficeChair() {
+	public void typesOfficeChair() {
+		Pair<String, Integer> furniture = null;
+		String model;
+		int price;
 		Scanner sc = new Scanner(System.in);
 		Printer.printTypesOfOfficeChair();
 		String str = sc.nextLine();
 		int officeChair = Integer.parseInt(str);
 		switch (officeChair) {
 		case 1:
-
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new OfficeChairWithWheels(model, price));
 			break;
-
 		case 2:
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new OfficeChairWithoutWheels(model, price));
 			break;
 		}
 		sc.close();
 	}
 
-	public void searchTypesOfTables() {
+	public void typesOfTables() {
+		Pair<String, Integer> furniture = null;
+		String model;
+		int price;
 		Scanner sc = new Scanner(System.in);
 		Printer.printTypesOfTables();
 		String str = sc.nextLine();
 		int typeTable = Integer.parseInt(str);
 		switch (typeTable) {
 		case 1:
-
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new BedroomTable(model, price));
 			break;
 		case 2:
-
+			typesCoffeeTable();
 			break;
 		case 3:
-			searchTypesCoffeeTable();
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new DiningTable(model, price));
 			break;
 		}
 		sc.close();
 	}
 
-	public void searchTypesCoffeeTable() {
+	public void typesCoffeeTable() {
+		Pair<String, Integer> furniture = null;
+		String model;
+		int price;
 		Scanner sc = new Scanner(System.in);
 		Printer.printTypesOfCoffeeTable();
 		String str = sc.nextLine();
 		int coffeeTable = Integer.parseInt(str);
 		switch (coffeeTable) {
 		case 1:
-
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new CristalCoffeeTable(model, price));
 			break;
 		case 2:
-
+			furniture = newFurniture();
+			model = furniture.getKey();
+			price = furniture.getValue();
+			furnitures.add(new WoodenCoffeeTable(model, price));
 			break;
 		}
 		sc.close();
@@ -136,10 +199,27 @@ public class Factory {
 	}
 
 	// switch with class
-	public void addNewFurniture() {
-
+	public void createNewFurniture() {
+		Scanner sc = new Scanner(System.in);
+		Printer.furnitureTypes();
+		String str = sc.nextLine();
+		int integer = Integer.parseInt(str);
+		try {
+			switch (integer) {
+			case 1:
+				typesOfChair();
+				break;
+			case 2:
+				typesOfTables();
+				break;
+			}
+		} catch (NumberFormatException exception) {
+			System.out.println("This is not a number");
+		}
+		sc.close();
 	}
 
+//	TODO
 	public void modifyFurnitureData() {
 	}
 
@@ -193,9 +273,9 @@ public class Factory {
 			int integer = Integer.parseInt(str);
 			switch (integer) {
 			case 1:
-				searchTypesOfChair();
+				typesOfChair();
 			case 2:
-				searchTypesOfTables();
+				typesOfTables();
 				break;
 			default:
 				System.out.println("This number is not valid");
@@ -384,6 +464,7 @@ public class Factory {
 				switch (integer) {
 				case 1:
 					System.out.println("1. Add new Furniture");
+					createNewFurniture();
 					break;
 				case 2:
 					System.out.println("2. Modify furniture data");
