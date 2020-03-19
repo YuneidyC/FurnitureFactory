@@ -1,6 +1,6 @@
 package furniture;
 
-import java.util.Scanner;
+import factory.Factory;
 
 public class Furniture {
 
@@ -29,19 +29,17 @@ public class Furniture {
 
 //	If an attribute to be modify is empty, it'll be left unchanged 
 	public void modifyData() {
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert Furniture model: ");
-		String str = sc.nextLine();
+		String str = Factory.sc.nextLine();
 		if (!str.isEmpty()) {
 			furnitureModel = str;
 		}
 		System.out.println("Insert price: ");
-		str = sc.nextLine();
-		int priceFurniture = Integer.parseInt(str);
+		str = Factory.sc.nextLine();
 		if (!str.isEmpty()) {
+			int priceFurniture = Integer.parseInt(str);
 			price = priceFurniture;
 		}
-		sc.close();
 	}
 
 	// @Override

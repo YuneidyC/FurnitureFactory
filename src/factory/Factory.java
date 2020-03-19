@@ -16,13 +16,16 @@ import furniture.WoodenCoffeeTable;
 import javafx.util.Pair;
 import people.Boss;
 import people.CompanyCustomer;
+import people.ContractInStaff;
 import people.Craftsman;
+import people.HourlyContract;
 import people.Person;
 import people.PrivateCustomer;
 import people.Salesman;
 
 public class Factory {
 
+	public static Scanner sc = new Scanner(System.in);
 	private List<Person> people = new LinkedList<Person>();
 	private List<Craftsman> craftsmans = new LinkedList<Craftsman>();
 	private List<Boss> bosses = new LinkedList<Boss>();
@@ -54,7 +57,6 @@ public class Factory {
 
 	private Pair<String, Integer> newFurniture() {
 		Pair<String, Integer> newFurniture = null;
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert furniture model: ");
 		String furnitureModel = sc.nextLine();
 		System.out.println("Insert price: ");
@@ -66,42 +68,45 @@ public class Factory {
 		} catch (Exception e) {
 			System.out.println("This is not a number");
 		}
-		sc.close();
 		return newFurniture;
 	}
 
-	public void typesOfChair() {
-		Pair<String, Integer> furniture = null;
-		String model;
-		int price;
-		Scanner sc = new Scanner(System.in);
+	/**
+	 * Create a new chair and adds it to the internal list
+	 */
+	public void createChair() {
+		Pair<String, Integer> chair = null;
 		Printer.printTypesOfChairs();
 		String str = sc.nextLine();
+		String modelOfChair;
+		int price;
 		int typeChair = Integer.parseInt(str);
 		switch (typeChair) {
 		case 1:
-			furniture = newFurniture();
-			model = furniture.getKey();
-			price = furniture.getValue();
-			furnitures.add(new FoldingChair(model, price));
+			chair = newFurniture();
+			modelOfChair = chair.getKey();
+			price = chair.getValue();
+			furnitures.add(new FoldingChair(modelOfChair, price));
 			break;
 		case 2:
-			furniture = newFurniture();
-			model = furniture.getKey();
-			price = furniture.getValue();
-			furnitures.add(new KitchenChair(model, price));
+			chair = newFurniture();
+			modelOfChair = chair.getKey();
+			price = chair.getValue();
+			furnitures.add(new KitchenChair(modelOfChair, price));
 			break;
 		case 3:
-			typesOfficeChair();
+			createOfficeChair();
 		}
-		sc.close();
 	}
 
-	public void typesOfficeChair() {
+	/**
+	 * Create a new OfficeChair and adds it to the internal list
+	 */
+
+	public void createOfficeChair() {
 		Pair<String, Integer> furniture = null;
 		String model;
 		int price;
-		Scanner sc = new Scanner(System.in);
 		Printer.printTypesOfOfficeChair();
 		String str = sc.nextLine();
 		int officeChair = Integer.parseInt(str);
@@ -119,14 +124,13 @@ public class Factory {
 			furnitures.add(new OfficeChairWithoutWheels(model, price));
 			break;
 		}
-		sc.close();
 	}
 
 	public void typesOfTables() {
 		Pair<String, Integer> furniture = null;
 		String model;
 		int price;
-		Scanner sc = new Scanner(System.in);
+		sc = new Scanner(System.in);
 		Printer.printTypesOfTables();
 		String str = sc.nextLine();
 		int typeTable = Integer.parseInt(str);
@@ -147,14 +151,12 @@ public class Factory {
 			furnitures.add(new DiningTable(model, price));
 			break;
 		}
-		sc.close();
 	}
 
 	public void typesCoffeeTable() {
 		Pair<String, Integer> furniture = null;
 		String model;
 		int price;
-		Scanner sc = new Scanner(System.in);
 		Printer.printTypesOfCoffeeTable();
 		String str = sc.nextLine();
 		int coffeeTable = Integer.parseInt(str);
@@ -172,42 +174,71 @@ public class Factory {
 			furnitures.add(new WoodenCoffeeTable(model, price));
 			break;
 		}
-		sc.close();
 	}
 
 	public void addBoss() {
 		System.out.println("Insert name: ");
-		Scanner sc = new Scanner(System.in);
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
 		Boss b = new Boss(name, dni);
 		addPerson((Person) b);
-		sc.close();
 	}
 
-	public void modifyBossData() {
+	// HERE MAKE SURE
+	public void modifyPeopleData() {
 		System.out.println("Insert DNI/PASSPORT: ");
-		Scanner scDni = new Scanner(System.in);
-		String dni = scDni.nextLine();
-		for (Boss boss : bosses) {
-			if (boss.getId() == dni) {
-				boss.modifyData();
+		String dni = sc.nextLine();
+		for (Person p : people) {
+			if (p.getId() == dni) {
+				p.modifyData();
 			}
 		}
-		scDni.close();
 	}
 
-	// switch with class
+	public void addSalesman() {
+		System.out.println("Insert name: ");
+		String name = sc.nextLine();
+		System.out.println("Insert DNI/PASSPORT: ");
+		String dni = sc.nextLine();
+		Salesman s = new Salesman(name, dni);
+		addPerson(s);
+	}
+
+	public void addCraftman() {
+		System.out.println("Insert name: ");
+		String name = sc.nextLine();
+		System.out.println("Insert DNI/PASSPORT: ");
+		String dni = sc.nextLine();
+		Printer.typeOfContractCraftsman();
+		String str = sc.nextLine();
+		try {
+			int contract = Integer.parseInt(str);
+			switch (contract) {
+			case 1:
+				Craftsman c1 = new ContractInStaff(name, dni);
+				addPerson(c1);
+				break;
+			case 2:
+				Craftsman c2 = new HourlyContract(name, dni);
+				addPerson(c2);
+				break;
+			case 3:
+				break;
+			}
+		} catch (NumberFormatException exception) {
+			System.out.println("This is nor a number");
+		}
+	}
+
 	public void createNewFurniture() {
-		Scanner sc = new Scanner(System.in);
 		Printer.furnitureTypes();
 		String str = sc.nextLine();
-		int integer = Integer.parseInt(str);
 		try {
+			int integer = Integer.parseInt(str);
 			switch (integer) {
 			case 1:
-				typesOfChair();
+				createChair();
 				break;
 			case 2:
 				typesOfTables();
@@ -216,11 +247,18 @@ public class Factory {
 		} catch (NumberFormatException exception) {
 			System.out.println("This is not a number");
 		}
-		sc.close();
 	}
 
 //	TODO
 	public void modifyFurnitureData() {
+		System.out.println("Insert ID: ");
+		String id = sc.nextLine();
+		int integer = Integer.parseInt(id);
+		for (Furniture f : furnitures) {
+			if (f.getId() == integer) {
+				f.modifyData();
+			}
+		}
 	}
 
 	public Person createOrGetClient(String personId) {
@@ -233,7 +271,6 @@ public class Factory {
 			}
 		}
 		System.out.println("Insert Name: ");
-		Scanner sc = new Scanner(System.in);
 		String str = sc.nextLine();
 		String name = str;
 		Person p = null;
@@ -258,13 +295,11 @@ public class Factory {
 		} catch (NumberFormatException exception) {
 			System.out.println("this is not a number");
 		}
-		sc.close();
 		return p;
 	}
 
 	// TODO
 	public void addOrder() {
-		Scanner sc = new Scanner(System.in);
 		System.out.println("Insert DNI/CIF: ");
 		String str = sc.nextLine();
 		createOrGetClient(str);
@@ -273,7 +308,7 @@ public class Factory {
 			int integer = Integer.parseInt(str);
 			switch (integer) {
 			case 1:
-				typesOfChair();
+				createChair();
 			case 2:
 				typesOfTables();
 				break;
@@ -287,17 +322,15 @@ public class Factory {
 			System.out.println("this is not a number");
 		}
 		// Order newOrder = new Order();
-		sc.close();
 	}
 
 	public static void main(String[] args) {
-
 		Factory factory = new Factory();
+		Factory.sc = new Scanner(System.in);
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.mainFunction();
-			Scanner sc = new Scanner(System.in);
-			String str = sc.nextLine();
+			String str = Factory.sc.nextLine();
 			try {
 				int integer = Integer.parseInt(str);
 				switch (integer) {
@@ -321,39 +354,39 @@ public class Factory {
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 			}
-			sc.close();
 		}
+		Factory.sc.close();
 	}
 
 	public void peopleSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.peopleFunction();
-			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
+			int integer = -1;
 			try {
-				int integer = Integer.parseInt(str);
-				switch (integer) {
-				case 1:
-					bossSwitch();
-					break;
-				case 2:
-					salesmanSwitch();
-					break;
-				case 3:
-					craftmanSwitch();
-					break;
-				case 4:
-					System.out.println("Exit");
-					mustExit = true;
-					break;
-				default:
-					break;
-				}
+				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 			}
-			sc.close();
+			switch (integer) {
+			case 1:
+				bossSwitch();
+				break;
+			case 2:
+				salesmanSwitch();
+				break;
+			case 3:
+				craftmanSwitch();
+				break;
+			case 4:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
 		}
 	}
 
@@ -361,31 +394,31 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.bossFunction();
-			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
+			int integer = -1;
 			try {
-				int integer = Integer.parseInt(str);
-				switch (integer) {
-				case 1:
-					addBoss();
-					break;
-				case 2:
-					System.out.println("2. Modify boss data");
-					break;
-				case 3:
-					System.out.println("3. Assign Craftsman");
-					break;
-				case 4:
-					System.out.println("4. Exit");
-					mustExit = true;
-					break;
-				default:
-					break;
-				}
+				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 			}
-			sc.close();
+			switch (integer) {
+			case 1:
+				addBoss();
+				break;
+			case 2:
+				modifyPeopleData();
+				break;
+			case 3:
+				System.out.println("3. Assign Craftsman");
+				break;
+			case 4:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
 		}
 	}
 
@@ -393,31 +426,28 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.salesmanFunction();
-			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
+			int integer = -1;
 			try {
-				int integer = Integer.parseInt(str);
-				switch (integer) {
-				case 1:
-					System.out.println("1. Add new salesman");
-					break;
-				case 2:
-					System.out.println("2. Modify commercial data");
-					break;
-				case 3:
-					System.out.println("3. Add new order");
-					break;
-				case 4:
-					System.out.println("4. Exit");
-					mustExit = true;
-					break;
-				default:
-					break;
-				}
+				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 			}
-			sc.close();
+			switch (integer) {
+			case 1:
+				addSalesman();
+				break;
+			case 2:
+				modifyPeopleData();
+				break;
+			case 3:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
 		}
 	}
 
@@ -425,31 +455,60 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.craftmanFunction();
-			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
+			int integer = -1;
 			try {
-				int integer = Integer.parseInt(str);
-				switch (integer) {
-				case 1:
-					System.out.println("1. Add new craftman");
-					break;
-				case 2:
-					System.out.println("2. Modify craftman data");
-					break;
-				case 3:
-					System.out.println("3. Add a new status of the order");
-					break;
-				case 4:
-					System.out.println("4. Exit");
-					mustExit = true;
-					break;
-				default:
-					break;
-				}
+				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 			}
-			sc.close();
+			switch (integer) {
+			case 1:
+				System.out.println("1. Add new craftman");
+				break;
+			case 2:
+				System.out.println("2. Modify craftman data");
+				break;
+			case 3:
+				System.out.println("3. Add a new status of the order");
+				break;
+			case 4:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
+		}
+	}
+
+	public void clientSwitch() {
+		boolean mustExit = false;
+		while (!mustExit) {
+			Printer.clientFunction();
+			String str = sc.nextLine();
+			int integer = -1;
+			try {
+				integer = Integer.parseInt(str);
+			} catch (NumberFormatException exception) {
+				System.out.println("this is not a number");
+			}
+			switch (integer) {
+			case 1:
+				System.out.println("1. Add new client");
+				break;
+			case 2:
+				System.out.println("2. Modify client data");
+				break;
+			case 3:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
 		}
 	}
 
@@ -457,29 +516,28 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.furnitureFunction();
-			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
+			int furnitureType = -1;
 			try {
-				int integer = Integer.parseInt(str);
-				switch (integer) {
-				case 1:
-					System.out.println("1. Add new Furniture");
-					createNewFurniture();
-					break;
-				case 2:
-					System.out.println("2. Modify furniture data");
-					break;
-				case 3:
-					System.out.println("Exit");
-					mustExit = true;
-					break;
-				default:
-					break;
-				}
+				furnitureType = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
-				System.out.println("this is not a number");
+				System.out.println("this is not a number\n");
 			}
-			sc.close();
+			switch (furnitureType) {
+			case 1:
+				createNewFurniture();
+				break;
+			case 2:
+				modifyFurnitureData();
+				break;
+			case 3:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
 		}
 	}
 
@@ -487,28 +545,28 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.orderFunction();
-			Scanner sc = new Scanner(System.in);
 			String str = sc.nextLine();
+			int integer = -1;
 			try {
-				int integer = Integer.parseInt(str);
-				switch (integer) {
-				case 1:
-					System.out.println("1. Add new order");
-					break;
-				case 2:
-					System.out.println("2. Modify order data");
-					break;
-				case 3:
-					System.out.println("Exit");
-					mustExit = true;
-					break;
-				default:
-					break;
-				}
+				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 			}
-			sc.close();
+			switch (integer) {
+			case 1:
+				System.out.println("1. Add new order");
+				break;
+			case 2:
+				System.out.println("2. Modify order data");
+				break;
+			case 3:
+				mustExit = true;
+				break;
+			default:
+				System.out.println("this number is not valid\n");
+			case -1:
+				continue;
+			}
 		}
 	}
 }
