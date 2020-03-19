@@ -11,12 +11,14 @@ public class Printer {
 		System.out.println("Enter the number: ");
 	}
 
+	// TODO switch add client
 	public static void peopleFunction() {
 		System.out.println("People Functions");
 		System.out.println("1. Boss");
 		System.out.println("2. Salesman");
 		System.out.println("3. Craftsman");
-		System.out.println("4. Exit");
+		System.out.println("4. Client");
+		System.out.println("5. Exit");
 		System.out.println("Enter the number: ");
 	}
 
@@ -33,7 +35,7 @@ public class Printer {
 		System.out.println("Salesman Function");
 		System.out.println("1. Add new Salesman");
 		System.out.println("2. Modify commercial data");
-		System.out.println("4. Exit");
+		System.out.println("3. Exit");
 		System.out.println("Enter the number: ");
 	}
 
@@ -43,6 +45,23 @@ public class Printer {
 		System.out.println("2. Modify craftman data");
 		System.out.println("3. Add a new status of the order");
 		System.out.println("4. Exit");
+		System.out.println("Enter the number: ");
+	}
+
+	public static void typeOfContractCraftsman() {
+		System.out.println("Type of contract");
+		System.out.println("1. Contract in staff");
+		System.out.println("2. Hourly Contract");
+		System.out.println("3. Exit");
+		System.out.println("Enter the number: ");
+	}
+
+	// TODO add switch client
+	public static void clientFunction() {
+		System.out.println("Client Function");
+		System.out.println("1. Add new client");
+		System.out.println("2. Modify client data");
+		System.out.println("3. Exit");
 		System.out.println("Enter the number: ");
 	}
 
