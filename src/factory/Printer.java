@@ -119,7 +119,7 @@ public class Printer {
 	}
 
 	public static void printTypesOfClient() {
-		System.out.println("Types of Cliente");
+		System.out.println("Types of Client: ");
 		System.out.println("1. Private");
 		System.out.println("2. Company");
 		System.out.println("Insert the number: ");
