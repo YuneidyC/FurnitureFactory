@@ -126,11 +126,10 @@ public class Factory {
 		}
 	}
 
-	public void typesOfTables() {
+	public void createTables() {
 		Pair<String, Integer> furniture = null;
 		String model;
 		int price;
-		sc = new Scanner(System.in);
 		Printer.printTypesOfTables();
 		String str = sc.nextLine();
 		int typeTable = Integer.parseInt(str);
@@ -142,7 +141,7 @@ public class Factory {
 			furnitures.add(new BedroomTable(model, price));
 			break;
 		case 2:
-			typesCoffeeTable();
+			createCoffeeTable();
 			break;
 		case 3:
 			furniture = newFurniture();
@@ -153,7 +152,7 @@ public class Factory {
 		}
 	}
 
-	public void typesCoffeeTable() {
+	public void createCoffeeTable() {
 		Pair<String, Integer> furniture = null;
 		String model;
 		int price;
@@ -181,8 +180,8 @@ public class Factory {
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
-		Boss b = new Boss(name, dni);
-		addPerson((Person) b);
+		Boss b = new Boss(dni, name);
+		addPerson(b);
 	}
 
 	// HERE MAKE SURE
@@ -190,7 +189,7 @@ public class Factory {
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
 		for (Person p : people) {
-			if (p.getId() == dni) {
+			if (p.getId().equals(dni)) {
 				p.modifyData();
 			}
 		}
@@ -241,7 +240,7 @@ public class Factory {
 				createChair();
 				break;
 			case 2:
-				typesOfTables();
+				createTables();
 				break;
 			}
 		} catch (NumberFormatException exception) {
@@ -261,12 +260,18 @@ public class Factory {
 		}
 	}
 
+	public void addNewClient() {
+		System.out.println("Insert DNI/PASSPORT: ");
+		String dni = sc.nextLine();
+		createOrGetClient(dni);
+	}
+
 	public Person createOrGetClient(String personId) {
 		if (personId.isEmpty()) {
 			return null;
 		}
 		for (Person p : people) {
-			if (p.getId() == personId) {
+			if (p.getId().equals(personId)) {
 				return p;
 			}
 		}
@@ -275,18 +280,19 @@ public class Factory {
 		String name = str;
 		Person p = null;
 		Printer.printTypesOfClient();
-		int integer = Integer.parseInt(str);
+		String type = sc.nextLine();
 		try {
+			int integer = Integer.parseInt(type);
 			switch (integer) {
 			case 1:
 				PrivateCustomer privateCustomer = new PrivateCustomer(personId, name);
-				addPerson(privateCustomer);
 				p = privateCustomer;
+				addPerson(privateCustomer);
 				break;
 			case 2:
-				CompanyCustomer company = new CompanyCustomer(personId, name);
-				addPerson(company);
-				p = company;
+				CompanyCustomer companyCustomer = new CompanyCustomer(personId, name);
+				p = companyCustomer;
+				addPerson(companyCustomer);
 				break;
 			default:
 				System.out.println("This number is not valide");
@@ -302,7 +308,9 @@ public class Factory {
 	public void addOrder() {
 		System.out.println("Insert DNI/CIF: ");
 		String str = sc.nextLine();
-		createOrGetClient(str);
+		Person get = createOrGetClient(str);
+		// comprobar si es null
+		String id = get.getId();
 		try {
 			Printer.furnitureTypes();
 			int integer = Integer.parseInt(str);
@@ -310,7 +318,7 @@ public class Factory {
 			case 1:
 				createChair();
 			case 2:
-				typesOfTables();
+				createTables();
 				break;
 			default:
 				System.out.println("This number is not valid");
@@ -322,6 +330,14 @@ public class Factory {
 			System.out.println("this is not a number");
 		}
 		// Order newOrder = new Order();
+	}
+
+	/**
+	 * 
+	 */
+	public Order getOrder(String orderId) {
+// TODO: Implement
+		return null;
 	}
 
 	public static void main(String[] args) {
@@ -380,6 +396,9 @@ public class Factory {
 				craftmanSwitch();
 				break;
 			case 4:
+				clientSwitch();
+				break;
+			case 5:
 				mustExit = true;
 				break;
 			default:
@@ -496,10 +515,11 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				System.out.println("1. Add new client");
+				addNewClient();
 				break;
 			case 2:
 				System.out.println("2. Modify client data");
+				modifyPeopleData();
 				break;
 			case 3:
 				mustExit = true;
@@ -555,6 +575,7 @@ public class Factory {
 			switch (integer) {
 			case 1:
 				System.out.println("1. Add new order");
+				addOrder();
 				break;
 			case 2:
 				System.out.println("2. Modify order data");
