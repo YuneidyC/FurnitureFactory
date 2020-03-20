@@ -1,6 +1,6 @@
 package people;
 
-import java.util.Scanner;
+import factory.Factory;
 
 public abstract class Person {
 	private String id;
@@ -22,18 +22,16 @@ public abstract class Person {
 
 //	If an attribute to be modify is empty, it'll be left unchanged 
 	public void modifyData() {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Insert DNI");
-		String str = sc.nextLine();
+		System.out.println("Insert new DNI:");
+		String str = Factory.sc.nextLine();
 		if (!str.isEmpty()) {
 			id = str;
 		}
-		System.out.println("Insert NAME");
-		str = sc.nextLine();
+		System.out.println("Insert new NAME");
+		str = Factory.sc.nextLine();
 		if (!str.isEmpty()) {
 			name = str;
 		}
-		sc.close();
 	}
 
 //	@Override
