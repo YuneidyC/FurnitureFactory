@@ -82,46 +82,58 @@ public class Printer {
 	}
 
 	public static void furnitureTypes() {
-		System.out.println("furniture types: ");
+		System.out.println("furniture types");
 		System.out.println("1. Chair");
 		System.out.println("2. Table");
+		System.out.println("3. Exit");
 		System.out.println("Insert the number: ");
 	}
 
-	public static void printTypesOfChairs() {
-		System.out.println("Types of chairs: ");
+	// TODO case exit
+	public static void typesOfChairs() {
+		System.out.println("Types of chairs");
 		System.out.println("1. Folding Chair");
 		System.out.println("2. Kitchen Chair");
 		System.out.println("3. Office Chair");
+		System.out.println("4. Exit");
 		System.out.println("Insert the number: ");
 	}
 
-	public static void printTypesOfOfficeChair() {
-		System.out.println("Types of office chair: ");
+	public static void typesOfOfficeChair() {
+		System.out.println("Types of office chair");
 		System.out.println("1. Chair with wheels");
 		System.out.println("2. Chair without wheels");
+		System.out.println("3. Exit");
 		System.out.println("Insert the number: ");
 	}
 
-	public static void printTypesOfTables() {
-		System.out.println("Types of tables: ");
+	public static void typesOfTables() {
+		System.out.println("Types of tables");
 		System.out.println("1. Bedroom");
 		System.out.println("2. Coffee");
 		System.out.println("3. Dining");
 		System.out.println("Insert the number: ");
 	}
 
-	public static void printTypesOfCoffeeTable() {
-		System.out.println("Types of coffee table: ");
+	public static void typesOfCoffeeTable() {
+		System.out.println("Types of coffee table");
 		System.out.println("1. Cristal");
 		System.out.println("2. Wooden");
 		System.out.println("Insert the number: ");
 	}
 
-	public static void printTypesOfClient() {
-		System.out.println("Types of Client: ");
+	public static void typesOfClient() {
+		System.out.println("Types of Client");
 		System.out.println("1. Private");
 		System.out.println("2. Company");
+		System.out.println("Insert the number: ");
+	}
+
+	// TODO NAME OF 1
+	public static void idMenu() {
+		System.out.println("Menu ID");
+		System.out.println("1. Insert");
+		System.out.println("2. Exit");
 		System.out.println("Insert the number: ");
 	}
 }
