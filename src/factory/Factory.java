@@ -1,7 +1,9 @@
 package factory;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 import furniture.BedroomTable;
@@ -64,6 +66,7 @@ public class Factory {
 			String str = sc.nextLine();
 			try {
 				totalFurniture = Integer.parseInt(str);
+				mustExit = true;
 			} catch (NumberFormatException exception) {
 				System.out.println("this is not a number");
 				mustExit = false;
@@ -72,8 +75,21 @@ public class Factory {
 		return totalFurniture;
 	}
 
-	public int calculateTotalPrice(int price, int totalFurniture) {
-		int total = price * totalFurniture;
+	public int calculateTotalPrice(HashMap<Integer, Integer> order) {
+		int priceFurniture;
+		int items;
+		int total = 0;
+
+		for (Map.Entry<Integer, Integer> getID : order.entrySet()) {
+			for (Furniture furnitureId : furnitures) {
+				if (getID.getKey() == furnitureId.getId()) {
+					priceFurniture = furnitureId.getPrice();
+					items = getID.getValue();
+					total += (priceFurniture * items);
+				}
+			}
+		}
+
 		return total;
 	}
 
@@ -96,14 +112,16 @@ public class Factory {
 	/**
 	 * Create a new chair and adds it to the internal list
 	 */
-	public void createChair(String dni) {
+	public int createChair() {
 		int typeChair = -1;
+		int furnitureID = -1;
 		boolean mustExit = false;
 		Pair<String, Integer> chair = null;
 		while (!mustExit) {
-			Printer.typesOfChairs();
+			Printer.menuChairs();
 			String str = sc.nextLine();
 			String modelOfChair;
+			String features;
 			int price;
 			typeChair = Integer.parseInt(str);
 			switch (typeChair) {
@@ -111,21 +129,25 @@ public class Factory {
 				chair = newFurniture();
 				modelOfChair = chair.getKey();
 				price = chair.getValue();
-				Furniture foldingChair = new FoldingChair(modelOfChair, price);
+				features = addOrNotFeatures();
+				Furniture foldingChair = new FoldingChair(modelOfChair, price, features);
 				furnitures.add(foldingChair);
-				int getId = foldingChair.getId();
-				int totalItems = askHowManyItems();
-				int totalPrice = calculateTotalPrice(price, totalItems);
-				addOrder(getId, totalItems, totalPrice);
+				furnitureID = foldingChair.getId();
+				mustExit = true;
 				break;
 			case 2:
 				chair = newFurniture();
 				modelOfChair = chair.getKey();
 				price = chair.getValue();
-				furnitures.add(new KitchenChair(modelOfChair, price));
+				features = addOrNotFeatures();
+				Furniture kitchenChair = new KitchenChair(modelOfChair, price, features);
+				furnitures.add(kitchenChair);
+				furnitureID = kitchenChair.getId();
+				mustExit = true;
 				break;
 			case 3:
-				createOfficeChair();
+				furnitureID = createOfficeChair();
+				mustExit = true;
 				break;
 			case 4:
 				mustExit = true;
@@ -136,19 +158,22 @@ public class Factory {
 				continue;
 			}
 		}
+		return furnitureID;
 	}
 
 	/**
 	 * Create a new OfficeChair and adds it to the internal list
 	 */
-	public void createOfficeChair() {
+	public int createOfficeChair() {
 		int typeOfficeChair = -1;
+		int furnitureID = -1;
 		boolean mustExit = false;
 		Pair<String, Integer> furniture = null;
 		String modelOfficeChair;
+		String features;
 		int price;
 		while (!mustExit) {
-			Printer.typesOfOfficeChair();
+			Printer.menuOfficeChair();
 			String str = sc.nextLine();
 			typeOfficeChair = Integer.parseInt(str);
 			switch (typeOfficeChair) {
@@ -156,65 +181,90 @@ public class Factory {
 				furniture = newFurniture();
 				modelOfficeChair = furniture.getKey();
 				price = furniture.getValue();
-				furnitures.add(new OfficeChairWithWheels(modelOfficeChair, price));
+				features = addOrNotFeatures();
+				Furniture chairWithWheels = new OfficeChairWithWheels(modelOfficeChair, price, features);
+				furnitures.add(chairWithWheels);
+				furnitureID = chairWithWheels.getId();
+				mustExit = true;
 				break;
 			case 2:
 				furniture = newFurniture();
 				modelOfficeChair = furniture.getKey();
 				price = furniture.getValue();
-				furnitures.add(new OfficeChairWithoutWheels(modelOfficeChair, price));
+				features = addOrNotFeatures();
+				Furniture chairWithoutWheels = new OfficeChairWithoutWheels(modelOfficeChair, price, features);
+				furnitures.add(chairWithoutWheels);
+				furnitureID = chairWithoutWheels.getId();
+				mustExit = true;
 				break;
 			}
 		}
+		return furnitureID;
 	}
 
-	public void createTables() {
+	public int createTables() {
 		Pair<String, Integer> furniture = null;
+		Printer.menuTables();
 		String model;
-		int price;
-		Printer.typesOfTables();
+		String features;
 		String str = sc.nextLine();
+		int price;
+		int furnitureID = -1;
 		int typeTable = Integer.parseInt(str);
 		switch (typeTable) {
 		case 1:
 			furniture = newFurniture();
 			model = furniture.getKey();
 			price = furniture.getValue();
-			furnitures.add(new BedroomTable(model, price));
+			features = addOrNotFeatures();
+			Furniture bedroomTable = new BedroomTable(model, price, features);
+			furnitures.add(bedroomTable);
+			furnitureID = bedroomTable.getId();
 			break;
 		case 2:
-			createCoffeeTable();
+			furnitureID = createCoffeeTable();
 			break;
 		case 3:
 			furniture = newFurniture();
 			model = furniture.getKey();
 			price = furniture.getValue();
-			furnitures.add(new DiningTable(model, price));
+			features = addOrNotFeatures();
+			Furniture diningTable = new DiningTable(model, price, features);
+			furnitures.add(diningTable);
+			furnitureID = diningTable.getId();
 			break;
 		}
+		return furnitureID;
 	}
 
-	public void createCoffeeTable() {
+	public int createCoffeeTable() {
 		Pair<String, Integer> furniture = null;
+		Printer.menuCoffeeTable();
 		String model;
-		int price;
-		Printer.typesOfCoffeeTable();
+		String features;
 		String str = sc.nextLine();
+		int furnitureID = -1;
+		int price;
 		int coffeeTable = Integer.parseInt(str);
 		switch (coffeeTable) {
 		case 1:
 			furniture = newFurniture();
 			model = furniture.getKey();
 			price = furniture.getValue();
-			furnitures.add(new CristalCoffeeTable(model, price));
+			features = addOrNotFeatures();
+			Furniture cristalCoffeeTable = new CristalCoffeeTable(model, price, features);
+			furnitures.add(cristalCoffeeTable);
+			furnitureID = cristalCoffeeTable.getId();
 			break;
 		case 2:
 			furniture = newFurniture();
 			model = furniture.getKey();
 			price = furniture.getValue();
-			furnitures.add(new WoodenCoffeeTable(model, price));
+			features = addOrNotFeatures();
+			furnitures.add(new WoodenCoffeeTable(model, price, features));
 			break;
 		}
+		return furnitureID;
 	}
 
 	public void addBoss() {
@@ -251,7 +301,7 @@ public class Factory {
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
-		Printer.typeOfContractCraftsman();
+		Printer.menuContractCraftsman();
 		String str = sc.nextLine();
 		try {
 			int contract = Integer.parseInt(str);
@@ -272,25 +322,27 @@ public class Factory {
 		}
 	}
 
-//	public void createNewFurniture() {
-//		Printer.furnitureTypes();
-//		String str = sc.nextLine();
-//		try {
-//			int integer = Integer.parseInt(str);
-//			switch (integer) {
-//			case 1:
-//				createChair();
-//				break;
-//			case 2:
-//				createTables();
-//				break;
-//			}
-//		} catch (NumberFormatException exception) {
-//			System.out.println("This is not a number");
-//		}
-//	}
+	public int createNewFurniture() {
+		Printer.furnitureTypes();
+		int furnitureID = -1;
+		int integer = -1;
+		String str = sc.nextLine();
+		try {
+			integer = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
+			System.out.println("This is not a number");
+		}
+		switch (integer) {
+		case 1:
+			furnitureID = createChair();
+			break;
+		case 2:
+			furnitureID = createTables();
+			break;
+		}
+		return furnitureID;
+	}
 
-//	TODO
 	public void modifyFurnitureData() {
 		System.out.println("Insert ID: ");
 		String id = sc.nextLine();
@@ -321,7 +373,7 @@ public class Factory {
 		String str = sc.nextLine();
 		String name = str;
 		Person p = null;
-		Printer.typesOfClient();
+		Printer.menuClient();
 		String type = sc.nextLine();
 		try {
 			int integer = Integer.parseInt(type);
@@ -349,15 +401,44 @@ public class Factory {
 	// TODO
 	public void createAnOrder() {
 		String id = null;
-		int integer = -1;
+		int moreFurniture;
+		int idFurniture;
+		int items;
+		int totalPrice;
+		int price;
 		boolean mustExit = false;
 		id = askID();
 		if (id == null || id.isEmpty()) {
 			return;
 		}
-
+		Order order = new Order(id);
+		idFurniture = createNewFurniture();
+		items = askHowManyItems();
+		order.addFurniturePiece(idFurniture, items);
 		while (!mustExit) {
-			Printer.furnitureTypes();
+			moreFurniture = addMoreFurnitureInTheOrder();
+			switch (moreFurniture) {
+			case 1:
+				idFurniture = createNewFurniture();
+				items = askHowManyItems();
+				order.addFurniturePiece(idFurniture, items);
+				break;
+			case 2:
+				mustExit = true;
+				break;
+			}
+		}
+		totalPrice = calculateTotalPrice(order.getIdsAndPriceFurniture());
+		order.setTotalPrice(totalPrice);
+		OrderList.add(order);
+	}
+
+	public int addMoreFurnitureInTheOrder() {
+		int integer = -1;
+		int moreFurniture = -1;
+		boolean mustExit = false;
+		while (!mustExit) {
+			Printer.askMoreFurnitureInTheOrder();
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -366,20 +447,42 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				createChair(id);
+				moreFurniture = 1;
+				mustExit = true;
 				break;
 			case 2:
-				createTables();
-				break;
-			case 3:
+				moreFurniture = 2;
 				mustExit = true;
 				break;
 			default:
-				System.out.println("this number is not valid\n");
+				System.out.println("This is not a number");
 			case -1:
 				continue;
 			}
 		}
+		return moreFurniture;
+	}
+
+	public String addOrNotFeatures() {
+		String features = null;
+		Printer.askFeatures();
+		String str = sc.nextLine();
+		int answer = -1;
+		try {
+			answer = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
+			System.out.println("this is not a number");
+		}
+		switch (answer) {
+		case 1:
+			System.out.println("Insert features: ");
+			features = sc.nextLine();
+			break;
+		case 2:
+			features = "Without features";
+			break;
+		}
+		return features;
 	}
 
 	public String askID() {
@@ -429,10 +532,39 @@ public class Factory {
 		return dniOrCif;
 	}
 
-	// TODO
-	public void addOrder(int id, int totalItems, int totalPrice) {
-
+	public int getPrice(int furnitureID) {
+		int price = -1;
+		for (Furniture f : furnitures) {
+			if (furnitureID == f.getId()) {
+				price = f.getPrice();
+			}
+		}
+		return price;
 	}
+
+//	// TODO recibir el objeto mejor
+//	public void addOrder(String dni, int idFurniture, int price, int totalItems, int totalPrice) {
+//		String features = null;
+//		int integer = -1;
+//		Printer.askFeatures();
+//		String str = sc.nextLine();
+//		try {
+//			integer = Integer.parseInt(str);
+//		} catch (NumberFormatException exception) {
+//			System.out.println("this is not a number");
+//		}
+//		switch (integer) {
+//		case 1:
+//			features = sc.nextLine();
+//			break;
+//		case 2:
+//			features = "Without features";
+//			break;
+//		}
+////		TODO añadirle la lista id de muebles
+//		// OrderList.add(new Order(dni, idFurniture, price, totalItems, totalPrice,
+//		// features));
+//	}
 
 	public Order getOrder(String orderId) {
 // TODO: Implement
@@ -673,7 +805,6 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				System.out.println("1. Add new order");
 				createAnOrder();
 				break;
 			case 2:

@@ -1,46 +1,46 @@
 package factory;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashMap;
 
 public class Order {
 
-	private String id;
-	private List<Order> orders = new LinkedList<Order>();
-	private String furniture;
+	private static int nextID = 0;
+	private int id;
+	private int idFurniture;
+	private HashMap<Integer, Integer> idsAndPriceFurniture = new HashMap<Integer, Integer>();
+	private String dni;
 	private String employeeAssigned = null;
 	private String status;
+	private int items;
+	private int totalPrice;
 
-	private double price;
-
-	public Order(String id, String furniture, double price) {
-		this.id = id;
-		this.furniture = furniture;
-		this.price = price;
+	public Order(String dni) {
+		this.id = nextID++;
+		this.dni = dni;
 	}
 
-	public String getId() {
+	public void addFurniturePiece(int idFurniture, int items) {
+		idsAndPriceFurniture.put(idFurniture, items);
+	}
+
+	public void totalPriceOfOrder() {
+
+	}
+
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public String getDni() {
+		return dni;
 	}
 
-	public String getFurniture() {
-		return furniture;
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
-	public void setFurniture(String furniture) {
-		this.furniture = furniture;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
+	public HashMap<Integer, Integer> getIdsAndPriceFurniture() {
+		return idsAndPriceFurniture;
 	}
 
 	public String getEmployeeAssigned() {
@@ -58,6 +58,30 @@ public class Order {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public int getItems() {
+		return items;
+	}
+
+	public void setItems(int items) {
+		this.items = items;
+	}
+
+	public int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+
+	public int getIdFurniture() {
+		return idFurniture;
+	}
+
+	public void setIdFurniture(int idFurniture) {
+		this.idFurniture = idFurniture;
 	}
 
 }
