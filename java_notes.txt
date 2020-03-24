@@ -2,7 +2,7 @@
 ** STATIC
 ****************
 
-- Call static function
+- Call static function 
 
     Type.function();
 

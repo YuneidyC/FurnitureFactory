@@ -8,11 +8,17 @@ public class Furniture {
 	private int id;
 	private String furnitureModel;
 	private int price;
+	private String features;
 
-	public Furniture(String furnitureModel, int price) {
+	public Furniture(String furnitureModel, int price, String features) {
 		this.id = nextId++;
 		this.furnitureModel = furnitureModel;
 		this.price = price;
+		this.features = features;
+	}
+
+	public int getPrice() {
+		return price;
 	}
 
 	public int getId() {
@@ -45,6 +51,14 @@ public class Furniture {
 	// @Override
 	public String toString() {
 		return id + ": " + furnitureModel + " " + price;
+	}
+
+	public String getFeatures() {
+		return features;
+	}
+
+	public void setFeatures(String features) {
+		this.features = features;
 	}
 
 }
