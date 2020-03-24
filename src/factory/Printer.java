@@ -48,7 +48,7 @@ public class Printer {
 		System.out.println("Enter the number: ");
 	}
 
-	public static void typeOfContractCraftsman() {
+	public static void menuContractCraftsman() {
 		System.out.println("Type of contract");
 		System.out.println("1. Contract in staff");
 		System.out.println("2. Hourly Contract");
@@ -90,7 +90,7 @@ public class Printer {
 	}
 
 	// TODO case exit
-	public static void typesOfChairs() {
+	public static void menuChairs() {
 		System.out.println("Types of chairs");
 		System.out.println("1. Folding Chair");
 		System.out.println("2. Kitchen Chair");
@@ -99,7 +99,7 @@ public class Printer {
 		System.out.println("Insert the number: ");
 	}
 
-	public static void typesOfOfficeChair() {
+	public static void menuOfficeChair() {
 		System.out.println("Types of office chair");
 		System.out.println("1. Chair with wheels");
 		System.out.println("2. Chair without wheels");
@@ -107,7 +107,7 @@ public class Printer {
 		System.out.println("Insert the number: ");
 	}
 
-	public static void typesOfTables() {
+	public static void menuTables() {
 		System.out.println("Types of tables");
 		System.out.println("1. Bedroom");
 		System.out.println("2. Coffee");
@@ -115,25 +115,37 @@ public class Printer {
 		System.out.println("Insert the number: ");
 	}
 
-	public static void typesOfCoffeeTable() {
+	public static void menuCoffeeTable() {
 		System.out.println("Types of coffee table");
 		System.out.println("1. Cristal");
 		System.out.println("2. Wooden");
 		System.out.println("Insert the number: ");
 	}
 
-	public static void typesOfClient() {
+	public static void menuClient() {
 		System.out.println("Types of Client");
 		System.out.println("1. Private");
 		System.out.println("2. Company");
 		System.out.println("Insert the number: ");
 	}
 
-	// TODO NAME OF 1
 	public static void idMenu() {
-		System.out.println("Menu ID");
+		System.out.println("Menu ID/CIF");
 		System.out.println("1. Insert");
 		System.out.println("2. Exit");
 		System.out.println("Insert the number: ");
+	}
+
+	public static void askFeatures() {
+		System.out.println("Furniture features");
+		System.out.println("1. add features");
+		System.out.println("2. do not add features");
+		System.out.println("Insert the number: ");
+	}
+
+	public static void askMoreFurnitureInTheOrder() {
+		System.out.println("Do you want more furniture?: ");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
 	}
 }
