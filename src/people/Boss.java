@@ -33,7 +33,7 @@ public class Boss extends Employee {
 			return false;
 		}
 		order.setEmployeeAssigned(craftsman.getId());
-		craftsman.assignOrder(order);
+		craftsman.assignOrder(order.getId());
 		return true;
 	}
 

@@ -20,4 +20,9 @@ public class PrivateCustomer extends Client {
 	public void modifyData() {
 		super.modifyData();
 	}
+
+	public boolean confirmOrder() {
+
+		return true;
+	}
 }

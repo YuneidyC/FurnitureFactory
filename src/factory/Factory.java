@@ -29,13 +29,13 @@ public class Factory {
 
 	public static Scanner sc = new Scanner(System.in);
 	private List<Person> people = new LinkedList<Person>();
-	private List<Craftsman> craftsmans = new LinkedList<Craftsman>();
+	private static List<Craftsman> craftsmans = new LinkedList<Craftsman>();
 	private List<Boss> bosses = new LinkedList<Boss>();
 	private List<Salesman> salesmans = new LinkedList<Salesman>();
 	private List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
 	private List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
 	private List<Furniture> furnitures = new LinkedList<Furniture>();
-	private List<Order> OrderList = new LinkedList<Order>();
+	private static List<Order> OrderList = new LinkedList<Order>();
 
 	public void addPerson(Person person) {
 		if (person instanceof Craftsman) {
@@ -56,6 +56,31 @@ public class Factory {
 		} else {
 			people.add(person);
 		}
+	}
+
+	public static void confirmStatusOrder() {
+
+	}
+
+	public static Order getOrder(int idOrder) {
+		for (Order order : OrderList) {
+			if (order.getId() == idOrder) {
+				return order;
+			}
+		}
+		return null;
+	}
+
+	public static Craftsman getCraftman() {
+		String id;
+		System.out.println("Insert DNI/PASSPORT: ");
+		id = sc.nextLine();
+		for (Craftsman craftman : craftsmans) {
+			if (craftman.getId() == id) {
+				return craftman;
+			}
+		}
+		return null;
 	}
 
 	public int askHowManyItems() {
@@ -79,17 +104,15 @@ public class Factory {
 		int priceFurniture;
 		int items;
 		int total = 0;
-
-		for (Map.Entry<Integer, Integer> getID : order.entrySet()) {
+		for (Map.Entry<Integer, Integer> pair : order.entrySet()) {
 			for (Furniture furnitureId : furnitures) {
-				if (getID.getKey() == furnitureId.getId()) {
+				if (pair.getKey() == furnitureId.getId()) {
 					priceFurniture = furnitureId.getPrice();
-					items = getID.getValue();
+					items = pair.getValue();
 					total += (priceFurniture * items);
 				}
 			}
 		}
-
 		return total;
 	}
 
@@ -405,17 +428,18 @@ public class Factory {
 		int idFurniture;
 		int items;
 		int totalPrice;
-		int price;
 		boolean mustExit = false;
 		id = askID();
 		if (id == null || id.isEmpty()) {
 			return;
 		}
 		Order order = new Order(id);
+		// creamos un mueble primera para que no este en el bucle
 		idFurniture = createNewFurniture();
 		items = askHowManyItems();
 		order.addFurniturePiece(idFurniture, items);
 		while (!mustExit) {
+			// TODO change addMoreFurniture to return boolean
 			moreFurniture = addMoreFurnitureInTheOrder();
 			switch (moreFurniture) {
 			case 1:

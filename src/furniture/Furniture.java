@@ -9,6 +9,7 @@ public class Furniture {
 	private String furnitureModel;
 	private int price;
 	private String features;
+	private String status = null;
 
 	public Furniture(String furnitureModel, int price, String features) {
 		this.id = nextId++;

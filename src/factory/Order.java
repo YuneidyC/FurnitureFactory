@@ -10,7 +10,8 @@ public class Order {
 	private HashMap<Integer, Integer> idsAndPriceFurniture = new HashMap<Integer, Integer>();
 	private String dni;
 	private String employeeAssigned = null;
-	private String status;
+	private String status = "En espera";
+	private boolean pendingCustomerConfirmation = false;
 	private int items;
 	private int totalPrice;
 
@@ -23,6 +24,7 @@ public class Order {
 		idsAndPriceFurniture.put(idFurniture, items);
 	}
 
+	// TODO
 	public void totalPriceOfOrder() {
 
 	}
@@ -82,6 +84,14 @@ public class Order {
 
 	public void setIdFurniture(int idFurniture) {
 		this.idFurniture = idFurniture;
+	}
+
+	public boolean getPendingCustomerConfirmation() {
+		return pendingCustomerConfirmation;
+	}
+
+	public void setPendingCustomerConfirmation(boolean pendingCustomerConfirmation) {
+		this.pendingCustomerConfirmation = pendingCustomerConfirmation;
 	}
 
 }

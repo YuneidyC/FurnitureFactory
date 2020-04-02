@@ -3,6 +3,9 @@ package people;
 import java.util.LinkedList;
 import java.util.List;
 
+import factory.Factory;
+import factory.Order;
+
 public class Craftsman extends Employee {
 
 //	TODO: Change order by string
@@ -20,14 +23,27 @@ public class Craftsman extends Employee {
 		assignedOrders.add(order);
 	}
 
-	// TODO
-//	public void statusOrder() {
-//		for (Order order : assignedOrders) {
-//			if (order.getStatus() != "Done") {
-//
-//			}
-//		}
-//	}
+	public void statusOrder() {
+		boolean exist = false;
+		Craftsman craftman = null;
+
+		while (!exist) {
+			craftman = Factory.getCraftman();
+			if (craftman != null) {
+				exist = true;
+				break;
+			}
+			System.out.println("This craftman no exist");
+		}
+		for (int idOrder : assignedOrders) {
+			Order o = Factory.getOrder(idOrder);
+			if (o != null) {
+				if (o.getStatus().equals("En espera")) {
+//					o.setStatus(status);
+				}
+			}
+		}
+	}
 
 	public void modifyData() {
 		super.modifyData();
