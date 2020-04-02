@@ -10,7 +10,6 @@ public class Order {
 	private HashMap<Integer, Integer> idsAndPriceFurniture = new HashMap<Integer, Integer>();
 	private String dni;
 	private String employeeAssigned = null;
-	private String status = "En espera";
 	private boolean pendingCustomerConfirmation = false;
 	private int items;
 	private int totalPrice;
@@ -52,14 +51,6 @@ public class Order {
 	public void setEmployeeAssigned(String employeeAssigned) {
 		this.employeeAssigned = employeeAssigned;
 
-	}
-
-	public String getStatus() {
-		return status;
-	}
-
-	public void setStatus(String status) {
-		this.status = status;
 	}
 
 	public int getItems() {

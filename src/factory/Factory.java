@@ -17,6 +17,7 @@ import furniture.OfficeChairWithoutWheels;
 import furniture.WoodenCoffeeTable;
 import javafx.util.Pair;
 import people.Boss;
+import people.Client;
 import people.CompanyCustomer;
 import people.ContractInStaff;
 import people.Craftsman;
@@ -28,16 +29,17 @@ import people.Salesman;
 public class Factory {
 
 	public static Scanner sc = new Scanner(System.in);
-	private List<Person> people = new LinkedList<Person>();
+	private static List<Person> people = new LinkedList<Person>();
 	private static List<Craftsman> craftsmans = new LinkedList<Craftsman>();
-	private List<Boss> bosses = new LinkedList<Boss>();
-	private List<Salesman> salesmans = new LinkedList<Salesman>();
-	private List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
-	private List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
-	private List<Furniture> furnitures = new LinkedList<Furniture>();
+	private static List<Boss> bosses = new LinkedList<Boss>();
+	private static List<Salesman> salesmans = new LinkedList<Salesman>();
+	private static List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
+	private static List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
+	private static List<Furniture> furnitures = new LinkedList<Furniture>();
 	private static List<Order> OrderList = new LinkedList<Order>();
+	private static List<Client> clients = new LinkedList<Client>();
 
-	public void addPerson(Person person) {
+	public static void addPerson(Person person) {
 		if (person instanceof Craftsman) {
 			people.add(person);
 			craftsmans.add((Craftsman) person);
@@ -49,17 +51,55 @@ public class Factory {
 			salesmans.add((Salesman) person);
 		} else if (person instanceof PrivateCustomer) {
 			people.add(person);
+			clients.add((Client) person);
 			privateCustomer.add((PrivateCustomer) person);
 		} else if (person instanceof CompanyCustomer) {
 			people.add(person);
+			clients.add((Client) person);
 			companyCustomer.add((CompanyCustomer) person);
 		} else {
 			people.add(person);
 		}
 	}
 
-	public static void confirmStatusOrder() {
+	public static int askConfirmOrder() {
+		Printer.confirmOrder();
+		String str = sc.nextLine();
+		int answer = 0;
+		try {
+			answer = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
+			System.out.println("this is not a number");
+		}
+		switch (answer) {
+		case 1:
+			return 1;
+		case 2:
+			return 2;
+		}
+		return answer;
+	}
 
+	public static Order confirmStatusOrder(Client client) {
+		for (Order o : OrderList) {
+			if (o.getDni().equals(client.getId())) {
+				return o;
+			}
+		}
+		return null;
+	}
+
+	public static Client getClient() {
+		String id;
+		System.out.println("Insert DNI/PASSPORT: ");
+		id = sc.nextLine();
+		for (Client client : clients) {
+			if (client.getId() != id) {
+				return null;
+			}
+			return client;
+		}
+		return null;
 	}
 
 	public static Order getOrder(int idOrder) {
@@ -777,6 +817,9 @@ public class Factory {
 				modifyPeopleData();
 				break;
 			case 3:
+				Client.confirmOrder();
+				break;
+			case 4:
 				mustExit = true;
 				break;
 			default:

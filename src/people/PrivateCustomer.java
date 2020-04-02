@@ -3,6 +3,7 @@ package people;
 import java.util.LinkedList;
 import java.util.List;
 
+import factory.Factory;
 import factory.Order;
 
 public class PrivateCustomer extends Client {
@@ -21,8 +22,25 @@ public class PrivateCustomer extends Client {
 		super.modifyData();
 	}
 
-	public boolean confirmOrder() {
-
-		return true;
+	public static void confirmOrder() {
+		Client client = null;
+		boolean exist = false;
+		while (!exist) {
+			client = Factory.getClient();
+			if (client != null) {
+				exist = true;
+				break;
+			}
+			System.out.println("This client no exist");
+		}
+		Order confirmOrder = Factory.confirmStatusOrder(client);
+		if (confirmOrder != null) {
+			int answer = Factory.askConfirmOrder();
+			if (answer == 1) {
+				confirmOrder.setPendingCustomerConfirmation(true);
+			} else {
+				confirmOrder.setPendingCustomerConfirmation(false);
+			}
+		}
 	}
 }

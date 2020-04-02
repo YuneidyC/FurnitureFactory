@@ -61,7 +61,8 @@ public class Printer {
 		System.out.println("Client Function");
 		System.out.println("1. Add new client");
 		System.out.println("2. Modify client data");
-		System.out.println("3. Exit");
+		System.out.println("3. Confirm order");
+		System.out.println("4. Exit");
 		System.out.println("Enter the number: ");
 	}
 
@@ -145,6 +146,12 @@ public class Printer {
 
 	public static void askMoreFurnitureInTheOrder() {
 		System.out.println("Do you want more furniture?: ");
+		System.out.println("1. Yes");
+		System.out.println("2. No");
+	}
+
+	public static void confirmOrder() {
+		System.out.println("Do you want to confirm this order?: ");
 		System.out.println("1. Yes");
 		System.out.println("2. No");
 	}

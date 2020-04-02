@@ -20,14 +20,4 @@ public class CompanyCustomer extends Client {
 	public void modifyData() {
 		super.modifyData();
 	}
-
-	public boolean confirmOrder() {
-		for (Order o : orders) {
-			if (o.getPendingCustomerConfirmation()) {
-
-			}
-		}
-		return true;
-	}
-
 }
