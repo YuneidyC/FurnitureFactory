@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import furniture.BedroomTable;
 import furniture.CristalCoffeeTable;
@@ -69,15 +70,12 @@ public class Factory {
 		try {
 			answer = Integer.parseInt(str);
 		} catch (NumberFormatException exception) {
-			System.out.println("this is not a number");
+			System.out.println("This is not a number \n");
 		}
-		switch (answer) {
-		case 1:
-			return 1;
-		case 2:
-			return 2;
+		if (answer <= 1 || answer >= 6) {
+			return answer;
 		}
-		return answer;
+		return -1;
 	}
 
 	public static Order confirmStatusOrder(Client client) {
@@ -107,6 +105,18 @@ public class Factory {
 			if (order.getId() == idOrder) {
 				return order;
 			}
+		}
+		return null;
+	}
+
+	// TODO COMMENT
+	public static Set<Integer> getIdFurniture(Order o) {
+		return o.getIdsAndPriceFurniture().keySet();
+	}
+
+	public static Furniture getFurniture(int idFurniture) {
+		for (Furniture furniture : furnitures) {
+			return furniture;
 		}
 		return null;
 	}
@@ -724,6 +734,7 @@ public class Factory {
 				break;
 			case 3:
 				System.out.println("3. Assign Craftsman");
+
 				break;
 			case 4:
 				mustExit = true;
@@ -779,12 +790,15 @@ public class Factory {
 			switch (integer) {
 			case 1:
 				System.out.println("1. Add new craftman");
+				addCraftman();
 				break;
 			case 2:
 				System.out.println("2. Modify craftman data");
+				modifyPeopleData();
 				break;
 			case 3:
 				System.out.println("3. Add a new status of the order");
+				Craftsman.modifyFurnitureStatus();
 				break;
 			case 4:
 				mustExit = true;

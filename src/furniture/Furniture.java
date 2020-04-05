@@ -9,7 +9,7 @@ public class Furniture {
 	private String furnitureModel;
 	private int price;
 	private String features;
-	private String status = null;
+	private String status = "En espera";
 
 	public Furniture(String furnitureModel, int price, String features) {
 		this.id = nextId++;
@@ -60,6 +60,14 @@ public class Furniture {
 
 	public void setFeatures(String features) {
 		this.features = features;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

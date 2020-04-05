@@ -155,4 +155,14 @@ public class Printer {
 		System.out.println("1. Yes");
 		System.out.println("2. No");
 	}
+
+	public static void statusFurnitureOrder() {
+		System.out.println("1. Pending");
+		System.out.println("2. In process");
+		System.out.println("3. Stopped due to missing part");
+		System.out.println("4. Stopped due to customer confirmation");
+		System.out.println("5. Test phase");
+		System.out.println("6. Finished");
+		System.out.println("7. Exit");
+	}
 }
