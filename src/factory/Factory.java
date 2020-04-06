@@ -29,6 +29,7 @@ import people.Salesman;
 
 public class Factory {
 
+	// public static Factory factory = new Factory();
 	public static Scanner sc = new Scanner(System.in);
 	private static List<Person> people = new LinkedList<Person>();
 	private static List<Craftsman> craftsmans = new LinkedList<Craftsman>();
@@ -37,7 +38,7 @@ public class Factory {
 	private static List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
 	private static List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
 	private static List<Furniture> furnitures = new LinkedList<Furniture>();
-	private static List<Order> OrderList = new LinkedList<Order>();
+	private static List<Order> orderList = new LinkedList<Order>();
 	private static List<Client> clients = new LinkedList<Client>();
 
 	public static void addPerson(Person person) {
@@ -63,6 +64,95 @@ public class Factory {
 		}
 	}
 
+	public static void modifyFurnitureStatus() {
+		Craftsman craftsman = getCraftsman();
+		if (craftsman == null) {
+			System.out.println("This craftsman does not exist \n");
+		}
+		craftsman.modifyFurnitureStatus();
+	}
+
+	// TODO CHECK AND CHANGE
+	public static void assignOrder() {
+		boolean mustExit = false;
+		String str = null;
+		Order order = null;
+		int id = -1;
+		while (!mustExit) {
+			System.out.println("Insert id order: ");
+			str = sc.nextLine();
+			try {
+				id = Integer.parseInt(str);
+				mustExit = true;
+			} catch (NumberFormatException exception) {
+				System.out.println("This is not a number");
+				mustExit = false;
+			}
+		}
+		order = getOrder(id);
+		if (order == null) {
+			System.out.println("This order does not exist");
+			return;
+		}
+		if (order.getEmployeeAssigned() != null) {
+			System.out.println("This order has already been assigned");
+			return;
+		}
+		Printer.assignOrderWithIdOrRandom();
+		str = sc.nextLine();
+		int assign = Integer.parseInt(str);
+		switch (assign) {
+		case 1:
+			assignCraftsman(order);
+		case 2:
+			assignOrderRandomCraftman(order);
+		}
+	}
+
+	public static void assignCraftsman(Order assignOrder) {
+		boolean exist = false;
+		boolean assigned = false;
+		Craftsman craftsman = null;
+		Boss boss = null;
+		while (!exist) {
+			craftsman = getCraftsman();
+			if (craftsman != null) {
+				exist = true;
+				break;
+			}
+		}
+		exist = false;
+		while (!exist) {
+			boss = getBoss();
+			if (boss != null) {
+				exist = true;
+				break;
+			}
+		}
+		assigned = boss.assignCraftsman(assignOrder, craftsman);
+		if (assigned != true) {
+			System.out.println("This craftsman has not been assigned");
+		}
+		System.out.println("This craftsman has been assigned");
+	}
+
+	public static void assignOrderRandomCraftman(Order assignOrder) {
+		boolean exist = false;
+		boolean assigned = false;
+		Boss boss = null;
+		while (!exist) {
+			boss = getBoss();
+			if (boss != null) {
+				exist = true;
+			}
+		}
+		assigned = boss.assignCraftsman(assignOrder, craftsmans);
+		if (assigned != true) {
+			System.out.println("This craftsman has not been assigned");
+		}
+		System.out.println("This craftsman has been assigned");
+	}
+
 	public static int askConfirmOrder() {
 		Printer.confirmOrder();
 		String str = sc.nextLine();
@@ -79,7 +169,7 @@ public class Factory {
 	}
 
 	public static Order confirmStatusOrder(Client client) {
-		for (Order o : OrderList) {
+		for (Order o : orderList) {
 			if (o.getDni().equals(client.getId())) {
 				return o;
 			}
@@ -101,7 +191,7 @@ public class Factory {
 	}
 
 	public static Order getOrder(int idOrder) {
-		for (Order order : OrderList) {
+		for (Order order : orderList) {
 			if (order.getId() == idOrder) {
 				return order;
 			}
@@ -121,19 +211,31 @@ public class Factory {
 		return null;
 	}
 
-	public static Craftsman getCraftman() {
+	public static Craftsman getCraftsman() {
 		String id;
 		System.out.println("Insert DNI/PASSPORT: ");
 		id = sc.nextLine();
 		for (Craftsman craftman : craftsmans) {
-			if (craftman.getId() == id) {
+			if (craftman.getId().equals(id)) {
 				return craftman;
 			}
 		}
 		return null;
 	}
 
-	public int askHowManyItems() {
+	public static Boss getBoss() {
+		String id;
+		System.out.println("Insert DNI/PASSPORT: ");
+		id = sc.nextLine();
+		for (Boss boss : bosses) {
+			if (boss.getId().equals(id)) {
+				return boss;
+			}
+		}
+		return null;
+	}
+
+	public static int askHowManyItems() {
 		int totalFurniture = 0;
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -150,7 +252,7 @@ public class Factory {
 		return totalFurniture;
 	}
 
-	public int calculateTotalPrice(HashMap<Integer, Integer> order) {
+	public static int calculateTotalPrice(HashMap<Integer, Integer> order) {
 		int priceFurniture;
 		int items;
 		int total = 0;
@@ -166,7 +268,7 @@ public class Factory {
 		return total;
 	}
 
-	private Pair<String, Integer> newFurniture() {
+	private static Pair<String, Integer> newFurniture() {
 		Pair<String, Integer> newFurniture = null;
 		System.out.println("Insert furniture model: ");
 		String furnitureModel = sc.nextLine();
@@ -185,7 +287,7 @@ public class Factory {
 	/**
 	 * Create a new chair and adds it to the internal list
 	 */
-	public int createChair() {
+	public static int createChair() {
 		int typeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
@@ -237,7 +339,7 @@ public class Factory {
 	/**
 	 * Create a new OfficeChair and adds it to the internal list
 	 */
-	public int createOfficeChair() {
+	public static int createOfficeChair() {
 		int typeOfficeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
@@ -275,7 +377,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	public int createTables() {
+	public static int createTables() {
 		Pair<String, Integer> furniture = null;
 		Printer.menuTables();
 		String model;
@@ -310,7 +412,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	public int createCoffeeTable() {
+	public static int createCoffeeTable() {
 		Pair<String, Integer> furniture = null;
 		Printer.menuCoffeeTable();
 		String model;
@@ -340,7 +442,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	public void addBoss() {
+	public static void addBoss() {
 		System.out.println("Insert name: ");
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
@@ -350,7 +452,7 @@ public class Factory {
 	}
 
 	// HERE MAKE SURE
-	public void modifyPeopleData() {
+	public static void modifyPeopleData() {
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
 		for (Person p : people) {
@@ -360,7 +462,7 @@ public class Factory {
 		}
 	}
 
-	public void addSalesman() {
+	public static void addSalesman() {
 		System.out.println("Insert name: ");
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
@@ -369,7 +471,7 @@ public class Factory {
 		addPerson(s);
 	}
 
-	public void addCraftman() {
+	public static void addCraftman() {
 		System.out.println("Insert name: ");
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
@@ -395,7 +497,7 @@ public class Factory {
 		}
 	}
 
-	public int createNewFurniture() {
+	public static int createNewFurniture() {
 		Printer.furnitureTypes();
 		int furnitureID = -1;
 		int integer = -1;
@@ -416,7 +518,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	public void modifyFurnitureData() {
+	public static void modifyFurnitureData() {
 		System.out.println("Insert ID: ");
 		String id = sc.nextLine();
 		int integer = Integer.parseInt(id);
@@ -427,13 +529,13 @@ public class Factory {
 		}
 	}
 
-	public void addNewClient() {
+	public static void addNewClient() {
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
 		createOrGetClient(dni);
 	}
 
-	public Person createOrGetClient(String personId) {
+	public static Person createOrGetClient(String personId) {
 		if (personId.isEmpty()) {
 			return null;
 		}
@@ -472,7 +574,7 @@ public class Factory {
 	}
 
 	// TODO
-	public void createAnOrder() {
+	public static void createAnOrder() {
 		String id = null;
 		int moreFurniture;
 		int idFurniture;
@@ -504,10 +606,10 @@ public class Factory {
 		}
 		totalPrice = calculateTotalPrice(order.getIdsAndPriceFurniture());
 		order.setTotalPrice(totalPrice);
-		OrderList.add(order);
+		orderList.add(order);
 	}
 
-	public int addMoreFurnitureInTheOrder() {
+	public static int addMoreFurnitureInTheOrder() {
 		int integer = -1;
 		int moreFurniture = -1;
 		boolean mustExit = false;
@@ -537,7 +639,7 @@ public class Factory {
 		return moreFurniture;
 	}
 
-	public String addOrNotFeatures() {
+	public static String addOrNotFeatures() {
 		String features = null;
 		Printer.askFeatures();
 		String str = sc.nextLine();
@@ -559,7 +661,7 @@ public class Factory {
 		return features;
 	}
 
-	public String askID() {
+	public static String askID() {
 		boolean mustExit = false;
 		int integer = -1;
 		String id = null;
@@ -588,7 +690,7 @@ public class Factory {
 		return id;
 	}
 
-	public String getID() {
+	public static String getID() {
 		String dniOrCif = null;
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -606,7 +708,7 @@ public class Factory {
 		return dniOrCif;
 	}
 
-	public int getPrice(int furnitureID) {
+	public static int getPrice(int furnitureID) {
 		int price = -1;
 		for (Furniture f : furnitures) {
 			if (furnitureID == f.getId()) {
@@ -616,37 +718,12 @@ public class Factory {
 		return price;
 	}
 
-//	// TODO recibir el objeto mejor
-//	public void addOrder(String dni, int idFurniture, int price, int totalItems, int totalPrice) {
-//		String features = null;
-//		int integer = -1;
-//		Printer.askFeatures();
-//		String str = sc.nextLine();
-//		try {
-//			integer = Integer.parseInt(str);
-//		} catch (NumberFormatException exception) {
-//			System.out.println("this is not a number");
-//		}
-//		switch (integer) {
-//		case 1:
-//			features = sc.nextLine();
-//			break;
-//		case 2:
-//			features = "Without features";
-//			break;
-//		}
-////		TODO añadirle la lista id de muebles
-//		// OrderList.add(new Order(dni, idFurniture, price, totalItems, totalPrice,
-//		// features));
-//	}
-
-	public Order getOrder(String orderId) {
+	public static Order getOrder(String orderId) {
 // TODO: Implement
 		return null;
 	}
 
 	public static void main(String[] args) {
-		Factory factory = new Factory();
 		Factory.sc = new Scanner(System.in);
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -656,13 +733,13 @@ public class Factory {
 				int integer = Integer.parseInt(str);
 				switch (integer) {
 				case 1:
-					factory.peopleSwitch();
+					peopleSwitch();
 					break;
 				case 2:
-					factory.furnitureSwitch();
+					furnitureSwitch();
 					break;
 				case 3:
-					factory.orderSwitch();
+					orderSwitch();
 					break;
 				case 4:
 					System.out.println("Exit");
@@ -679,7 +756,7 @@ public class Factory {
 		Factory.sc.close();
 	}
 
-	public void peopleSwitch() {
+	public static void peopleSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.peopleFunction();
@@ -714,7 +791,7 @@ public class Factory {
 		}
 	}
 
-	public void bossSwitch() {
+	public static void bossSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.bossFunction();
@@ -733,8 +810,7 @@ public class Factory {
 				modifyPeopleData();
 				break;
 			case 3:
-				System.out.println("3. Assign Craftsman");
-
+				assignOrder();
 				break;
 			case 4:
 				mustExit = true;
@@ -747,7 +823,7 @@ public class Factory {
 		}
 	}
 
-	public void salesmanSwitch() {
+	public static void salesmanSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.salesmanFunction();
@@ -776,7 +852,7 @@ public class Factory {
 		}
 	}
 
-	public void craftmanSwitch() {
+	public static void craftmanSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.craftmanFunction();
@@ -789,16 +865,14 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				System.out.println("1. Add new craftman");
 				addCraftman();
 				break;
 			case 2:
-				System.out.println("2. Modify craftman data");
 				modifyPeopleData();
 				break;
 			case 3:
 				System.out.println("3. Add a new status of the order");
-				Craftsman.modifyFurnitureStatus();
+				modifyFurnitureStatus();
 				break;
 			case 4:
 				mustExit = true;
@@ -811,7 +885,7 @@ public class Factory {
 		}
 	}
 
-	public void clientSwitch() {
+	public static void clientSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.clientFunction();
@@ -844,7 +918,7 @@ public class Factory {
 		}
 	}
 
-	public void furnitureSwitch() {
+	public static void furnitureSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.furnitureFunction();
@@ -873,7 +947,7 @@ public class Factory {
 		}
 	}
 
-	public void orderSwitch() {
+	public static void orderSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.orderFunction();

@@ -156,6 +156,12 @@ public class Printer {
 		System.out.println("2. No");
 	}
 
+	public static void assignOrderWithIdOrRandom() {
+		System.out.println("Assign order: ");
+		System.out.println("1. With DNI/PASSPORT");
+		System.out.println("2. Random");
+	}
+
 	public static void statusFurnitureOrder() {
 		System.out.println("1. Pending");
 		System.out.println("2. In process");
