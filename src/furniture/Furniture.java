@@ -9,7 +9,7 @@ public class Furniture {
 	private String furnitureModel;
 	private int price;
 	private String features;
-	private String status = "En espera";
+	private String status = "On hold";
 
 	public Furniture(String furnitureModel, int price, String features) {
 		this.id = nextId++;
@@ -49,9 +49,8 @@ public class Furniture {
 		}
 	}
 
-	// @Override
 	public String toString() {
-		return id + ": " + furnitureModel + " " + price;
+		return id + ": " + furnitureModel + " " + status;
 	}
 
 	public String getFeatures() {

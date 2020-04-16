@@ -29,7 +29,6 @@ import people.Salesman;
 
 public class Factory {
 
-	// public static Factory factory = new Factory();
 	public static Scanner sc = new Scanner(System.in);
 	private static List<Person> people = new LinkedList<Person>();
 	private static List<Craftsman> craftsmans = new LinkedList<Craftsman>();
@@ -40,6 +39,7 @@ public class Factory {
 	private static List<Furniture> furnitures = new LinkedList<Furniture>();
 	private static List<Order> orderList = new LinkedList<Order>();
 	private static List<Client> clients = new LinkedList<Client>();
+	private static List<Order> finishedOrder = new LinkedList<Order>();
 
 	public static void addPerson(Person person) {
 		if (person instanceof Craftsman) {
@@ -64,15 +64,140 @@ public class Factory {
 		}
 	}
 
-	public static void modifyFurnitureStatus() {
-		Craftsman craftsman = getCraftsman();
-		if (craftsman == null) {
-			System.out.println("This craftsman does not exist \n");
+	public static Craftsman checkExistCraftsman() {
+		Craftsman craftsman = null;
+		boolean exist = false;
+		while (!exist) {
+			craftsman = getCraftsman();
+			if (craftsman != null) {
+				craftsman.modifyFurnitureStatus();
+				exist = true;
+				break;
+			}
+			System.out.println("This craftsman does not exist. \n");
+			continue;
 		}
-		craftsman.modifyFurnitureStatus();
+		return null;
 	}
 
-	// TODO CHECK AND CHANGE
+	public static int chooseIdOrder(Craftsman craftsman) {
+		boolean number = false;
+		int id = -1;
+		while (!number) {
+			for (int idOrder : craftsman.getAssignedOrders()) {
+				System.out.println(idOrder);
+			}
+			System.out.println("Choose the order ID: ");
+			String idOrder = Factory.sc.nextLine();
+			try {
+				id = Integer.parseInt(idOrder);
+				number = true;
+				break;
+			} catch (NumberFormatException exception) {
+				System.out.println("This is not a number.");
+				continue;
+			}
+		}
+		return id;
+	}
+
+	public static Order checkExistOrder(int id) {
+		Order order = null;
+		boolean exist = false;
+		while (!exist) {
+			order = Factory.getOrder(id);
+			if (order != null) {
+				exist = true;
+				break;
+			}
+			System.out.println("This order not exist.");
+			continue;
+		}
+		return order;
+	}
+
+	public static boolean sameCraftsmanOrder(Order order, Craftsman craftsman) {
+		boolean exist = false;
+		while (!exist) {
+			if (order.getEmployeeAssigned().equals(craftsman.getId())) {
+				exist = true;
+				return true;
+			}
+		}
+		System.out.println("This order is not assigned to this craftsman.");
+		return false;
+	}
+
+	public static Furniture showAndGetFurnitureOfThisOrder(Order order) {
+		int id = -1;
+		Furniture furniture = null;
+		boolean mustExit = false;
+		while (!mustExit) {
+			for (Integer idFurniture : order.getIdsAndPriceFurniture().keySet()) {
+				furniture = getFurniture(idFurniture);
+				System.out.println(furniture.toString());
+			}
+			System.out.println("Choose the furniture id: ");
+			String str = sc.nextLine();
+			int idFurniture = Integer.parseInt(str);
+			furniture = getFurniture(idFurniture);
+			if (furniture != null) {
+				mustExit = true;
+				return furniture;
+			}
+			System.out.println("This furniture does not exist.");
+			continue;
+		}
+		return furniture;
+	}
+
+	public static void changeStatusToOrder(Furniture furniture) {
+		int furnitureStatus = -1;
+		boolean exit = false;
+		Printer.statusFurnitureOrder();
+		String str = Factory.sc.nextLine();
+		try {
+			furnitureStatus = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
+			System.out.println("This is not a number");
+		}
+		while (!exit) {
+			switch (furnitureStatus) {
+			case 1:
+				furniture.setStatus("Pending");
+				exit = true;
+				break;
+			case 2:
+				furniture.setStatus("In process");
+				exit = true;
+				break;
+			case 3:
+				furniture.setStatus("Stopped due to missing part");
+				exit = true;
+				break;
+			case 4:
+				furniture.setStatus("Stopped to customer confirmation");
+				exit = true;
+				break;
+			case 5:
+				furniture.setStatus("Test phase");
+				exit = true;
+				break;
+			case 6:
+				furniture.setStatus("Finished");
+				exit = true;
+				break;
+			case 7:
+				exit = true;
+				return;
+			default:
+				System.out.println("This number is not in the range");
+			case -1:
+				continue;
+			}
+		}
+	}
+
 	public static void assignOrder() {
 		boolean mustExit = false;
 		String str = null;
@@ -100,13 +225,17 @@ public class Factory {
 		}
 		Printer.assignOrderWithIdOrRandom();
 		str = sc.nextLine();
+		// TODO TRY CATCH
 		int assign = Integer.parseInt(str);
 		switch (assign) {
 		case 1:
 			assignCraftsman(order);
+			break;
 		case 2:
 			assignOrderRandomCraftman(order);
+			break;
 		}
+		return;
 	}
 
 	public static void assignCraftsman(Order assignOrder) {
@@ -162,16 +291,16 @@ public class Factory {
 		} catch (NumberFormatException exception) {
 			System.out.println("This is not a number \n");
 		}
-		if (answer <= 1 || answer >= 6) {
+		if (answer <= 1 || answer >= 7) {
 			return answer;
 		}
 		return -1;
 	}
 
 	public static Order confirmStatusOrder(Client client) {
-		for (Order o : orderList) {
-			if (o.getDni().equals(client.getId())) {
-				return o;
+		for (Order order : orderList) {
+			if (order.getDni().equals(client.getId())) {
+				return order;
 			}
 		}
 		return null;
@@ -182,10 +311,9 @@ public class Factory {
 		System.out.println("Insert DNI/PASSPORT: ");
 		id = sc.nextLine();
 		for (Client client : clients) {
-			if (client.getId() != id) {
-				return null;
+			if (client.getId().equals(id)) {
+				return client;
 			}
-			return client;
 		}
 		return null;
 	}
@@ -200,8 +328,8 @@ public class Factory {
 	}
 
 	// TODO COMMENT
-	public static Set<Integer> getIdFurniture(Order o) {
-		return o.getIdsAndPriceFurniture().keySet();
+	public static Set<Integer> getIdFurniture(Order order) {
+		return order.getIdsAndPriceFurniture().keySet();
 	}
 
 	public static Furniture getFurniture(int idFurniture) {
@@ -274,13 +402,14 @@ public class Factory {
 		String furnitureModel = sc.nextLine();
 		System.out.println("Insert price: ");
 		String str = sc.nextLine();
+		int price = -1;
 		try {
-			int price = Integer.parseInt(str);
-			Pair<String, Integer> ans = new Pair<String, Integer>(furnitureModel, price);
-			newFurniture = ans;
-		} catch (Exception e) {
+			price = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
 			System.out.println("This is not a number");
 		}
+		Pair<String, Integer> ans = new Pair<String, Integer>(furnitureModel, price);
+		newFurniture = ans;
 		return newFurniture;
 	}
 
@@ -447,17 +576,17 @@ public class Factory {
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
-		Boss b = new Boss(dni, name);
-		addPerson(b);
+		Boss boss = new Boss(dni, name);
+		addPerson(boss);
 	}
 
 	// HERE MAKE SURE
 	public static void modifyPeopleData() {
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
-		for (Person p : people) {
-			if (p.getId().equals(dni)) {
-				p.modifyData();
+		for (Person person : people) {
+			if (person.getId().equals(dni)) {
+				person.modifyData();
 			}
 		}
 	}
@@ -467,33 +596,41 @@ public class Factory {
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
-		Salesman s = new Salesman(name, dni);
-		addPerson(s);
+		Salesman salesman = new Salesman(dni, name);
+		addPerson(salesman);
 	}
 
+	// TODO CHECK AND MAKE EXIT SELECTION
 	public static void addCraftman() {
+		int contract = -1;
+		boolean selection = false;
 		System.out.println("Insert name: ");
 		String name = sc.nextLine();
 		System.out.println("Insert DNI/PASSPORT: ");
 		String dni = sc.nextLine();
-		Printer.menuContractCraftsman();
-		String str = sc.nextLine();
-		try {
-			int contract = Integer.parseInt(str);
+		while (!selection) {
+			Printer.menuContractCraftsman();
+			String str = sc.nextLine();
+			try {
+				contract = Integer.parseInt(str);
+			} catch (NumberFormatException exception) {
+				System.out.println("This is nor a number");
+			}
 			switch (contract) {
 			case 1:
-				Craftsman c1 = new ContractInStaff(name, dni);
-				addPerson(c1);
+				Craftsman craftsmanStaff = new ContractInStaff(dni, name);
+				addPerson(craftsmanStaff);
+				selection = true;
 				break;
 			case 2:
-				Craftsman c2 = new HourlyContract(name, dni);
-				addPerson(c2);
+				Craftsman craftsmanHourlyContract = new HourlyContract(dni, name);
+				addPerson(craftsmanHourlyContract);
+				selection = true;
 				break;
-			case 3:
-				break;
+			default:
+				System.out.println("This is not a valid option.");
+				continue;
 			}
-		} catch (NumberFormatException exception) {
-			System.out.println("This is nor a number");
 		}
 	}
 
@@ -564,7 +701,7 @@ public class Factory {
 				addPerson(companyCustomer);
 				break;
 			default:
-				System.out.println("This number is not valide");
+				System.out.println("This is not a valid option.");
 				break;
 			}
 		} catch (NumberFormatException exception) {
@@ -619,7 +756,7 @@ public class Factory {
 			try {
 				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
-				System.out.println("this is not a number");
+				System.out.println("this is not a number.");
 			}
 			switch (integer) {
 			case 1:
@@ -631,7 +768,7 @@ public class Factory {
 				mustExit = true;
 				break;
 			default:
-				System.out.println("This is not a number");
+				System.out.println("This is not a valid option.");
 			case -1:
 				continue;
 			}
@@ -643,20 +780,30 @@ public class Factory {
 		String features = null;
 		Printer.askFeatures();
 		String str = sc.nextLine();
+		boolean exit = false;
 		int answer = -1;
 		try {
 			answer = Integer.parseInt(str);
 		} catch (NumberFormatException exception) {
 			System.out.println("this is not a number");
 		}
-		switch (answer) {
-		case 1:
+		while (!exit) {
 			System.out.println("Insert features: ");
-			features = sc.nextLine();
-			break;
-		case 2:
-			features = "Without features";
-			break;
+			switch (answer) {
+			case 1:
+				features = sc.nextLine();
+				exit = true;
+				break;
+			case 2:
+				features = "Without features";
+				exit = true;
+				break;
+			default:
+				System.out.println("This is not a valid option.");
+			case -1:
+				continue;
+
+			}
 		}
 		return features;
 	}
@@ -861,7 +1008,7 @@ public class Factory {
 			try {
 				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
-				System.out.println("this is not a number");
+				System.out.println("this is not a number.");
 			}
 			switch (integer) {
 			case 1:
@@ -871,14 +1018,13 @@ public class Factory {
 				modifyPeopleData();
 				break;
 			case 3:
-				System.out.println("3. Add a new status of the order");
-				modifyFurnitureStatus();
+				checkExistCraftsman();
 				break;
 			case 4:
 				mustExit = true;
 				break;
 			default:
-				System.out.println("this number is not valid\n");
+				System.out.println("this is not a valid option.");
 			case -1:
 				continue;
 			}

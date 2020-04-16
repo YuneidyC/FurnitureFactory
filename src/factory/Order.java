@@ -23,11 +23,6 @@ public class Order {
 		idsAndPriceFurniture.put(idFurniture, items);
 	}
 
-	// TODO
-	public void totalPriceOfOrder() {
-
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -84,5 +79,4 @@ public class Order {
 	public void setPendingCustomerConfirmation(boolean pendingCustomerConfirmation) {
 		this.pendingCustomerConfirmation = pendingCustomerConfirmation;
 	}
-
 }

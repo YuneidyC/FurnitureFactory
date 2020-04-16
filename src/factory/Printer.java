@@ -170,5 +170,6 @@ public class Printer {
 		System.out.println("5. Test phase");
 		System.out.println("6. Finished");
 		System.out.println("7. Exit");
+		System.out.println("Insert status: ");
 	}
 }
