@@ -2,11 +2,15 @@ package furniture;
 
 public class BedroomTable extends Table {
 
-	public BedroomTable(String name, int price, String features) {
-		super(name, price, features);
+	public BedroomTable(String model, int price, String features) {
+		super(model, price, features);
 	}
 
-	public void modifyData() {
-		super.modifyData();
+	public boolean modifyData() {
+		return super.modifyData();
+	}
+
+	public String toString() {
+		return super.toString();
 	}
 }

@@ -6,8 +6,12 @@ public class Table extends Furniture {
 		super(name, price, features);
 	}
 
-	public void modifyData() {
-		super.modifyData();
+	public boolean modifyData() {
+		return super.modifyData();
+	}
+
+	public String toString() {
+		return super.toString();
 	}
 
 }

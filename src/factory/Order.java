@@ -6,37 +6,35 @@ public class Order {
 
 	private static int nextID = 0;
 	private int id;
-	private int idFurniture;
-	private HashMap<Integer, Integer> idsAndPriceFurniture = new HashMap<Integer, Integer>();
-	private String dni;
+	private HashMap<Integer, Integer> idsAndItemsFurniture = new HashMap<Integer, Integer>();
+	private String DNIClient;
 	private String employeeAssigned = null;
 	private boolean pendingCustomerConfirmation = false;
-	private int items;
 	private int totalPrice;
 
-	public Order(String dni) {
+	public Order(String DNIClient) {
 		this.id = nextID++;
-		this.dni = dni;
+		this.DNIClient = DNIClient;
 	}
 
-	public void addFurniturePiece(int idFurniture, int items) {
-		idsAndPriceFurniture.put(idFurniture, items);
+	public void addFurnitureIDAndItems(int idFurniture, int items) {
+		idsAndItemsFurniture.put(idFurniture, items);
 	}
 
 	public int getId() {
 		return id;
 	}
 
-	public String getDni() {
-		return dni;
+	public String getDNIClient() {
+		return DNIClient;
 	}
 
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setDNIClient(String DNIClient) {
+		this.DNIClient = DNIClient;
 	}
 
-	public HashMap<Integer, Integer> getIdsAndPriceFurniture() {
-		return idsAndPriceFurniture;
+	public HashMap<Integer, Integer> getIdsAndItemsFurniture() {
+		return idsAndItemsFurniture;
 	}
 
 	public String getEmployeeAssigned() {
@@ -48,14 +46,6 @@ public class Order {
 
 	}
 
-	public int getItems() {
-		return items;
-	}
-
-	public void setItems(int items) {
-		this.items = items;
-	}
-
 	public int getTotalPrice() {
 		return totalPrice;
 	}
@@ -64,19 +54,15 @@ public class Order {
 		this.totalPrice = totalPrice;
 	}
 
-	public int getIdFurniture() {
-		return idFurniture;
-	}
-
-	public void setIdFurniture(int idFurniture) {
-		this.idFurniture = idFurniture;
-	}
-
 	public boolean getPendingCustomerConfirmation() {
 		return pendingCustomerConfirmation;
 	}
 
 	public void setPendingCustomerConfirmation(boolean pendingCustomerConfirmation) {
 		this.pendingCustomerConfirmation = pendingCustomerConfirmation;
+	}
+
+	public String toString() {
+		return "ID: " + id;
 	}
 }

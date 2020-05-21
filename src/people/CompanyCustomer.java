@@ -1,23 +1,16 @@
 package people;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import factory.Order;
-
 public class CompanyCustomer extends Client {
 
-	private List<Order> orders = new LinkedList<Order>();
-
-	public CompanyCustomer(String id, String name) {
-		super(id, name);
-	}
-
-	public void addOrder(Order o) {
-		orders.add(o);
+	public CompanyCustomer(String DNI, String name, int telephone) {
+		super(DNI, name, telephone);
 	}
 
 	public void modifyData() {
 		super.modifyData();
+	}
+
+	public String toString() {
+		return super.toString();
 	}
 }
