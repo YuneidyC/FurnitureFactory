@@ -1,9 +1,11 @@
 package people;
 
+import factory.Factory;
+
 public class CompanyCustomer extends Client {
 
-	public CompanyCustomer(String DNI, String name, int telephone) {
-		super(DNI, name, telephone);
+	public CompanyCustomer(Factory factory, String DNI, String name, int telephone) {
+		super(factory, DNI, name, telephone);
 	}
 
 	public void modifyData() {

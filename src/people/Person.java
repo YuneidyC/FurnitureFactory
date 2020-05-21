@@ -4,13 +4,18 @@ import factory.Factory;
 import factory.Printer;
 
 public abstract class Person {
+	private Factory factory;
 	private String dni;
 	private String name;
 
-	public Person(String dni, String name) {
-		super();
+	public Person(Factory factory, String dni, String name) {
+		this.factory = factory;
 		this.dni = dni;
 		this.name = name;
+	}
+
+	protected Factory getFactory() {
+		return factory;
 	}
 
 	public String getDNI() {
@@ -25,15 +30,15 @@ public abstract class Person {
 	public void modifyData() {
 		String dniPerson = this.dni;
 		System.out.println("Insert new DNI:");
-		String str = Factory.sc.nextLine();
+		String str = factory.sc.nextLine();
 		if (!str.isEmpty()) {
 			dni = str;
 			if ((this instanceof Client)) {
-				Factory.onClientDNIUpdate(dniPerson, str);
+				factory.onClientDNIUpdate(dniPerson, str);
 			}
 		}
 		System.out.println("Insert new NAME");
-		str = Factory.sc.nextLine();
+		str = factory.sc.nextLine();
 		if (!str.isEmpty()) {
 			name = str;
 		}
@@ -43,7 +48,7 @@ public abstract class Person {
 	public int chooseIdOrder() {
 		int idOrder = -1;
 		System.out.println("Choose the order ID: ");
-		String IDorder = Factory.sc.nextLine();
+		String IDorder = factory.sc.nextLine();
 		try {
 			idOrder = Integer.parseInt(IDorder);
 		} catch (NumberFormatException exception) {
@@ -56,4 +61,5 @@ public abstract class Person {
 	public String toString() {
 		return "DNI/PASSPORT: " + dni + " Name: " + name;
 	}
+
 }

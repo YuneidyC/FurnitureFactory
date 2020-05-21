@@ -9,8 +9,8 @@ public class Client extends Person {
 	private int telephone;
 	private List<Integer> orders = new LinkedList<Integer>();
 
-	public Client(String DNI, String name, int telephone) {
-		super(DNI, name);
+	public Client(Factory factory, String DNI, String name, int telephone) {
+		super(factory, DNI, name);
 		this.telephone = telephone;
 	}
 
@@ -28,7 +28,7 @@ public class Client extends Person {
 
 	public void modifyData() {
 		super.modifyData();
-		int phoneNumber = Factory.getPhoneNumber();
+		int phoneNumber = getFactory().getPhoneNumber();
 		if (phoneNumber == -1) {
 			System.out.println("The phone could not be modified.");
 			return;
@@ -38,7 +38,7 @@ public class Client extends Person {
 
 	// TODO EL LA LISTA DE IDSORDERS LA TIENE CADA TIPO
 	public void confirmOrder() {
-		Factory.confirmOrder(this.getDNI());
+		getFactory().confirmOrder(this.getDNI());
 	}
 
 	public String toString() {

@@ -13,11 +13,12 @@ public class Furniture {
 	private int id;
 	private String furnitureModel;
 	private int price;
+	private Factory factory;
 	private String features;
 	private List<String> statusHistory = new LinkedList<String>();
 	private List<Piece> missingPieces = new LinkedList<Piece>();
 
-	public Furniture(String furnitureModel, int price, String features) {
+	public Furniture(Factory factory, String furnitureModel, int price, String features) {
 		this.id = nextId++;
 		this.furnitureModel = furnitureModel;
 		this.price = price;
@@ -37,6 +38,10 @@ public class Furniture {
 		return furnitureModel;
 	}
 
+	protected Factory getFactory() {
+		return factory;
+	}
+
 	public String getFeatures() {
 		return features;
 	}
@@ -53,19 +58,19 @@ public class Furniture {
 	public boolean modifyData() {
 		boolean modifyPrice = false;
 		System.out.println("Insert Furniture model: ");
-		String str = Factory.sc.nextLine();
+		String str = getFactory().sc.nextLine();
 		if (!str.isEmpty()) {
 			furnitureModel = str;
 		}
 		System.out.println("Insert price: ");
-		str = Factory.sc.nextLine();
+		str = getFactory().sc.nextLine();
 		if (!str.isEmpty()) {
 			int priceFurniture = Integer.parseInt(str);
 			price = priceFurniture;
 			modifyPrice = true;
 		}
 		System.out.println("Insert features: ");
-		str = Factory.sc.nextLine();
+		str = getFactory().sc.nextLine();
 		if (!str.isEmpty()) {
 			features = str;
 		}
@@ -98,7 +103,7 @@ public class Furniture {
 		int insert = -1;
 		while (!mustExit) {
 			Printer.orderParts();
-			String str = Factory.sc.nextLine();
+			String str = getFactory().sc.nextLine();
 			try {
 				insert = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
@@ -107,7 +112,7 @@ public class Furniture {
 			}
 			switch (insert) {
 			case 1:
-				piece = Factory.askForPieceDetails();
+				piece = getFactory().askForPieceDetails();
 				if (piece == null) {
 					System.out.println("The part was not inserted.");
 					mustExit = true;
@@ -157,4 +162,5 @@ public class Furniture {
 	public String toString() {
 		return "ID: " + id + " \nModel: " + furnitureModel;
 	}
+
 }

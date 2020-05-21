@@ -5,18 +5,18 @@ import factory.Order;
 
 public class Boss extends Employee {
 
-	public Boss(String DNI, String name) {
-		super(DNI, name);
+	public Boss(Factory factory, String DNI, String name) {
+		super(factory, DNI, name);
 	}
 
 	public void assignCraftsman() {
 		boolean assignCraftsman = false;
-		Craftsman craftsman = Factory.assignOrderWithIDOrRandom();
+		Craftsman craftsman = getFactory().assignOrderWithIDOrRandom();
 		if (craftsman == null) {
 			return;
 		}
-		int id = Factory.unassignedOrders();
-		Order order = Factory.getOrder(id);
+		int id = getFactory().unassignedOrders();
+		Order order = getFactory().getOrder(id);
 		if (order == null) {
 			System.out.println("This order does not exist");
 			return;

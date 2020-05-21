@@ -1,9 +1,11 @@
 package furniture;
 
+import factory.Factory;
+
 public class DiningTable extends Table {
 
-	public DiningTable(String name, int price, String features) {
-		super(name, price, features);
+	public DiningTable(Factory factory, String name, int price, String features) {
+		super(factory, name, price, features);
 	}
 
 	public boolean modifyData() {

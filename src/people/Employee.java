@@ -1,9 +1,11 @@
 package people;
 
+import factory.Factory;
+
 public class Employee extends Person {
 
-	public Employee(String DNI, String name) {
-		super(DNI, name);
+	public Employee(Factory factory, String DNI, String name) {
+		super(factory, DNI, name);
 	}
 
 	public void modifyData() {

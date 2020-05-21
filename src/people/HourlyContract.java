@@ -1,9 +1,11 @@
 package people;
 
+import factory.Factory;
+
 public class HourlyContract extends Craftsman {
 
-	public HourlyContract(String dni, String name) {
-		super(dni, name);
+	public HourlyContract(Factory factory, String dni, String name) {
+		super(factory, dni, name);
 	}
 
 	public String toString() {

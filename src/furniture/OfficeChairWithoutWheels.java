@@ -1,9 +1,11 @@
 package furniture;
 
+import factory.Factory;
+
 public class OfficeChairWithoutWheels extends OfficeChair {
 
-	public OfficeChairWithoutWheels(String name, int price, String features) {
-		super(name, price, features);
+	public OfficeChairWithoutWheels(Factory factory, String name, int price, String features) {
+		super(factory, name, price, features);
 	}
 
 	public boolean modifyData() {

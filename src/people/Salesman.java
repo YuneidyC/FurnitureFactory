@@ -4,13 +4,13 @@ import factory.Factory;
 
 public class Salesman extends Employee {
 
-	public Salesman(String DNI, String name) {
-		super(DNI, name);
+	public Salesman(Factory factory, String DNI, String name) {
+		super(factory, DNI, name);
 	}
 
 	public void notifyTheCustomer() {
 		int idOrder = -1;
-		boolean allFine = Factory.printIdsOrderHasNotBeenNotified();
+		boolean allFine = getFactory().printIdsOrderHasNotBeenNotified();
 		if (allFine == false) {
 			return;
 		}
@@ -18,7 +18,7 @@ public class Salesman extends Employee {
 		if (idOrder == -1) {
 			return;
 		}
-		Factory.notifyCustomer(idOrder);
+		getFactory().notifyCustomer(idOrder);
 		return;
 	}
 

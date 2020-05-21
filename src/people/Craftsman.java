@@ -12,8 +12,8 @@ public class Craftsman extends Employee {
 	private List<Integer> listOfAssignedOrders = new LinkedList<Integer>();
 	private List<Integer> finishedOrders = new LinkedList<Integer>();
 
-	public Craftsman(String DNI, String name) {
-		super(DNI, name);
+	public Craftsman(Factory factory, String DNI, String name) {
+		super(factory, DNI, name);
 	}
 
 	public List<Integer> getAssignedOrders() {
@@ -44,32 +44,32 @@ public class Craftsman extends Employee {
 		if (idOrder == -1) {
 			return;
 		}
-		order = Factory.getOrder(idOrder);
+		order = getFactory().getOrder(idOrder);
 		if (order == null) {
 			return;
 		}
-		sameCraftsman = Factory.sameCraftsmanOrder(order, this);
+		sameCraftsman = getFactory().sameCraftsmanOrder(order, this);
 		if (sameCraftsman == false) {
 			return;
 		}
-		furniture = Factory.showAndGetFurnitureOfThisOrder(order);
+		furniture = getFactory().showAndGetFurnitureOfThisOrder(order);
 		if (furniture == null) {
 			return;
 		}
-		Factory.changeStatusToOrder(furniture);
+		getFactory().changeStatusToOrder(furniture);
 	}
 
 	public void finishedOrder() {
 		int id = -1;
 		for (int idOrder : listOfAssignedOrders) {
-			Factory.printFinishedOrder(idOrder);
+			getFactory().printFinishedOrder(idOrder);
 		}
 
 		id = super.chooseIdOrder();
 		if (id == -1) {
 			return;
 		}
-		int allFine = Factory.orderFinished(id, this);
+		int allFine = getFactory().orderFinished(id, this);
 		if (allFine == -1) {
 			return;
 		}
@@ -80,12 +80,12 @@ public class Craftsman extends Employee {
 	public void craftsmanHistory() {
 		super.toString();
 		String history = null;
-		String contract = Factory.instanceOf(this);
+		String contract = getFactory().instanceOf(this);
 		System.out.println("Contract: " + contract + ".");
 		if (listOfAssignedOrders.isEmpty()) {
 			System.out.println("List orders assigned: ");
 			for (Integer idOrder : listOfAssignedOrders) {
-				Order order = Factory.getOrder(idOrder);
+				Order order = getFactory().getOrder(idOrder);
 				if (order != null) {
 					history += order.getId() + ", ";
 				}
@@ -98,7 +98,7 @@ public class Craftsman extends Employee {
 		if (!finishedOrders.isEmpty()) {
 			System.out.println("List orders finished: ");
 			for (Integer idOrder : finishedOrders) {
-				Order order = Factory.getOrder(idOrder);
+				Order order = getFactory().getOrder(idOrder);
 				if (order != null) {
 					history += order.getId() + ", ";
 				}

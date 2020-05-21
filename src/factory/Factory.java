@@ -31,56 +31,56 @@ import people.Salesman;
 
 public class Factory {
 
-	public static Scanner sc;
-	public static Boss boss = null;
-	private static List<Person> people = new LinkedList<Person>();
-	private static List<Craftsman> craftsmans = new LinkedList<Craftsman>();
-	private static List<Salesman> salesmans = new LinkedList<Salesman>();
-	private static List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
-	private static List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
-	private static List<Furniture> furnitures = new LinkedList<Furniture>();
-	private static List<Order> orderList = new LinkedList<Order>();
-	private static List<Client> clients = new LinkedList<Client>();
-	private static Map<Boolean, ArrayList<Order>> finishedOrders = new HashMap<Boolean, ArrayList<Order>>();
+	public Scanner sc;
+	public Boss boss = null;
+	private List<Person> people = new LinkedList<Person>();
+	private List<Craftsman> craftsmans = new LinkedList<Craftsman>();
+	private List<Salesman> salesmans = new LinkedList<Salesman>();
+	private List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
+	private List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
+	private List<Furniture> furnitures = new LinkedList<Furniture>();
+	private List<Order> orderList = new LinkedList<Order>();
+	private List<Client> clients = new LinkedList<Client>();
+	private Map<Boolean, ArrayList<Order>> finishedOrders = new HashMap<Boolean, ArrayList<Order>>();
 
-	public static List<Person> getPeople() {
+	public List<Person> getPeople() {
 		return people;
 	}
 
-	public static List<Craftsman> getCraftsmans() {
+	public List<Craftsman> getCraftsmans() {
 		return craftsmans;
 	}
 
-	public static List<Salesman> getSalesmans() {
+	public List<Salesman> getSalesmans() {
 		return salesmans;
 	}
 
-	public static List<PrivateCustomer> getPrivateCustomer() {
+	public List<PrivateCustomer> getPrivateCustomer() {
 		return privateCustomer;
 	}
 
-	public static List<CompanyCustomer> getCompanyCustomer() {
+	public List<CompanyCustomer> getCompanyCustomer() {
 		return companyCustomer;
 	}
 
-	public static List<Furniture> getFurnitures() {
+	public List<Furniture> getFurnitures() {
 		return furnitures;
 	}
 
-	public static List<Order> getOrderList() {
+	public List<Order> getOrderList() {
 		return orderList;
 	}
 
-	public static List<Client> getClients() {
+	public List<Client> getClients() {
 		return clients;
 	}
 
-	public static Map<Boolean, ArrayList<Order>> getFinishedOrders() {
+	public Map<Boolean, ArrayList<Order>> getFinishedOrders() {
 		return finishedOrders;
 	}
 
 	// TODO QUITAR LAS LISTAS CAMBIAR EL CAMBIAR AÑADIR O QUITAR EN LOS SITOS
-	public static void addPerson(Person person) {
+	public void addPerson(Person person) {
 		if (person instanceof Craftsman) {
 			people.add(person);
 			craftsmans.add((Craftsman) person);
@@ -100,7 +100,7 @@ public class Factory {
 		}
 	}
 
-	public static String instanceOf(Craftsman craftsman) {
+	public String instanceOf(Craftsman craftsman) {
 		if (craftsman instanceof ContractInStaff) {
 			return "In staff";
 		}
@@ -111,7 +111,7 @@ public class Factory {
 	}
 
 	// CHECK
-	private static void missingPieces() {
+	private void missingPieces() {
 		String missing = null;
 		if (orderList.isEmpty()) {
 			System.out.println("There are no factory orders.");
@@ -140,7 +140,7 @@ public class Factory {
 		}
 	}
 
-	private static void processedByEachCraftsman() {
+	private void processedByEachCraftsman() {
 		if (craftsmans.isEmpty()) {
 			System.out.println("Not there is craftsman in the factory.");
 			return;
@@ -177,7 +177,7 @@ public class Factory {
 		}
 	}
 
-	public static void onClientDNIUpdate(String DNI, String DNIAct) {
+	public void onClientDNIUpdate(String DNI, String DNIAct) {
 		for (Order order : orderList) {
 			if (order.getDNIClient().equals(DNI)) {
 				order.setDNIClient(DNIAct);
@@ -186,7 +186,7 @@ public class Factory {
 
 	}
 
-	private static void requestCompanyCustomerToConfirm(Client client) {
+	private void requestCompanyCustomerToConfirm(Client client) {
 		List<Integer> orders = ((CompanyCustomer) client).getOrders();
 		if (orders.isEmpty()) {
 			System.out.println("This client does not have orders.");
@@ -204,7 +204,7 @@ public class Factory {
 		}
 	}
 
-	private static void requestPrivateCustomerToConfirm(Client client) {
+	private void requestPrivateCustomerToConfirm(Client client) {
 		List<Integer> orders = ((PrivateCustomer) client).getOrders();
 		if (orders.isEmpty()) {
 			System.out.println("This client does not have orders.");
@@ -222,7 +222,7 @@ public class Factory {
 		}
 	}
 
-	private static void requestClientToConfirm() {
+	private void requestClientToConfirm() {
 		for (Client client : clients) {
 			if (client instanceof CompanyCustomer) {
 				requestCompanyCustomerToConfirm(client);
@@ -233,7 +233,7 @@ public class Factory {
 	}
 
 	// CHECK
-	private static void reportInProcess() {
+	private void reportInProcess() {
 		/*
 		 * We could stop iterating when we find the one that interests us, but in this
 		 * way we would allow an artisan to have several orders in process.
@@ -264,7 +264,7 @@ public class Factory {
 		}
 	}
 
-	private static void switchCraftsmanHistory() {
+	private void switchCraftsmanHistory() {
 		boolean mustExit = false;
 		int integer = -1;
 		while (!mustExit) {
@@ -293,7 +293,7 @@ public class Factory {
 		}
 	}
 
-	private static void showAndGetCraftsman() {
+	private void showAndGetCraftsman() {
 		if (craftsmans.isEmpty()) {
 			System.out.println("There are no craftsmans in the factory.");
 			return;
@@ -308,7 +308,7 @@ public class Factory {
 		craftsman.craftsmanHistory();
 	}
 
-	private static void allCraftsmanHistory() {
+	private void allCraftsmanHistory() {
 		if (craftsmans.isEmpty()) {
 			System.out.println("There are no craftsmans in the factory.");
 			return;
@@ -318,7 +318,7 @@ public class Factory {
 		}
 	}
 
-	private static void switchFurnitureHistory() {
+	private void switchFurnitureHistory() {
 		boolean mustExit = false;
 		int integer = -1;
 		while (!mustExit) {
@@ -347,7 +347,7 @@ public class Factory {
 		}
 	}
 
-	private static void showAndGetFurniture() {
+	private void showAndGetFurniture() {
 		int idFurniture = -1;
 		for (Furniture furniture : furnitures) {
 			System.out.println(furniture.getId());
@@ -372,13 +372,13 @@ public class Factory {
 		furniture.furnitureHistory();
 	}
 
-	private static void allFurnitureHistory() {
+	private void allFurnitureHistory() {
 		for (Furniture furniture : furnitures) {
 			furniture.furnitureHistory();
 		}
 	}
 
-	private static boolean allFurnitureDone(Order order) {
+	private boolean allFurnitureDone(Order order) {
 		int counter = 0;
 		int furnituresOrder = order.getIdsAndItemsFurniture().size();
 		for (Integer idFurniture : order.getIdsAndItemsFurniture().keySet()) {
@@ -398,7 +398,7 @@ public class Factory {
 		return false;
 	}
 
-	public static void printFinishedOrder(int idOrder) {
+	public void printFinishedOrder(int idOrder) {
 		boolean furnitureFinished = false;
 		System.out.println("Order finished: ");
 		Order order = getOrder(idOrder);
@@ -411,7 +411,7 @@ public class Factory {
 		}
 	}
 
-	public static boolean printIdsOrderHasNotBeenNotified() {
+	public boolean printIdsOrderHasNotBeenNotified() {
 		if (finishedOrders.get(false).isEmpty()) {
 			System.out.println("There is no order without notifying.");
 			return false;
@@ -422,7 +422,7 @@ public class Factory {
 		return true;
 	}
 
-	public static void notifyCustomer(int idOrder) {
+	public void notifyCustomer(int idOrder) {
 		for (Order o : finishedOrders.get(false)) {
 			if (idOrder == o.getId()) {
 				finishedOrders.get(true).add(o);
@@ -446,7 +446,7 @@ public class Factory {
 		System.out.println("This order has not finished.");
 	}
 
-	public static int orderFinished(int idOrder, Craftsman craftsman) {
+	public int orderFinished(int idOrder, Craftsman craftsman) {
 		Order toDelete = null;
 		int allFine = 0;
 		boolean finished = false;
@@ -471,7 +471,7 @@ public class Factory {
 		return allFine;
 	}
 
-	public static boolean sameCraftsmanOrder(Order order, Craftsman craftsman) {
+	public boolean sameCraftsmanOrder(Order order, Craftsman craftsman) {
 		boolean exist = false;
 		while (!exist) {
 			if (order.getEmployeeAssigned().equals(craftsman.getDNI())) {
@@ -484,7 +484,7 @@ public class Factory {
 	}
 
 	// CHECK
-	public static Furniture showAndGetFurnitureOfThisOrder(Order order) {
+	public Furniture showAndGetFurnitureOfThisOrder(Order order) {
 		int idFurniture = -1;
 		Furniture furniture = null;
 		System.out.println("ID furniture: ");
@@ -512,7 +512,7 @@ public class Factory {
 	}
 
 	// CHECK
-	public static void changeStatusToOrder(Furniture furniture) {
+	public void changeStatusToOrder(Furniture furniture) {
 		int furnitureStatus = -1;
 		boolean exit = false;
 		List<String> statusHistory = furniture.getStatusHistory();
@@ -523,7 +523,7 @@ public class Factory {
 		}
 		while (!exit) {
 			Printer.statusFurnitureOrder();
-			String str = Factory.sc.nextLine();
+			String str = sc.nextLine();
 			try {
 				furnitureStatus = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
@@ -565,7 +565,7 @@ public class Factory {
 		}
 	}
 
-	public static Piece askForPieceDetails() {
+	public Piece askForPieceDetails() {
 		Piece piece = null;
 		System.out.println("Insert part reference: ");
 		String reference = sc.nextLine();
@@ -577,7 +577,7 @@ public class Factory {
 	}
 
 	// TODO
-	public static int unassignedOrders() {
+	public int unassignedOrders() {
 		boolean mustExit = false;
 		int id = -1;
 		String str = null;
@@ -600,7 +600,7 @@ public class Factory {
 		return id;
 	}
 
-	public static Craftsman assignOrderWithIDOrRandom() {
+	public Craftsman assignOrderWithIDOrRandom() {
 		boolean mustExit = false;
 		Craftsman craftsman = null;
 		int assign = -1;
@@ -647,7 +647,7 @@ public class Factory {
 		return craftsman;
 	}
 
-	private static Craftsman assignRandomCraftsman() {
+	private Craftsman assignRandomCraftsman() {
 		if (craftsmans == null || craftsmans.isEmpty()) {
 			System.out.println("There are no craftsman in the factory.");
 			return null;
@@ -661,7 +661,7 @@ public class Factory {
 		return craftsman;
 	}
 
-	private static Craftsman listAndCatchCraftsman() {
+	private Craftsman listAndCatchCraftsman() {
 		if (craftsmans.isEmpty()) {
 			System.out.println("There are no craftsman in the factory.");
 			return null;
@@ -683,7 +683,7 @@ public class Factory {
 		return null;
 	}
 
-	private static Craftsman assignCraftsman() {
+	private Craftsman assignCraftsman() {
 		Craftsman craftsman = getCraftsman();
 		if (craftsman == null) {
 			System.out.println("This craftsman does not exist or the DNI was not inserted.");
@@ -692,7 +692,7 @@ public class Factory {
 		return craftsman;
 	}
 
-	private static ArrayList<Integer> printerPendingClientOrder(String DNIClient) {
+	private ArrayList<Integer> printerPendingClientOrder(String DNIClient) {
 		boolean anyClientOrder = false;
 		ArrayList<Integer> idsOrder = new ArrayList<Integer>();
 		if (orderList.isEmpty()) {
@@ -715,7 +715,7 @@ public class Factory {
 		return idsOrder;
 	}
 
-	public static void confirmOrder(String DNIClient) {
+	public void confirmOrder(String DNIClient) {
 		int selectIDOrder = -1;
 		ArrayList<Integer> idsOrder = printerPendingClientOrder(DNIClient);
 		if (idsOrder == null) {
@@ -742,7 +742,7 @@ public class Factory {
 		System.out.println("The order you have selected is not in the list of your orders.");
 	}
 
-	private static int confirmOrderClient(String DNIClient, int idOrder) {
+	private int confirmOrderClient(String DNIClient, int idOrder) {
 		int IDOrder = -1;
 		if (orderList.isEmpty()) {
 			System.out.println("There is no registered order.");
@@ -772,7 +772,7 @@ public class Factory {
 		return 0;
 	}
 
-	private static void ShowOrderPrice() {
+	private void ShowOrderPrice() {
 		int idOrder = -1;
 		System.out.println("Insert ID order: ");
 		String id = sc.nextLine();
@@ -793,7 +793,7 @@ public class Factory {
 		System.out.println(order.toString() + "Total price: " + order.getTotalPrice());
 	}
 
-	private static Client getClient() {
+	private Client getClient() {
 		String id;
 		System.out.println("Insert client DNI/PASSPORT: ");
 		id = sc.nextLine();
@@ -806,7 +806,7 @@ public class Factory {
 		return null;
 	}
 
-	public static Order getOrder(int idOrder) {
+	public Order getOrder(int idOrder) {
 		if (orderList.isEmpty()) {
 			System.out.println("There is no order in the factory.");
 			return null;
@@ -821,11 +821,11 @@ public class Factory {
 	}
 
 	// TODO COMMENT
-	public static Set<Integer> getIdFurniture(Order order) {
+	public Set<Integer> getIdFurniture(Order order) {
 		return order.getIdsAndItemsFurniture().keySet();
 	}
 
-	private static Furniture getFurniture(int idFurniture) {
+	private Furniture getFurniture(int idFurniture) {
 		for (Furniture furniture : furnitures) {
 			if (furniture.getId() == idFurniture) {
 				return furniture;
@@ -835,7 +835,7 @@ public class Factory {
 		return null;
 	}
 
-	private static Craftsman getCraftsman() {
+	private Craftsman getCraftsman() {
 		System.out.println("Insert craftsman DNI/PASSPORT: ");
 		String dni = sc.nextLine();
 		if (dni.isEmpty()) {
@@ -851,7 +851,7 @@ public class Factory {
 		return null;
 	}
 
-	private static Salesman getSalesman() {
+	private Salesman getSalesman() {
 		String dni;
 		System.out.println("Insert salesman DNI/PASSPORT: ");
 		dni = sc.nextLine();
@@ -864,7 +864,7 @@ public class Factory {
 		return null;
 	}
 
-	private static int askHowManyItems() {
+	private int askHowManyItems() {
 		int totalFurniture = 0;
 		System.out.println("How many do you want?: ");
 		String str = sc.nextLine();
@@ -877,7 +877,7 @@ public class Factory {
 		return totalFurniture;
 	}
 
-	private static int calculateTotalPrice(HashMap<Integer, Integer> order) {
+	private int calculateTotalPrice(HashMap<Integer, Integer> order) {
 		int priceFurniture;
 		int items;
 		int total = 0;
@@ -894,7 +894,7 @@ public class Factory {
 	}
 
 	// TODO COMMENT
-	private static Pair<String, Integer> modelAndPriceFurniture() {
+	private Pair<String, Integer> modelAndPriceFurniture() {
 		int price = -1;
 		Pair<String, Integer> newFurniture = null;
 		System.out.println("Insert furniture model: ");
@@ -919,7 +919,7 @@ public class Factory {
 	/**
 	 * Create a new chair and adds it to the internal list
 	 */
-	private static int createChairs() {
+	private int createChairs() {
 		int typeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
@@ -950,7 +950,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture foldingChair = new FoldingChair(modelOfChair, price, features);
+				Furniture foldingChair = new FoldingChair(this, modelOfChair, price, features);
 				furnitureID = foldingChair.getId();
 				furnitures.add(foldingChair);
 				mustExit = true;
@@ -968,7 +968,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture kitchenChair = new KitchenChair(modelOfChair, price, features);
+				Furniture kitchenChair = new KitchenChair(this, modelOfChair, price, features);
 				furnitureID = kitchenChair.getId();
 				furnitures.add(kitchenChair);
 				mustExit = true;
@@ -993,7 +993,7 @@ public class Factory {
 	 * Create a new OfficeChair and adds it to the internal list
 	 */
 
-	private static int createOfficeChair() {
+	private int createOfficeChair() {
 		int typeOfficeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
@@ -1024,7 +1024,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture officeChairWithWheels = new OfficeChairWithWheels(model, price, features);
+				Furniture officeChairWithWheels = new OfficeChairWithWheels(this, model, price, features);
 				furnitureID = officeChairWithWheels.getId();
 				furnitures.add(officeChairWithWheels);
 				mustExit = true;
@@ -1042,7 +1042,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture officeChairWithoutWheels = new OfficeChairWithoutWheels(model, price, features);
+				Furniture officeChairWithoutWheels = new OfficeChairWithoutWheels(this, model, price, features);
 				furnitureID = officeChairWithoutWheels.getId();
 				furnitures.add(officeChairWithoutWheels);
 				mustExit = true;
@@ -1058,7 +1058,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	private static int createTables() {
+	private int createTables() {
 		Pair<String, Integer> table = null;
 		String model;
 		String features;
@@ -1090,7 +1090,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture bedroomTable = new BedroomTable(model, price, features);
+				Furniture bedroomTable = new BedroomTable(this, model, price, features);
 				furnitureID = bedroomTable.getId();
 				furnitures.add(bedroomTable);
 				mustExit = true;
@@ -1112,7 +1112,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture diningTable = new DiningTable(model, price, features);
+				Furniture diningTable = new DiningTable(this, model, price, features);
 				furnitureID = diningTable.getId();
 				furnitures.add(diningTable);
 				mustExit = true;
@@ -1128,7 +1128,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	private static int createCoffeeTable() {
+	private int createCoffeeTable() {
 		Pair<String, Integer> table = null;
 		String model;
 		String features;
@@ -1159,7 +1159,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture cristalCoffeeTable = new CristalCoffeeTable(model, price, features);
+				Furniture cristalCoffeeTable = new CristalCoffeeTable(this, model, price, features);
 				furnitureID = cristalCoffeeTable.getId();
 				furnitures.add(cristalCoffeeTable);
 				mustExit = true;
@@ -1177,7 +1177,7 @@ public class Factory {
 					System.out.println("This is not a features.");
 					return -1;
 				}
-				Furniture woodenCoffeeTable = new WoodenCoffeeTable(model, price, features);
+				Furniture woodenCoffeeTable = new WoodenCoffeeTable(this, model, price, features);
 				furnitureID = woodenCoffeeTable.getId();
 				furnitures.add(woodenCoffeeTable);
 				mustExit = true;
@@ -1193,7 +1193,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	public static boolean addBoss() {
+	public boolean addBoss() {
 		String name = "";
 		String DNI = "";
 		System.out.println("Insert boss data: ");
@@ -1222,13 +1222,13 @@ public class Factory {
 			System.out.println("Boss DNI/PASSPORT not inserted.");
 			return false;
 		}
-		boss = new Boss(DNI, name);
+		boss = new Boss(this, DNI, name);
 		addPerson(boss);
 		return true;
 	}
 
 	// HERE MAKE SURE
-	private static void modifyPeopleData() {
+	private void modifyPeopleData() {
 		boolean exist = false;
 		System.out.println("Insert DNI/PASSPORT: ");
 		String DNI = sc.nextLine();
@@ -1248,7 +1248,7 @@ public class Factory {
 		}
 	}
 
-	public static void addSalesman() {
+	public void addSalesman() {
 		System.out.println("Insert name: ");
 		if (!sc.hasNextLine()) {
 			return;
@@ -1280,11 +1280,11 @@ public class Factory {
 				return;
 			}
 		}
-		Salesman salesman = new Salesman(dni, name);
+		Salesman salesman = new Salesman(this, dni, name);
 		addPerson(salesman);
 	}
 
-	public static void addCraftman() {
+	public void addCraftman() {
 		int contract = -1;
 		boolean mustExit = false;
 		System.out.println("Insert name: ");
@@ -1332,12 +1332,12 @@ public class Factory {
 			}
 			switch (contract) {
 			case 1:
-				Craftsman craftsmanStaff = new ContractInStaff(dni, name);
+				Craftsman craftsmanStaff = new ContractInStaff(this, dni, name);
 				addPerson(craftsmanStaff);
 				mustExit = true;
 				break;
 			case 2:
-				Craftsman craftsmanHourlyContract = new HourlyContract(dni, name);
+				Craftsman craftsmanHourlyContract = new HourlyContract(this, dni, name);
 				addPerson(craftsmanHourlyContract);
 				mustExit = true;
 				break;
@@ -1351,7 +1351,7 @@ public class Factory {
 		}
 	}
 
-	private static int createNewFurniture() {
+	private int createNewFurniture() {
 		boolean mustExit = false;
 		int furnitureID = -1;
 		int integer = -1;
@@ -1383,7 +1383,7 @@ public class Factory {
 	}
 
 	// MAKE SURE
-	private static void modifyFurnitureData() {
+	private void modifyFurnitureData() {
 		Furniture furniture = null;
 		boolean modifyPrice = false;
 		int integer = -1;
@@ -1415,7 +1415,7 @@ public class Factory {
 
 	}
 
-	private static Client createClient(String personDNI) {
+	private Client createClient(String personDNI) {
 		int phoneNumber;
 		int integer = -1;
 		boolean mustExit = false;
@@ -1452,13 +1452,13 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				PrivateCustomer privateCustomer = new PrivateCustomer(personDNI, name, phoneNumber);
+				PrivateCustomer privateCustomer = new PrivateCustomer(this, personDNI, name, phoneNumber);
 				client = privateCustomer;
 				addPerson(privateCustomer);
 				mustExit = true;
 				break;
 			case 2:
-				CompanyCustomer companyCustomer = new CompanyCustomer(personDNI, name, phoneNumber);
+				CompanyCustomer companyCustomer = new CompanyCustomer(this, personDNI, name, phoneNumber);
 				client = companyCustomer;
 				addPerson(companyCustomer);
 				mustExit = true;
@@ -1474,7 +1474,7 @@ public class Factory {
 		return client;
 	}
 
-	public static int getPhoneNumber() {
+	public int getPhoneNumber() {
 		int phoneNumber = 0;
 		System.out.println("Insert Phone number (7 digit): ");
 		String str = sc.nextLine();
@@ -1497,7 +1497,7 @@ public class Factory {
 		return phoneNumber;
 	}
 
-	private static void createAnOrder() {
+	private void createAnOrder() {
 		Client client = null;
 		int moreFurniture;
 		int idFurniture;
@@ -1548,7 +1548,7 @@ public class Factory {
 		orderList.add(order);
 	}
 
-	private static int addMoreFurnitureInTheOrder() {
+	private int addMoreFurnitureInTheOrder() {
 		int integer = -1;
 		int moreFurniture = -1;
 		boolean mustExit = false;
@@ -1578,7 +1578,7 @@ public class Factory {
 		return moreFurniture;
 	}
 
-	private static String addOrNotFeatures() {
+	private String addOrNotFeatures() {
 		String features = null;
 		Printer.askFeatures();
 		String str = sc.nextLine();
@@ -1610,7 +1610,7 @@ public class Factory {
 		return features;
 	}
 
-	private static Client askDNIClient() {
+	private Client askDNIClient() {
 		boolean mustExit = false;
 		int integer = -1;
 		Client client = null;
@@ -1642,7 +1642,7 @@ public class Factory {
 		return client;
 	}
 
-	private static Client getDNI() {
+	private Client getDNI() {
 		Client client = null;
 		boolean mustExit = false;
 		while (!mustExit) {
@@ -1665,11 +1665,12 @@ public class Factory {
 	}
 
 	public static void main(String[] args) {
-		Factory.finishedOrders.put(false, new ArrayList<Order>());
-		Factory.finishedOrders.put(true, new ArrayList<Order>());
-		Factory.sc = new Scanner(System.in);
+		Factory factory = new Factory();
+		factory.finishedOrders.put(false, new ArrayList<Order>());
+		factory.finishedOrders.put(true, new ArrayList<Order>());
+		factory.sc = new Scanner(System.in);
 		boolean bossInserted = false;
-		bossInserted = addBoss();
+		bossInserted = factory.addBoss();
 		if (!bossInserted) {
 			return;
 		}
@@ -1677,7 +1678,7 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.mainFunction();
-			String str = Factory.sc.nextLine();
+			String str = factory.sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
 			} catch (NumberFormatException exception) {
@@ -1686,16 +1687,16 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				peopleSwitch();
+				factory.peopleSwitch();
 				break;
 			case 2:
-				furnitureSwitch();
+				factory.furnitureSwitch();
 				break;
 			case 3:
-				orderSwitch();
+				factory.orderSwitch();
 				break;
 			case 4:
-				factorySwitch();
+				factory.factorySwitch();
 				break;
 			case 5:
 				mustExit = true;
@@ -1705,10 +1706,10 @@ public class Factory {
 				continue;
 			}
 		}
-		Factory.sc.close();
+		factory.sc.close();
 	}
 
-	private static void peopleSwitch() {
+	private void peopleSwitch() {
 		boolean mustExit = false;
 		int integer = -1;
 		while (!mustExit) {
@@ -1743,7 +1744,7 @@ public class Factory {
 		}
 	}
 
-	private static void bossSwitch() {
+	private void bossSwitch() {
 		boolean mustExit = false;
 		int integer = -1;
 		while (!mustExit) {
@@ -1773,7 +1774,7 @@ public class Factory {
 		}
 	}
 
-	private static void salesmanSwitch() {
+	private void salesmanSwitch() {
 		boolean mustExit = false;
 		int integer = -1;
 		while (!mustExit) {
@@ -1811,7 +1812,7 @@ public class Factory {
 		}
 	}
 
-	private static void craftmanSwitch() {
+	private void craftmanSwitch() {
 		boolean mustExit = false;
 		Craftsman craftsman = null;
 		int integer = -1;
@@ -1857,7 +1858,7 @@ public class Factory {
 		}
 	}
 
-	private static void clientSwitch() {
+	private void clientSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.clientFunction();
@@ -1891,7 +1892,7 @@ public class Factory {
 		}
 	}
 
-	private static void furnitureSwitch() {
+	private void furnitureSwitch() {
 		boolean mustExit = false;
 		int furnitureType = -1;
 		while (!mustExit) {
@@ -1917,7 +1918,7 @@ public class Factory {
 		}
 	}
 
-	private static void orderSwitch() {
+	private void orderSwitch() {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.orderFunction();
@@ -1943,7 +1944,7 @@ public class Factory {
 		}
 	}
 
-	private static void factorySwitch() {
+	private void factorySwitch() {
 		boolean mustExit = false;
 		int integer = -1;
 		while (!mustExit) {
