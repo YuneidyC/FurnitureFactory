@@ -200,4 +200,45 @@ public class PeopleTest {
 		assertEquals(null, factory.getClient(""));
 	}
 
+	@Test
+	public void modifyPeopleData() {
+		String input = "487669C\nManolo\n7894563\n1";
+		input += "\n487669C\n\nJulian\n";
+		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
+		factory.createOrGetClient();
+		assertEquals(1, factory.getClients().size());
+		factory.modifyPeopleData();
+		assertEquals("Julian", factory.getClient("487669C").getName());
+	}
+
+	@Test
+	public void modifyPeopleDataNoDataInsert() {
+		String input = "487669C\nManolo\n7894563\n1";
+		input += "\n487669C\n\n\n";
+		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
+		factory.createOrGetClient();
+		assertEquals(1, factory.getClients().size());
+		factory.modifyPeopleData();
+		assertEquals("Manolo", factory.getClient("487669C").getName());
+		assertEquals(7894563, factory.getClient("487669C").getTelephone());
+	}
+
+	@Test
+	public void createAnOrder() {
+		String input = "789435M\nJulian\n6895731\n1";
+		input += "\n1\n1\nSG7985\n500\n2\n3\n3\n2";
+		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
+		factory.createAnOrder();
+		assertEquals(1, factory.getFurnitures().size());
+	}
+
+	@Test
+	public void createAnOrderWithMultipleFurniture() {
+		String input = "569873C\nRubby\n6598317\n1";
+		input += "\n1\n1\nSG78943\n500\n1\nBlack\n3\n1";
+		input += "\n2\n2\n1\nCC78964\n2000\n2\n2\2";
+		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
+		factory.createAnOrder();
+		assertEquals(2, factory.getFurnitures().size());
+	}
 }
