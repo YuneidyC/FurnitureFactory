@@ -793,12 +793,26 @@ public class Factory {
 		System.out.println(order.toString() + "Total price: " + order.getTotalPrice());
 	}
 
-	private Client getClient() {
-		String id;
-		System.out.println("Insert client DNI/PASSPORT: ");
-		id = sc.nextLine();
+	public Client getClient(String DNI) {
 		for (Client client : clients) {
-			if (client.getDNI().equals(id)) {
+			if (client.getDNI().equals(DNI)) {
+				return client;
+			}
+		}
+		System.out.println("This client does not exist.");
+		return null;
+	}
+
+	private Client getClient() {
+		String DNI;
+		System.out.println("Insert client DNI/PASSPORT: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
+		DNI = sc.nextLine();
+		for (Client client : clients) {
+			if (client.getDNI().equals(DNI)) {
 				return client;
 			}
 		}
@@ -1199,6 +1213,7 @@ public class Factory {
 		System.out.println("Insert boss data: ");
 		System.out.println("Name: ");
 		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return false;
 		}
 		name = sc.nextLine();
@@ -1415,16 +1430,21 @@ public class Factory {
 
 	}
 
-	private Client createClient(String personDNI) {
-		int phoneNumber;
-		int integer = -1;
-		boolean mustExit = false;
-		if (personDNI.isEmpty()) {
-			System.out.println("You did not insert the ID.");
+	private boolean existClient(String DNI) {
+		for (Client client : clients) {
+			if (client.getDNI().equals(DNI)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private String getName() {
+		System.out.println("Insert Name: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return null;
 		}
-		Client client = null;
-		System.out.println("Insert Name: ");
 		String name = sc.nextLine();
 		if (name.isEmpty()) {
 			System.out.println("Client name not inserted.");
@@ -1437,9 +1457,33 @@ public class Factory {
 				return null;
 			}
 		}
-		phoneNumber = getPhoneNumber();
-		if (phoneNumber == -1) {
+		return name;
+	}
+
+	public Client createOrGetClient() {
+		int phoneNumber = -1;
+		int integer = -1;
+		boolean existClient = false;
+		boolean mustExit = false;
+		Client client = null;
+		String name = null;
+		String DNI = getDNI();
+		if (DNI == null) {
+			return null;
+		}
+		existClient = existClient(DNI);
+		if (!existClient) {
+			name = getName();
+			if (name == null) {
+				return null;
+			}
 			phoneNumber = getPhoneNumber();
+			if (phoneNumber == -1) {
+				phoneNumber = getPhoneNumber();
+			}
+		} else {
+			client = getClient(DNI);
+			return client;
 		}
 		while (!mustExit) {
 			Printer.clientTypes();
@@ -1452,13 +1496,13 @@ public class Factory {
 			}
 			switch (integer) {
 			case 1:
-				PrivateCustomer privateCustomer = new PrivateCustomer(this, personDNI, name, phoneNumber);
+				PrivateCustomer privateCustomer = new PrivateCustomer(this, DNI, name, phoneNumber);
 				client = privateCustomer;
 				addPerson(privateCustomer);
 				mustExit = true;
 				break;
 			case 2:
-				CompanyCustomer companyCustomer = new CompanyCustomer(this, personDNI, name, phoneNumber);
+				CompanyCustomer companyCustomer = new CompanyCustomer(this, DNI, name, phoneNumber);
 				client = companyCustomer;
 				addPerson(companyCustomer);
 				mustExit = true;
@@ -1477,6 +1521,10 @@ public class Factory {
 	public int getPhoneNumber() {
 		int phoneNumber = 0;
 		System.out.println("Insert Phone number (7 digit): ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return -1;
+		}
 		String str = sc.nextLine();
 		try {
 			phoneNumber = Integer.parseInt(str);
@@ -1504,7 +1552,7 @@ public class Factory {
 		int items;
 		int totalPrice;
 		boolean mustExit = false;
-		client = askDNIClient();
+		client = createOrGetClient();
 		if (client == null) {
 			return;
 		}
@@ -1610,58 +1658,18 @@ public class Factory {
 		return features;
 	}
 
-	private Client askDNIClient() {
-		boolean mustExit = false;
-		int integer = -1;
-		Client client = null;
-		while (!mustExit) {
-			Printer.DNIMenu();
-			String str = sc.nextLine();
-			try {
-				integer = Integer.parseInt(str);
-			} catch (NumberFormatException exception) {
-				Printer.thisIsNotANumber();
-				return client;
-			}
-			switch (integer) {
-			case 1:
-				client = getDNI();
-				if (client == null) {
-					return null;
-				}
-				mustExit = true;
-				break;
-			case 2:
-				mustExit = true;
-				break;
-			default:
-				Printer.isNotValidOption();
-				continue;
-			}
+	private String getDNI() {
+		System.out.println("Insert DNI/CIF: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
 		}
-		return client;
-	}
-
-	private Client getDNI() {
-		Client client = null;
-		boolean mustExit = false;
-		while (!mustExit) {
-			System.out.println("Insert DNI/CIF: ");
-			String str = sc.nextLine();
-			if (str != null && !str.isEmpty()) {
-				client = createClient(str);
-				if (client == null) {
-					break;
-				}
-				mustExit = true;
-				break;
-			} else {
-				System.out.println("The dni has not been inserted.");
-				mustExit = false;
-				break;
-			}
+		String DNI = sc.nextLine();
+		if (DNI.isEmpty() || DNI == null) {
+			System.out.println("The DNI has not been inserted.");
+			return null;
 		}
-		return client;
+		return DNI;
 	}
 
 	public static void main(String[] args) {
