@@ -54,35 +54,35 @@ public class PeopleTest {
 	public void addSalesmanWithString() {
 		factory.sc = new Scanner(new ByteArrayInputStream("Lola\n457885M".getBytes()));
 		factory.addSalesman();
-		assertEquals(1, factory.getSalesmans().size());
+		assertEquals(1, factory.getPeople().size());
 	}
 
 	@Test
 	public void addSalesmanWithEmptyString() {
 		factory.sc = new Scanner(new ByteArrayInputStream("".getBytes()));
 		factory.addSalesman();
-		assertEquals(0, factory.getSalesmans().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
 	public void addSalesmanWithEmptyDNI() {
 		factory.sc = new Scanner(new ByteArrayInputStream("Lola\n".getBytes()));
 		factory.addSalesman();
-		assertEquals(0, factory.getSalesmans().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
 	public void addSalesmanWithEmptyName() {
 		factory.sc = new Scanner(new ByteArrayInputStream("\n876497C".getBytes()));
 		factory.addSalesman();
-		assertEquals(0, factory.getSalesmans().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
 	public void addSalesmanWithNameNumber() {
 		factory.sc = new Scanner(new ByteArrayInputStream("Mano1o\n487669C".getBytes()));
 		factory.addSalesman();
-		assertEquals(0, factory.getSalesmans().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
@@ -142,7 +142,7 @@ public class PeopleTest {
 		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
 		factory.createOrGetClient();
 		factory.createOrGetClient();
-		assertEquals(2, factory.getClients().size());
+		assertEquals(2, factory.getPeople().size());
 	}
 
 	@Test
@@ -151,7 +151,7 @@ public class PeopleTest {
 		factory.sc = new Scanner(new ByteArrayInputStream("487669C\nManolo\n5987764\n1".getBytes()));
 		factory.createOrGetClient();
 		factory.createOrGetClient();
-		assertEquals(1, factory.getClients().size());
+		assertEquals(1, factory.getPeople().size());
 	}
 
 	@Test
@@ -160,35 +160,35 @@ public class PeopleTest {
 		factory.sc = new Scanner(new ByteArrayInputStream("487669C\nManolo\n7894563\n1".getBytes()));
 		factory.createOrGetClient();
 		factory.createOrGetClient();
-		assertEquals(1, factory.getClients().size());
+		assertEquals(1, factory.getPeople().size());
 	}
 
 	@Test
 	public void addClientWithEmptyDNI() {
 		factory.sc = new Scanner(new ByteArrayInputStream("\nManolo\n5987764\n1".getBytes()));
 		factory.createOrGetClient();
-		assertEquals(0, factory.getClients().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
 	public void addClientWithEmptyName() {
 		factory.sc = new Scanner(new ByteArrayInputStream("\n797986C\n5987764\n1".getBytes()));
 		factory.createOrGetClient();
-		assertEquals(0, factory.getClients().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
 	public void addClientWithEmptyTelephone() {
 		factory.sc = new Scanner(new ByteArrayInputStream("\n7894658C\nManolo\n1".getBytes()));
 		factory.createOrGetClient();
-		assertEquals(0, factory.getClients().size());
+		assertEquals(0, factory.getPeople().size());
 	}
 
 	@Test
 	public void getClientNameWithDNI() {
 		factory.sc = new Scanner(new ByteArrayInputStream("487669C\nManolo\n7894563\n1".getBytes()));
 		factory.createOrGetClient();
-		assertEquals(1, factory.getClients().size());
+		assertEquals(1, factory.getPeople().size());
 		assertEquals("Manolo", factory.getClient("487669C").getName());
 	}
 
@@ -196,7 +196,7 @@ public class PeopleTest {
 	public void getClientWithEmptyDNI() {
 		factory.sc = new Scanner(new ByteArrayInputStream("487669C\nManolo\n7894563\n1".getBytes()));
 		factory.createOrGetClient();
-		assertEquals(1, factory.getClients().size());
+		assertEquals(1, factory.getPeople().size());
 		assertEquals(null, factory.getClient(""));
 	}
 
@@ -206,7 +206,7 @@ public class PeopleTest {
 		input += "\n487669C\n\nJulian\n";
 		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
 		factory.createOrGetClient();
-		assertEquals(1, factory.getClients().size());
+		assertEquals(1, factory.getPeople().size());
 		factory.modifyPeopleData();
 		assertEquals("Julian", factory.getClient("487669C").getName());
 	}
@@ -217,7 +217,7 @@ public class PeopleTest {
 		input += "\n487669C\n\n\n";
 		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
 		factory.createOrGetClient();
-		assertEquals(1, factory.getClients().size());
+		assertEquals(1, factory.getPeople().size());
 		factory.modifyPeopleData();
 		assertEquals("Manolo", factory.getClient("487669C").getName());
 		assertEquals(7894563, factory.getClient("487669C").getTelephone());

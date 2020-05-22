@@ -70,8 +70,9 @@ public abstract class Person {
 		return idOrder;
 	}
 
+	// ARREGLAR ESTE TOSTRING QUE AL FINAL NO ME SALGA UN \N CUANDO LLEGUE AL ULTIMO
 	public String toString() {
-		return "DNI/PASSPORT: " + DNI + " Name: " + name;
+		return "DNI/PASSPORT: " + DNI + " Name: " + name + "\n";
 	}
 
 }

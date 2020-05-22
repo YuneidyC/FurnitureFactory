@@ -34,33 +34,17 @@ public class Factory {
 	public Scanner sc;
 	public Boss boss = null;
 	private List<Person> people = new LinkedList<Person>();
-	private List<Craftsman> craftsmans = new LinkedList<Craftsman>();
-	private List<Salesman> salesmans = new LinkedList<Salesman>();
-	private List<PrivateCustomer> privateCustomer = new LinkedList<PrivateCustomer>();
-	private List<CompanyCustomer> companyCustomer = new LinkedList<CompanyCustomer>();
+	private List<String> ListDNICraftsman = new LinkedList<String>();
 	private List<Furniture> furnitures = new LinkedList<Furniture>();
 	private List<Order> orderList = new LinkedList<Order>();
-	private List<Client> clients = new LinkedList<Client>();
 	private Map<Boolean, ArrayList<Order>> finishedOrders = new HashMap<Boolean, ArrayList<Order>>();
 
 	public List<Person> getPeople() {
 		return people;
 	}
 
-	public List<Craftsman> getCraftsmans() {
-		return craftsmans;
-	}
-
-	public List<Salesman> getSalesmans() {
-		return salesmans;
-	}
-
-	public List<PrivateCustomer> getPrivateCustomer() {
-		return privateCustomer;
-	}
-
-	public List<CompanyCustomer> getCompanyCustomer() {
-		return companyCustomer;
+	public List<String> getCraftsmans() {
+		return ListDNICraftsman;
 	}
 
 	public List<Furniture> getFurnitures() {
@@ -71,30 +55,14 @@ public class Factory {
 		return orderList;
 	}
 
-	public List<Client> getClients() {
-		return clients;
-	}
-
 	public Map<Boolean, ArrayList<Order>> getFinishedOrders() {
 		return finishedOrders;
 	}
 
-	// TODO QUITAR LAS LISTAS CAMBIAR EL CAMBIAR AÑADIR O QUITAR EN LOS SITOS
 	public void addPerson(Person person) {
 		if (person instanceof Craftsman) {
 			people.add(person);
-			craftsmans.add((Craftsman) person);
-		} else if (person instanceof Salesman) {
-			people.add(person);
-			salesmans.add((Salesman) person);
-		} else if (person instanceof PrivateCustomer) {
-			people.add(person);
-			clients.add((Client) person);
-			privateCustomer.add((PrivateCustomer) person);
-		} else if (person instanceof CompanyCustomer) {
-			people.add(person);
-			clients.add((Client) person);
-			companyCustomer.add((CompanyCustomer) person);
+			ListDNICraftsman.add(person.getDNI());
 		} else {
 			people.add(person);
 		}
@@ -141,36 +109,41 @@ public class Factory {
 	}
 
 	private void processedByEachCraftsman() {
-		if (craftsmans.isEmpty()) {
+		if (people.isEmpty()) {
 			System.out.println("Not there is craftsman in the factory.");
 			return;
 		}
-		for (Craftsman craftsman : craftsmans) {
-			List<Integer> assignedOrders = craftsman.getAssignedOrders();
-			int sizeAssignedOrders = assignedOrders.size();
-			if (craftsman.getAssignedOrders().isEmpty()) {
-				System.out.println("This craftsman does not have any furniture in process.");
-				continue;
-			}
-			String str = "File";
-			if (sizeAssignedOrders <= 1) {
-				str += "s";
-			}
-			str += " processed by this craftsman: ";
-			System.out.println(str);
-			for (Integer idOrder : craftsman.getAssignedOrders()) {
-				Order order = getOrder(idOrder);
-				if (order == null) {
-					continue;
-				}
-				for (Integer idFurniture : order.getIdsAndItemsFurniture().keySet()) {
-					Furniture furniture = getFurniture(idFurniture);
-					if (furniture == null) {
+		for (String craftsmanDNI : ListDNICraftsman) {
+			for (Person person : people) {
+				if (person.getDNI().equals(craftsmanDNI)) {
+					Craftsman craftsman = (Craftsman) person;
+					List<Integer> assignedOrders = craftsman.getAssignedOrders();
+					int sizeAssignedOrders = assignedOrders.size();
+					if (craftsman.getAssignedOrders().isEmpty()) {
+						System.out.println("This craftsman does not have any furniture in process.");
 						continue;
 					}
-					int lastStatus = furniture.getStatusHistory().size() - 1;
-					if ((furniture.getStatusHistory().get(lastStatus).equals("In process."))) {
-						System.out.println(order.getId() + " " + furniture.getId());
+					String str = "File";
+					if (sizeAssignedOrders <= 1) {
+						str += "s";
+					}
+					str += " processed by this craftsman: ";
+					System.out.println(str);
+					for (Integer idOrder : craftsman.getAssignedOrders()) {
+						Order order = getOrder(idOrder);
+						if (order == null) {
+							continue;
+						}
+						for (Integer idFurniture : order.getIdsAndItemsFurniture().keySet()) {
+							Furniture furniture = getFurniture(idFurniture);
+							if (furniture == null) {
+								continue;
+							}
+							int lastStatus = furniture.getStatusHistory().size() - 1;
+							if ((furniture.getStatusHistory().get(lastStatus).equals("In process."))) {
+								System.out.println(order.getId() + " " + furniture.getId());
+							}
+						}
 					}
 				}
 			}
@@ -223,11 +196,11 @@ public class Factory {
 	}
 
 	private void requestClientToConfirm() {
-		for (Client client : clients) {
-			if (client instanceof CompanyCustomer) {
-				requestCompanyCustomerToConfirm(client);
-			} else if (client instanceof PrivateCustomer) {
-				requestPrivateCustomerToConfirm(client);
+		for (Person person : people) {
+			if (person instanceof CompanyCustomer) {
+				requestCompanyCustomerToConfirm((Client) person);
+			} else if (person instanceof PrivateCustomer) {
+				requestPrivateCustomerToConfirm((Client) person);
 			}
 		}
 	}
@@ -238,11 +211,16 @@ public class Factory {
 		 * We could stop iterating when we find the one that interests us, but in this
 		 * way we would allow an artisan to have several orders in process.
 		 */
-		if (craftsmans.isEmpty()) {
+		if (ListDNICraftsman.isEmpty()) {
 			System.out.println("There are not craftsman in the factory.");
 			return;
 		}
-		for (Craftsman craftsman : craftsmans) {
+		for (String craftsmanDNI : ListDNICraftsman) {
+			Craftsman craftsman = getCraftsman(craftsmanDNI);
+			if (craftsman == null) {
+				System.out.println("This craftsman does not exist.");
+				return;
+			}
 			for (Integer idOrder : craftsman.getAssignedOrders()) {
 				Order order = getOrder(idOrder);
 				if (order != null) {
@@ -262,6 +240,17 @@ public class Factory {
 				continue;
 			}
 		}
+	}
+
+	public Craftsman getCraftsman(String DNI) {
+		Craftsman craftsman = null;
+		for (Person person : people) {
+			if (person.getDNI().equals(DNI)) {
+				craftsman = (Craftsman) person;
+				return craftsman;
+			}
+		}
+		return craftsman;
 	}
 
 	private void switchCraftsmanHistory() {
@@ -294,27 +283,38 @@ public class Factory {
 	}
 
 	private void showAndGetCraftsman() {
-		if (craftsmans.isEmpty()) {
+		Craftsman craftsman = null;
+		if (ListDNICraftsman.isEmpty()) {
 			System.out.println("There are no craftsmans in the factory.");
 			return;
 		}
-		for (Craftsman craftsman : craftsmans) {
+		for (String craftsmanDNI : ListDNICraftsman) {
+			craftsman = getCraftsman(craftsmanDNI);
+			if (craftsman == null) {
+				return;
+			}
 			System.out.println(craftsman.toString());
-		}
-		Craftsman craftsman = getCraftsman();
-		if (craftsman == null) {
-			return;
 		}
 		craftsman.craftsmanHistory();
 	}
 
 	private void allCraftsmanHistory() {
-		if (craftsmans.isEmpty()) {
-			System.out.println("There are no craftsmans in the factory.");
+		boolean exist = false;
+		Craftsman craftsman = null;
+		if (people.isEmpty()) {
+			System.out.println("There are no people in the factory.");
 			return;
 		}
-		for (Craftsman craftsman : craftsmans) {
+		for (String craftsmanDNI : ListDNICraftsman) {
+			craftsman = getCraftsman(craftsmanDNI);
+			if (craftsman == null) {
+				System.out.println("This craftsman does not exist.");
+				continue;
+			}
 			craftsman.craftsmanHistory();
+		}
+		if (exist == false) {
+			System.out.println("There are no craftsman in the factory.");
 		}
 	}
 
@@ -648,35 +648,41 @@ public class Factory {
 	}
 
 	private Craftsman assignRandomCraftsman() {
-		if (craftsmans == null || craftsmans.isEmpty()) {
-			System.out.println("There are no craftsman in the factory.");
+		if (ListDNICraftsman == null || ListDNICraftsman.isEmpty()) {
+			System.out.println("There are no people in the factory.");
 			return null;
 		}
 
 		// We don't want to always assign orders to the same artisan.
-		int sizeCraftsmanList = craftsmans.size();
+		int sizeCraftsmanList = people.size();
 		Random randomNumbers = new Random();
 		int randomIndex = randomNumbers.nextInt(sizeCraftsmanList);
-		Craftsman craftsman = craftsmans.get(randomIndex);
+		String craftsmanDNI = ListDNICraftsman.get(randomIndex);
+		Craftsman craftsman = getCraftsman(craftsmanDNI);
+		if (craftsman == null) {
+			return null;
+		}
 		return craftsman;
 	}
 
 	private Craftsman listAndCatchCraftsman() {
-		if (craftsmans.isEmpty()) {
+		String DNI = null;
+		if (ListDNICraftsman.isEmpty()) {
 			System.out.println("There are no craftsman in the factory.");
 			return null;
 		}
-		for (Craftsman craftsman : craftsmans) {
-			System.out.println("List of craftsman: ");
-			System.out.println(craftsman.toString());
+		System.out.println("List of craftsman: ");
+		for (String craftsmanDNI : ListDNICraftsman) {
+			DNI += craftsmanDNI + "\n";
 		}
+		System.out.println(DNI.substring(0, DNI.length() - 1));
 		System.out.println("Insert craftsman DNI: ");
-		String dni = sc.nextLine();
-		if (dni.isEmpty()) {
+		DNI = sc.nextLine();
+		if (DNI.isEmpty()) {
 			System.out.println("The DNI craftsman has not been inserted.");
 			return null;
 		}
-		Craftsman craftsman = getCraftsman();
+		Craftsman craftsman = getCraftsman(DNI);
 		if (craftsman != null) {
 			return craftsman;
 		}
@@ -794,9 +800,9 @@ public class Factory {
 	}
 
 	public Client getClient(String DNI) {
-		for (Client client : clients) {
-			if (client.getDNI().equals(DNI)) {
-				return client;
+		for (Person person : people) {
+			if ((person instanceof Client) && person.getDNI().equals(DNI)) {
+				return (Client) person;
 			}
 		}
 		System.out.println("This client does not exist.");
@@ -811,9 +817,9 @@ public class Factory {
 			return null;
 		}
 		DNI = sc.nextLine();
-		for (Client client : clients) {
-			if (client.getDNI().equals(DNI)) {
-				return client;
+		for (Person person : people) {
+			if ((person instanceof Client) && person.getDNI().equals(DNI)) {
+				return (Client) person;
 			}
 		}
 		System.out.println("This client does not exist.");
@@ -850,6 +856,7 @@ public class Factory {
 	}
 
 	private Craftsman getCraftsman() {
+		Craftsman craftsman = null;
 		System.out.println("Insert craftsman DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
 			System.out.println("Nothing has been inserted.");
@@ -860,26 +867,27 @@ public class Factory {
 			System.out.println("The DNI craftsman has not been inserted.");
 			return null;
 		}
-		for (Craftsman craftman : craftsmans) {
-			if (craftman.getDNI().equals(dni)) {
-				return craftman;
-			}
+		if (!ListDNICraftsman.contains(dni)) {
+			System.out.println("This craftsman does not exist.");
+			return null;
 		}
-		System.out.println("This craftsman does not exist.");
-		return null;
+		for (String craftsmanDNI : ListDNICraftsman) {
+			craftsman = getCraftsman(craftsmanDNI);
+		}
+		return craftsman;
 	}
 
 	private Salesman getSalesman() {
-		String dni;
+		String DNI;
 		System.out.println("Insert salesman DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
 			System.out.println("Nothing has been inserted.");
 			return null;
 		}
-		dni = sc.nextLine();
-		for (Salesman salesman : salesmans) {
-			if (salesman.getDNI().equals(dni)) {
-				return salesman;
+		DNI = sc.nextLine();
+		for (Person person : people) {
+			if ((person instanceof Salesman) && person.getDNI().equals(DNI)) {
+				return (Salesman) person;
 			}
 		}
 		System.out.println("This salesman does not exist.");
@@ -1480,8 +1488,8 @@ public class Factory {
 	}
 
 	private boolean existClient(String DNI) {
-		for (Client client : clients) {
-			if (client.getDNI().equals(DNI)) {
+		for (Person person : people) {
+			if (person instanceof Client && person.getDNI().equals(DNI)) {
 				return true;
 			}
 		}
@@ -1589,10 +1597,12 @@ public class Factory {
 			System.out.println("This phone number does not have.");
 			return -1;
 		}
-		for (Client client : clients) {
-			if (client.getTelephone() == phoneNumber) {
-				System.out.println("This number already exists.");
-				return -1;
+		for (Person person : people) {
+			if (person instanceof Client) {
+				if (((Client) person).getTelephone() == phoneNumber) {
+					System.out.println("This number already exists.");
+					return -1;
+				}
 			}
 		}
 		return phoneNumber;
