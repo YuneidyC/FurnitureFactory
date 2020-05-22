@@ -28,12 +28,15 @@ public class Client extends Person {
 
 	public void modifyData() {
 		super.modifyData();
-		int phoneNumber = getFactory().getPhoneNumber();
-		if (phoneNumber == -1) {
-			System.out.println("The phone could not be modified.");
+		System.out.println("Insert new telephone:");
+		if (!getFactory().sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return;
 		}
-		telephone = phoneNumber;
+		int phone = getFactory().sc.nextInt();
+		if (phone != -1) {
+			this.telephone = phone;
+		}
 	}
 
 	// TODO EL LA LISTA DE IDSORDERS LA TIENE CADA TIPO

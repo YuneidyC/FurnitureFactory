@@ -8,10 +8,6 @@ public class BedroomTable extends Table {
 		super(factory, model, price, features);
 	}
 
-	public boolean modifyData() {
-		return super.modifyData();
-	}
-
 	public String toString() {
 		return super.toString();
 	}

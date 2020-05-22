@@ -42,6 +42,10 @@ public abstract class Person {
 			}
 		}
 		System.out.println("Insert new NAME");
+		if (!factory.sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return;
+		}
 		str = factory.sc.nextLine();
 		if (!str.isEmpty()) {
 			name = str;

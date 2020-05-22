@@ -8,10 +8,6 @@ public class OfficeChair extends Chair {
 		super(factory, name, price, features);
 	}
 
-	public boolean modifyData() {
-		return super.modifyData();
-	}
-
 	public String toString() {
 		return super.toString();
 	}

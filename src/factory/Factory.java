@@ -851,6 +851,10 @@ public class Factory {
 
 	private Craftsman getCraftsman() {
 		System.out.println("Insert craftsman DNI/PASSPORT: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		String dni = sc.nextLine();
 		if (dni.isEmpty()) {
 			System.out.println("The DNI craftsman has not been inserted.");
@@ -868,6 +872,10 @@ public class Factory {
 	private Salesman getSalesman() {
 		String dni;
 		System.out.println("Insert salesman DNI/PASSPORT: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		dni = sc.nextLine();
 		for (Salesman salesman : salesmans) {
 			if (salesman.getDNI().equals(dni)) {
@@ -878,9 +886,13 @@ public class Factory {
 		return null;
 	}
 
-	private int askHowManyItems() {
+	public int askHowManyItems() {
 		int totalFurniture = 0;
 		System.out.println("How many do you want?: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return -1;
+		}
 		String str = sc.nextLine();
 		try {
 			totalFurniture = Integer.parseInt(str);
@@ -912,18 +924,26 @@ public class Factory {
 		int price = -1;
 		Pair<String, Integer> newFurniture = null;
 		System.out.println("Insert furniture model: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		String furnitureModel = sc.nextLine();
 		System.out.println("Insert price: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		String str = sc.nextLine();
 		try {
 			price = Integer.parseInt(str);
 		} catch (NumberFormatException exception) {
 			Printer.thisIsNotANumber();
-			return newFurniture;
+			return null;
 		}
 		if (price == 0) {
 			System.out.println("This price is not valid for a piece of furniture.");
-			return newFurniture;
+			return null;
 		}
 		Pair<String, Integer> ans = new Pair<String, Integer>(furnitureModel, price);
 		newFurniture = ans;
@@ -933,7 +953,7 @@ public class Factory {
 	/**
 	 * Create a new chair and adds it to the internal list
 	 */
-	private int createChairs() {
+	public int createChairs() {
 		int typeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
@@ -943,6 +963,10 @@ public class Factory {
 		int price;
 		while (!mustExit) {
 			Printer.chairsTypes();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return -1;
+			}
 			String str = sc.nextLine();
 			try {
 				typeChair = Integer.parseInt(str);
@@ -1007,7 +1031,7 @@ public class Factory {
 	 * Create a new OfficeChair and adds it to the internal list
 	 */
 
-	private int createOfficeChair() {
+	public int createOfficeChair() {
 		int typeOfficeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
@@ -1017,6 +1041,10 @@ public class Factory {
 		int price;
 		while (!mustExit) {
 			Printer.officeChairTypes();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return -1;
+			}
 			String str = sc.nextLine();
 			try {
 				typeOfficeChair = Integer.parseInt(str);
@@ -1072,7 +1100,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	private int createTables() {
+	public int createTables() {
 		Pair<String, Integer> table = null;
 		String model;
 		String features;
@@ -1082,6 +1110,10 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.tableTypes();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return -1;
+			}
 			String str = sc.nextLine();
 			try {
 				typeTable = Integer.parseInt(str);
@@ -1142,7 +1174,7 @@ public class Factory {
 		return furnitureID;
 	}
 
-	private int createCoffeeTable() {
+	public int createCoffeeTable() {
 		Pair<String, Integer> table = null;
 		String model;
 		String features;
@@ -1152,6 +1184,10 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.coffeeTableTypes();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return -1;
+			}
 			String str = sc.nextLine();
 			try {
 				coffeeTable = Integer.parseInt(str);
@@ -1243,9 +1279,13 @@ public class Factory {
 	}
 
 	// HERE MAKE SURE
-	private void modifyPeopleData() {
+	public void modifyPeopleData() {
 		boolean exist = false;
 		System.out.println("Insert DNI/PASSPORT: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return;
+		}
 		String DNI = sc.nextLine();
 		if (DNI.isEmpty()) {
 			System.out.println("The DNI has not been inserted.");
@@ -1304,6 +1344,7 @@ public class Factory {
 		boolean mustExit = false;
 		System.out.println("Insert name: ");
 		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return;
 		}
 		String name = sc.nextLine();
@@ -1320,6 +1361,7 @@ public class Factory {
 		}
 		System.out.println("Insert DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return;
 		}
 		String dni = sc.nextLine();
@@ -1336,6 +1378,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.menuContractCraftsman();
 			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
 				return;
 			}
 			String str = sc.nextLine();
@@ -1366,12 +1409,16 @@ public class Factory {
 		}
 	}
 
-	private int createNewFurniture() {
+	public int createNewFurniture() {
 		boolean mustExit = false;
 		int furnitureID = -1;
 		int integer = -1;
 		while (!mustExit) {
 			Printer.furnitureTypes();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return -1;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1382,9 +1429,11 @@ public class Factory {
 			switch (integer) {
 			case 1:
 				furnitureID = createChairs();
+				mustExit = true;
 				break;
 			case 2:
 				furnitureID = createTables();
+				mustExit = true;
 				break;
 			case 3:
 				mustExit = true;
@@ -1487,6 +1536,10 @@ public class Factory {
 		}
 		while (!mustExit) {
 			Printer.clientTypes();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return null;
+			}
 			String type = sc.nextLine();
 			try {
 				integer = Integer.parseInt(type);
@@ -1545,7 +1598,7 @@ public class Factory {
 		return phoneNumber;
 	}
 
-	private void createAnOrder() {
+	public void createAnOrder() {
 		Client client = null;
 		int moreFurniture;
 		int idFurniture;
@@ -1596,12 +1649,16 @@ public class Factory {
 		orderList.add(order);
 	}
 
-	private int addMoreFurnitureInTheOrder() {
+	public int addMoreFurnitureInTheOrder() {
 		int integer = -1;
 		int moreFurniture = -1;
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.askMoreFurnitureInTheOrder();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return -1;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1629,6 +1686,10 @@ public class Factory {
 	private String addOrNotFeatures() {
 		String features = null;
 		Printer.askFeatures();
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		String str = sc.nextLine();
 		boolean exit = false;
 		int answer = -1;

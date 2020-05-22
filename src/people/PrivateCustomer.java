@@ -8,9 +8,9 @@ public class PrivateCustomer extends Client {
 		super(factory, DNI, name, telephone);
 	}
 
-	public void modifyData() {
-		super.modifyData();
-	}
+//	public void modifyData() {
+//		super.modifyData();
+//	}
 
 	public String toString() {
 		return super.toString();
