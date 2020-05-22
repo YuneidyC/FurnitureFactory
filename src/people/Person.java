@@ -5,12 +5,12 @@ import factory.Printer;
 
 public abstract class Person {
 	private Factory factory;
-	private String dni;
+	private String DNI;
 	private String name;
 
 	public Person(Factory factory, String dni, String name) {
 		this.factory = factory;
-		this.dni = dni;
+		this.DNI = dni;
 		this.name = name;
 	}
 
@@ -19,7 +19,7 @@ public abstract class Person {
 	}
 
 	public String getDNI() {
-		return dni;
+		return DNI;
 	}
 
 	public String getName() {
@@ -28,11 +28,15 @@ public abstract class Person {
 
 //	If an attribute to be modify is empty, it'll be left unchanged 
 	public void modifyData() {
-		String dniPerson = this.dni;
+		String dniPerson = this.DNI;
 		System.out.println("Insert new DNI:");
+		if (!factory.sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return;
+		}
 		String str = factory.sc.nextLine();
 		if (!str.isEmpty()) {
-			dni = str;
+			DNI = str;
 			if ((this instanceof Client)) {
 				factory.onClientDNIUpdate(dniPerson, str);
 			}
@@ -48,6 +52,10 @@ public abstract class Person {
 	public int chooseIdOrder() {
 		int idOrder = -1;
 		System.out.println("Choose the order ID: ");
+		if (!factory.sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return -1;
+		}
 		String IDorder = factory.sc.nextLine();
 		try {
 			idOrder = Integer.parseInt(IDorder);
@@ -59,7 +67,7 @@ public abstract class Person {
 	}
 
 	public String toString() {
-		return "DNI/PASSPORT: " + dni + " Name: " + name;
+		return "DNI/PASSPORT: " + DNI + " Name: " + name;
 	}
 
 }
