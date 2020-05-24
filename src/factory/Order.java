@@ -5,24 +5,24 @@ import java.util.HashMap;
 public class Order {
 
 	private static int nextID = 0;
-	private int id;
-	private HashMap<Integer, Integer> idsAndItemsFurniture = new HashMap<Integer, Integer>();
+	private int ID;
+	private HashMap<Integer, Integer> IDsAndItemsFurniture = new HashMap<Integer, Integer>();
 	private String DNIClient;
 	private String employeeAssigned = null;
 	private boolean pendingCustomerConfirmation = false;
 	private int totalPrice;
 
 	public Order(String DNIClient) {
-		this.id = nextID++;
+		this.ID = nextID++;
 		this.DNIClient = DNIClient;
 	}
 
-	public void addFurnitureIDAndItems(int idFurniture, int items) {
-		idsAndItemsFurniture.put(idFurniture, items);
+	public void addFurnitureIDAndItems(int IDFurniture, int items) {
+		IDsAndItemsFurniture.put(IDFurniture, items);
 	}
 
 	public int getId() {
-		return id;
+		return ID;
 	}
 
 	public String getDNIClient() {
@@ -34,7 +34,7 @@ public class Order {
 	}
 
 	public HashMap<Integer, Integer> getIdsAndItemsFurniture() {
-		return idsAndItemsFurniture;
+		return IDsAndItemsFurniture;
 	}
 
 	public String getEmployeeAssigned() {
@@ -63,6 +63,6 @@ public class Order {
 	}
 
 	public String toString() {
-		return "ID: " + id;
+		return "ID: " + ID;
 	}
 }
