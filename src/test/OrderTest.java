@@ -283,12 +283,16 @@ public class OrderTest {
 		assertTrue(craftsman.getAssignedOrders().contains(order.getId()));
 		int IDsFurniture = factory.getIDsFurnitureOrder(order);
 		assertNotEquals(-1, IDsFurniture);
-		input = order.getId() + "\n" + Integer.toString(IDsFurniture) + "\n6\n1\n";
+		input = order.getId() + "\n" + Integer.toString(IDsFurniture) + "\n6";
 		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
 		craftsman.modifyFurnitureStatus();
 		Furniture furniture = factory.getFurniture(IDsFurniture);
 		assertNotNull(furniture);
 		List<String> status = furniture.getStatusHistory();
+		assertEquals("Finished", status.get(status.size() - 1));
+		input = "5";
+		factory.sc = new Scanner(new ByteArrayInputStream(input.getBytes()));
+		craftsman.modifyFurnitureStatus();
 		assertEquals("Finished", status.get(status.size() - 1));
 	}
 
