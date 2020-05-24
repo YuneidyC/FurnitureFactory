@@ -39,7 +39,6 @@ public class Client extends Person {
 		}
 	}
 
-	// TODO EL LA LISTA DE IDSORDERS LA TIENE CADA TIPO
 	public void confirmOrder() {
 		getFactory().confirmOrder(this.getDNI());
 	}

@@ -12,7 +12,4 @@ public class HourlyContract extends Craftsman {
 		return super.toString();
 	}
 
-	public void modifyData() {
-		super.modifyData();
-	}
 }

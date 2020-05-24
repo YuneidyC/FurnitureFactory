@@ -42,7 +42,4 @@ public class Boss extends Employee {
 		return true;
 	}
 
-	public void modifyData() {
-		super.modifyData();
-	}
 }

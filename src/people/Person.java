@@ -54,20 +54,20 @@ public abstract class Person {
 
 	// TODO BUCLE
 	public int chooseIdOrder() {
-		int idOrder = -1;
+		int IDsOrder = -1;
 		System.out.println("Choose the order ID: ");
 		if (!factory.sc.hasNextLine()) {
 			System.out.println("Nothing has been inserted.");
 			return -1;
 		}
-		String IDorder = factory.sc.nextLine();
+		String IDOrder = factory.sc.nextLine();
 		try {
-			idOrder = Integer.parseInt(IDorder);
+			IDsOrder = Integer.parseInt(IDOrder);
 		} catch (NumberFormatException exception) {
 			Printer.thisIsNotANumber();
 			return -1;
 		}
-		return idOrder;
+		return IDsOrder;
 	}
 
 	// ARREGLAR ESTE TOSTRING QUE AL FINAL NO ME SALGA UN \N CUANDO LLEGUE AL ULTIMO

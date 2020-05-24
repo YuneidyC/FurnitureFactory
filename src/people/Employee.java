@@ -12,7 +12,4 @@ public class Employee extends Person {
 		super.modifyData();
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }

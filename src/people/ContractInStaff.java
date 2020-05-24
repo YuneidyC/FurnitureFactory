@@ -12,7 +12,4 @@ public class ContractInStaff extends Craftsman {
 		return super.toString();
 	}
 
-	public void modifyData() {
-		super.modifyData();
-	}
 }

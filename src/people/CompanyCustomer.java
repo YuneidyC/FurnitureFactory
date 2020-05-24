@@ -12,7 +12,4 @@ public class CompanyCustomer extends Client {
 		super.modifyData();
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }

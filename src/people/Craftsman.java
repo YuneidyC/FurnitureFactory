@@ -38,7 +38,7 @@ public class Craftsman extends Employee {
 			return;
 		}
 		for (Integer idOrders : listOfAssignedOrders) {
-			System.out.println(idOrders);
+			System.out.println(getFactory().getOrder(idOrders).toString());
 		}
 		idOrder = chooseIdOrder();
 		if (idOrder == -1) {

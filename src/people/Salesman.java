@@ -21,8 +21,4 @@ public class Salesman extends Employee {
 		getFactory().notifyCustomer(idOrder);
 		return;
 	}
-
-	public void modifyData() {
-		super.modifyData();
-	}
 }
