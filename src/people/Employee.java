@@ -8,8 +8,4 @@ public class Employee extends Person {
 		super(factory, DNI, name);
 	}
 
-	public void modifyData() {
-		super.modifyData();
-	}
-
 }

@@ -109,11 +109,4 @@ public class Craftsman extends Employee {
 		}
 	}
 
-	public String toString() {
-		return super.toString();
-	}
-
-	public void modifyData() {
-		super.modifyData();
-	}
 }

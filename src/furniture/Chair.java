@@ -8,7 +8,4 @@ public class Chair extends Furniture {
 		super(factory, name, price, features);
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }

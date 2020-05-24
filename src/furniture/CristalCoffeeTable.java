@@ -8,7 +8,4 @@ public class CristalCoffeeTable extends CoffeeTable {
 		super(factory, name, price, features);
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }

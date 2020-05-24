@@ -8,7 +8,4 @@ public class DiningTable extends Table {
 		super(factory, name, price, features);
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }

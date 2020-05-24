@@ -8,7 +8,4 @@ public class BedroomTable extends Table {
 		super(factory, model, price, features);
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }

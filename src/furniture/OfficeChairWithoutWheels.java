@@ -8,7 +8,4 @@ public class OfficeChairWithoutWheels extends OfficeChair {
 		super(factory, name, price, features);
 	}
 
-	public String toString() {
-		return super.toString();
-	}
 }
