@@ -21,7 +21,7 @@ import people.Boss;
 import people.Client;
 import people.Craftsman;
 
-public class OrderTest {
+public class OrderAndFurnitureTest {
 	private Factory factory = null;
 
 	@Before

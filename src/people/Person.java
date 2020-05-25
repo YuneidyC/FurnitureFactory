@@ -52,7 +52,6 @@ public abstract class Person {
 		}
 	}
 
-	// TODO BUCLE
 	public int chooseIdOrder() {
 		int IDsOrder = -1;
 		System.out.println("Choose the order ID: ");
@@ -70,7 +69,6 @@ public abstract class Person {
 		return IDsOrder;
 	}
 
-	// ARREGLAR ESTE TOSTRING QUE AL FINAL NO ME SALGA UN \N CUANDO LLEGUE AL ULTIMO
 	public String toString() {
 		return "DNI/PASSPORT: " + DNI + " Name: " + name + "\n";
 	}

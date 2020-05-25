@@ -10,7 +10,7 @@ import factory.Printer;
 public class Furniture {
 
 	private static int nextId = 0;
-	private int id;
+	private int ID;
 	private String furnitureModel;
 	private int price;
 	private Factory factory;
@@ -19,7 +19,8 @@ public class Furniture {
 	private List<Piece> missingPieces = new LinkedList<Piece>();
 
 	public Furniture(Factory factory, String furnitureModel, int price, String features) {
-		this.id = nextId++;
+		this.ID = nextId++;
+		this.factory = factory;
 		this.furnitureModel = furnitureModel;
 		this.price = price;
 		this.features = features;
@@ -31,7 +32,7 @@ public class Furniture {
 	}
 
 	public int getId() {
-		return id;
+		return ID;
 	}
 
 	public String getFurniture() {
@@ -57,20 +58,38 @@ public class Furniture {
 //	If an attribute to be modify is empty, it'll be left unchanged 
 	public boolean modifyData() {
 		boolean modifyPrice = false;
+		int priceFurniture = -1;
 		System.out.println("Insert Furniture model: ");
+		if (!factory.sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return false;
+		}
 		String str = getFactory().sc.nextLine();
 		if (!str.isEmpty()) {
 			furnitureModel = str;
 		}
 		System.out.println("Insert price: ");
+		if (!factory.sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return false;
+		}
 		str = getFactory().sc.nextLine();
 		if (!str.isEmpty()) {
-			int priceFurniture = Integer.parseInt(str);
+			try {
+				priceFurniture = Integer.parseInt(str);
+			} catch (NumberFormatException exception) {
+				Printer.thisIsNotANumber();
+				return false;
+			}
 			price = priceFurniture;
 			modifyPrice = true;
 		}
 		System.out.println("Insert features: ");
-		str = getFactory().sc.nextLine();
+		if (!factory.sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return false;
+		}
+		str = getFactory().addOrNotFeatures();
 		if (!str.isEmpty()) {
 			features = str;
 		}
@@ -103,6 +122,10 @@ public class Furniture {
 		int insert = -1;
 		while (!mustExit) {
 			Printer.orderParts();
+			if (!factory.sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = getFactory().sc.nextLine();
 			try {
 				insert = Integer.parseInt(str);
@@ -160,7 +183,7 @@ public class Furniture {
 	}
 
 	public String toString() {
-		return "ID: " + id + " \nModel: " + furnitureModel;
+		return "ID: " + ID + " \nModel: " + furnitureModel;
 	}
 
 }

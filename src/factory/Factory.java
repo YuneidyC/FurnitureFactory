@@ -59,6 +59,10 @@ public class Factory {
 		return finishedOrders;
 	}
 
+	/**
+	 * This method takes care of adding people to the list, in case in case the
+	 * person is a craftsman, the ID is also added to the listIDCraftsman list.
+	 */
 	public void addPerson(Person person) {
 		if (person instanceof Craftsman) {
 			people.add(person);
@@ -258,6 +262,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.craftsmanHistory();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -323,6 +331,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.furnitureHistory();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -353,6 +365,10 @@ public class Factory {
 			System.out.println(furniture.getId());
 		}
 		System.out.println("Insert id furniture: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return;
+		}
 		String str = sc.nextLine();
 		try {
 			idFurniture = Integer.parseInt(str);
@@ -420,6 +436,28 @@ public class Factory {
 			System.out.println(order.toString() + " " + order.getDNIClient() + " Not notified.");
 		}
 		return true;
+	}
+
+	public int getIDsFurnitureOrder(Order order) {
+		if (orderList.contains(order)) {
+			for (Integer ID : order.getIdsAndItemsFurniture().keySet()) {
+				if (ID == null) {
+					continue;
+				}
+				Furniture furniture = getFurniture(ID);
+				if (furniture == null) {
+					continue;
+				}
+				List<String> status = furniture.getStatusHistory();
+				if (status.isEmpty()) {
+					continue;
+				}
+				if (!status.get(status.size() - 1).equals("Finished.")) {
+					return furniture.getId();
+				}
+			}
+		}
+		return -1;
 	}
 
 	public void notifyCustomer(int idOrder) {
@@ -496,7 +534,11 @@ public class Factory {
 				}
 			}
 		}
-		System.out.println("Choose the furniture id: ");
+		System.out.println("Choose the furniture ID: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		String str = sc.nextLine();
 		try {
 			idFurniture = Integer.parseInt(str);
@@ -511,7 +553,6 @@ public class Factory {
 		return furniture;
 	}
 
-	// CHECK
 	public void changeStatusToOrder(Furniture furniture) {
 		int furnitureStatus = -1;
 		boolean exit = false;
@@ -523,6 +564,10 @@ public class Factory {
 		}
 		while (!exit) {
 			Printer.statusFurnitureOrder();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				furnitureStatus = Integer.parseInt(str);
@@ -532,27 +577,27 @@ public class Factory {
 			}
 			switch (furnitureStatus) {
 			case 1:
-				furniture.addStatus(1, "Pending.");
+				furniture.addStatus(1, "Pending");
 				exit = true;
 				break;
 			case 2:
-				furniture.addStatus(2, "In process.");
+				furniture.addStatus(2, "In process");
 				exit = true;
 				break;
 			case 3:
-				furniture.addStatus(3, "Stopped due to missing part.");
+				furniture.addStatus(3, "Stopped due to missing part");
 				exit = true;
 				break;
 			case 4:
-				furniture.addStatus(4, "Stopped to customer confirmation.");
+				furniture.addStatus(4, "Stopped to customer confirmation");
 				exit = true;
 				break;
 			case 5:
-				furniture.addStatus(5, "Test phase.");
+				furniture.addStatus(5, "Test phase");
 				exit = true;
 				break;
 			case 6:
-				furniture.addStatus(6, "Finished.");
+				furniture.addStatus(6, "Finished");
 				exit = true;
 				break;
 			case 7:
@@ -568,6 +613,10 @@ public class Factory {
 	public Piece askForPieceDetails() {
 		Piece piece = null;
 		System.out.println("Insert part reference: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
 		String reference = sc.nextLine();
 		if (reference.isEmpty()) {
 			return null;
@@ -578,42 +627,59 @@ public class Factory {
 
 	// TODO
 	public int unassignedOrders() {
-		boolean mustExit = false;
 		int id = -1;
 		String str = null;
-		while (!mustExit) {
-			for (Order orderList : orderList) {
-				if (orderList.getEmployeeAssigned() == null) {
-					System.out.println(orderList.toString() + " unassigned");
-				}
-			}
-			System.out.println("Insert id order: ");
-			str = sc.nextLine();
-			try {
-				id = Integer.parseInt(str);
-				mustExit = true;
-				break;
-			} catch (NumberFormatException exception) {
-				Printer.thisIsNotANumber();
+		if (orderList.isEmpty()) {
+			System.out.println("There are no orders in the factory.");
+			return -1;
+		}
+		for (Order orderList : orderList) {
+			if (orderList.getEmployeeAssigned() == null) {
+				System.out.println(orderList.toString() + " unassigned");
 			}
 		}
+		System.out.println("Insert id order: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return -1;
+		}
+		str = sc.nextLine();
+		try {
+			id = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
+			Printer.thisIsNotANumber();
+			return -1;
+		}
 		return id;
+	}
+
+	public Boss getBoss() {
+		Boss boss = null;
+		for (Person person : people) {
+			if (person instanceof Boss) {
+				boss = (Boss) person;
+			}
+		}
+		return boss;
 	}
 
 	public Craftsman assignOrderWithIDOrRandom() {
 		boolean mustExit = false;
 		Craftsman craftsman = null;
 		int assign = -1;
+		Printer.assignOrderWithDNIOrRandom();
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return null;
+		}
+		String str = sc.nextLine();
+		try {
+			assign = Integer.parseInt(str);
+		} catch (NumberFormatException exception) {
+			Printer.thisIsNotANumber();
+			return null;
+		}
 		while (!mustExit) {
-			Printer.assignOrderWithDNIOrRandom();
-			String str = sc.nextLine();
-			try {
-				assign = Integer.parseInt(str);
-				mustExit = true;
-			} catch (NumberFormatException exception) {
-				Printer.thisIsNotANumber();
-				return null;
-			}
 			switch (assign) {
 			case 1:
 				craftsman = assignCraftsman();
@@ -652,9 +718,8 @@ public class Factory {
 			System.out.println("There are no people in the factory.");
 			return null;
 		}
-
 		// We don't want to always assign orders to the same artisan.
-		int sizeCraftsmanList = people.size();
+		int sizeCraftsmanList = ListDNICraftsman.size();
 		Random randomNumbers = new Random();
 		int randomIndex = randomNumbers.nextInt(sizeCraftsmanList);
 		String craftsmanDNI = ListDNICraftsman.get(randomIndex);
@@ -728,6 +793,10 @@ public class Factory {
 			return;
 		}
 		System.out.println("Insert ID of the order you want to confirm: ");
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return;
+		}
 		String str = sc.nextLine();
 		try {
 			selectIDOrder = Integer.parseInt(str);
@@ -758,6 +827,10 @@ public class Factory {
 			if (order.getId() == idOrder) {
 				if (order.getDNIClient().equals(DNIClient)) {
 					Printer.confirmOrder();
+					if (!sc.hasNextLine()) {
+						System.out.println("Nothing has been inserted.");
+						return -1;
+					}
 					String str = sc.nextLine();
 					int answer = 0;
 					try {
@@ -845,7 +918,7 @@ public class Factory {
 		return order.getIdsAndItemsFurniture().keySet();
 	}
 
-	private Furniture getFurniture(int idFurniture) {
+	public Furniture getFurniture(int idFurniture) {
 		for (Furniture furniture : furnitures) {
 			if (furniture.getId() == idFurniture) {
 				return furniture;
@@ -862,17 +935,20 @@ public class Factory {
 			System.out.println("Nothing has been inserted.");
 			return null;
 		}
-		String dni = sc.nextLine();
-		if (dni.isEmpty()) {
+		String DNI = sc.nextLine();
+		if (DNI.isEmpty()) {
 			System.out.println("The DNI craftsman has not been inserted.");
 			return null;
 		}
-		if (!ListDNICraftsman.contains(dni)) {
+		if (!ListDNICraftsman.contains(DNI)) {
 			System.out.println("This craftsman does not exist.");
 			return null;
 		}
 		for (String craftsmanDNI : ListDNICraftsman) {
-			craftsman = getCraftsman(craftsmanDNI);
+			if (craftsmanDNI.equals(DNI)) {
+				craftsman = getCraftsman(craftsmanDNI);
+				break;
+			}
 		}
 		return craftsman;
 	}
@@ -1274,6 +1350,7 @@ public class Factory {
 		}
 		System.out.println("DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return false;
 		}
 		DNI = sc.nextLine();
@@ -1286,7 +1363,6 @@ public class Factory {
 		return true;
 	}
 
-	// HERE MAKE SURE
 	public void modifyPeopleData() {
 		boolean exist = false;
 		System.out.println("Insert DNI/PASSPORT: ");
@@ -1314,6 +1390,7 @@ public class Factory {
 	public void addSalesman() {
 		System.out.println("Insert name: ");
 		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return;
 		}
 		String name = sc.nextLine();
@@ -1330,6 +1407,7 @@ public class Factory {
 		}
 		System.out.println("Insert DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
 			return;
 		}
 		String dni = sc.nextLine();
@@ -1454,16 +1532,19 @@ public class Factory {
 		return furnitureID;
 	}
 
-	// MAKE SURE
-	private void modifyFurnitureData() {
+	public void modifyFurnitureData() {
 		Furniture furniture = null;
-		boolean modifyPrice = false;
+		boolean modifyPrice;
 		int integer = -1;
 		int price = 0;
 		System.out.println("Insert ID furniture: ");
-		String id = sc.nextLine();
+		if (!sc.hasNextLine()) {
+			System.out.println("Nothing has been inserted.");
+			return;
+		}
+		String ID = sc.nextLine();
 		try {
-			integer = Integer.parseInt(id);
+			integer = Integer.parseInt(ID);
 		} catch (NumberFormatException exception) {
 			Printer.thisIsNotANumber();
 			return;
@@ -1472,19 +1553,26 @@ public class Factory {
 		if (furniture == null) {
 			return;
 		}
-		price = furniture.getPrice();
+		for (Order order : orderList) {
+			for (Integer furnitureID : order.getIdsAndItemsFurniture().keySet()) {
+				if (furnitureID == furniture.getId()) {
+					int items = order.getIdsAndItemsFurniture().get(furnitureID);
+					price = furniture.getPrice() * items;
+				}
+			}
+		}
 		modifyPrice = furniture.modifyData();
-		if (!modifyPrice) {
+		if (modifyPrice) {
 			for (Order order : orderList) {
 				for (Integer furnitureID : order.getIdsAndItemsFurniture().keySet()) {
-					if (furnitureID == integer) {
-						int totalPrice = order.getTotalPrice() - price + furniture.getPrice();
+					if (furnitureID == furniture.getId()) {
+						int totalPrice = order.getTotalPrice() - price;
+						totalPrice += furniture.getPrice() * order.getIdsAndItemsFurniture().get(furnitureID);
 						order.setTotalPrice(totalPrice);
 					}
 				}
 			}
 		}
-
 	}
 
 	private boolean existClient(String DNI) {
@@ -1693,7 +1781,7 @@ public class Factory {
 		return moreFurniture;
 	}
 
-	private String addOrNotFeatures() {
+	public String addOrNotFeatures() {
 		String features = null;
 		Printer.askFeatures();
 		if (!sc.hasNextLine()) {
@@ -1707,12 +1795,16 @@ public class Factory {
 			answer = Integer.parseInt(str);
 		} catch (NumberFormatException exception) {
 			Printer.thisIsNotANumber();
-			return features;
+			return null;
 		}
 		while (!exit) {
 			switch (answer) {
 			case 1:
 				System.out.println("Insert features: ");
+				if (!sc.hasNextLine()) {
+					System.out.println("Nothing has been inserted.");
+					return null;
+				}
 				features = sc.nextLine();
 				exit = true;
 				break;
@@ -1757,6 +1849,10 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.mainFunction();
+			if (!factory.sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = factory.sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1793,6 +1889,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.peopleFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1828,6 +1928,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.bossFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1858,6 +1962,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.salesmanFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1897,6 +2005,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.craftmanFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
@@ -1941,6 +2053,10 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.clientFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			Client client = null;
 			int integer = -1;
@@ -1976,6 +2092,10 @@ public class Factory {
 		int furnitureType = -1;
 		while (!mustExit) {
 			Printer.furnitureFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				furnitureType = Integer.parseInt(str);
@@ -2001,6 +2121,10 @@ public class Factory {
 		boolean mustExit = false;
 		while (!mustExit) {
 			Printer.orderFunction();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			int integer = -1;
 			try {
@@ -2028,6 +2152,10 @@ public class Factory {
 		int integer = -1;
 		while (!mustExit) {
 			Printer.factorySwitch();
+			if (!sc.hasNextLine()) {
+				System.out.println("Nothing has been inserted.");
+				return;
+			}
 			String str = sc.nextLine();
 			try {
 				integer = Integer.parseInt(str);
