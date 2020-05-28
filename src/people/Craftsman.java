@@ -30,21 +30,21 @@ public class Craftsman extends Employee {
 
 	public void modifyFurnitureStatus() {
 		boolean sameCraftsman = false;
-		int idOrder = -1;
+		int IDOrder = -1;
 		Furniture furniture = null;
 		Order order = null;
 		if (listOfAssignedOrders.isEmpty()) {
 			System.out.println("You don't have assigned order.");
 			return;
 		}
-		for (Integer idOrders : listOfAssignedOrders) {
-			System.out.println(getFactory().getOrder(idOrders).toString());
+		for (Integer IDOrders : listOfAssignedOrders) {
+			System.out.println(getFactory().getOrder(IDOrders).toString());
 		}
-		idOrder = chooseIdOrder();
-		if (idOrder == -1) {
+		IDOrder = super.chooseIdOrder();
+		if (IDOrder == -1) {
 			return;
 		}
-		order = getFactory().getOrder(idOrder);
+		order = getFactory().getOrder(IDOrder);
 		if (order == null) {
 			return;
 		}
@@ -60,21 +60,21 @@ public class Craftsman extends Employee {
 	}
 
 	public void finishedOrder() {
-		int id = -1;
+		int ID = -1;
 		for (int idOrder : listOfAssignedOrders) {
 			getFactory().printFinishedOrder(idOrder);
 		}
 
-		id = super.chooseIdOrder();
-		if (id == -1) {
+		ID = super.chooseIdOrder();
+		if (ID == -1) {
 			return;
 		}
-		int allFine = getFactory().orderFinished(id, this);
+		int allFine = getFactory().orderFinished(ID, this);
 		if (allFine == -1) {
 			return;
 		}
-		finishedOrders.add(id);
-		listOfAssignedOrders.remove(id);
+		finishedOrders.add(ID);
+		listOfAssignedOrders.remove(ID);
 	}
 
 	public void craftsmanHistory() {
