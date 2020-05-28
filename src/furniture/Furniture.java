@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import factory.Factory;
+import factory.Order;
 import factory.Piece;
 import factory.Printer;
 
@@ -109,6 +110,18 @@ public class Furniture {
 			statusHistory.add(status);
 			System.out.println("Status has been updated.");
 			return;
+		}
+		if (option == 4) {
+			List<Order> orders = factory.getOrderList();
+			for (Order order : orders) {
+				if (order.getIdsAndItemsFurniture().keySet().contains(this.ID)) {
+					if (order.getPendingCustomerConfirmation() == true) {
+						System.out.println("Status has not been updated, because this order is already confirmed.");
+						return;
+					}
+					break;
+				}
+			}
 		}
 		if (missingPieces.isEmpty()) {
 			statusHistory.add(status);
