@@ -24,12 +24,12 @@ public class Craftsman extends Employee {
 		listOfAssignedOrders.add(order);
 	}
 
-	public List<Integer> getFinishesOrders() {
+	public List<Integer> getFinishedOrders() {
 		return finishedOrders;
 	}
 
 	public void modifyFurnitureStatus() {
-		boolean sameCraftsman = false;
+		boolean isSameCraftsman = false;
 		int IDOrder = -1;
 		Furniture furniture = null;
 		Order order = null;
@@ -40,7 +40,7 @@ public class Craftsman extends Employee {
 		for (Integer IDOrders : listOfAssignedOrders) {
 			System.out.println(getFactory().getOrder(IDOrders).toString());
 		}
-		IDOrder = super.chooseIdOrder();
+		IDOrder = chooseIdOrder();
 		if (IDOrder == -1) {
 			return;
 		}
@@ -48,8 +48,8 @@ public class Craftsman extends Employee {
 		if (order == null) {
 			return;
 		}
-		sameCraftsman = getFactory().sameCraftsmanOrder(order, this);
-		if (sameCraftsman == false) {
+		isSameCraftsman = order.isAssignedToCraftsman(this);
+		if (isSameCraftsman == false) {
 			return;
 		}
 		furniture = getFactory().showAndGetFurnitureOfThisOrder(order);
@@ -65,7 +65,7 @@ public class Craftsman extends Employee {
 			getFactory().printFinishedOrder(idOrder);
 		}
 
-		ID = super.chooseIdOrder();
+		ID = chooseIdOrder();
 		if (ID == -1) {
 			return;
 		}

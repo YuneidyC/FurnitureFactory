@@ -83,7 +83,9 @@ public class Factory {
 		return null;
 	}
 
-	// CHECK
+	/**
+	 * This function shows the pieces are missing at the factory
+	 */
 	private void missingPieces() {
 		String missing = null;
 		if (orderList.isEmpty()) {
@@ -161,7 +163,6 @@ public class Factory {
 				order.setDNIClient(DNIAct);
 			}
 		}
-
 	}
 
 	private void requestCompanyCustomerToConfirm(Client client) {
@@ -210,7 +211,6 @@ public class Factory {
 		}
 	}
 
-	// CHECK
 	private void reportInProcess() {
 		/*
 		 * We could stop iterating when we find the one that interests us, but in this
@@ -264,7 +264,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.craftsmanHistory();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -281,12 +281,11 @@ public class Factory {
 			case 2:
 				allCraftsmanHistory();
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -333,7 +332,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.furnitureHistory();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -350,12 +349,11 @@ public class Factory {
 			case 2:
 				allFurnitureHistory();
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -510,18 +508,6 @@ public class Factory {
 		return allFine;
 	}
 
-	public boolean sameCraftsmanOrder(Order order, Craftsman craftsman) {
-		boolean exist = false;
-		while (!exist) {
-			if (order.getEmployeeAssigned().equals(craftsman.getDNI())) {
-				exist = true;
-				return true;
-			}
-		}
-		System.out.println("This order is not assigned to this craftsman.");
-		return false;
-	}
-
 	public Furniture showAndGetFurnitureOfThisOrder(Order order) {
 		int idFurniture = -1;
 		Furniture furniture = null;
@@ -536,7 +522,7 @@ public class Factory {
 		}
 		System.out.println("Choose the furniture ID: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String str = sc.nextLine();
@@ -565,7 +551,7 @@ public class Factory {
 		while (!exit) {
 			Printer.statusFurnitureOrder();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -600,12 +586,11 @@ public class Factory {
 				furniture.addStatus(6, "Finished");
 				exit = true;
 				break;
-			case 7:
+			case 7: // Exit
 				exit = true;
 				return;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -614,7 +599,7 @@ public class Factory {
 		Piece piece = null;
 		System.out.println("Insert part reference: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String reference = sc.nextLine();
@@ -639,7 +624,7 @@ public class Factory {
 		}
 		System.out.println("Insert id order: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return -1;
 		}
 		str = sc.nextLine();
@@ -668,7 +653,7 @@ public class Factory {
 		int assign = -1;
 		Printer.assignOrderWithDNIOrRandom();
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String str = sc.nextLine();
@@ -701,12 +686,11 @@ public class Factory {
 				}
 				mustExit = true;
 				break;
-			case 4:
+			case 4: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 		return craftsman;
@@ -741,6 +725,10 @@ public class Factory {
 		}
 		System.out.println(DNI.substring(0, DNI.length() - 1));
 		System.out.println("Insert craftsman DNI: ");
+		if (!sc.hasNextLine()) {
+			Printer.nothingHasBeenInserted();
+			return null;
+		}
 		DNI = sc.nextLine();
 		if (DNI.isEmpty()) {
 			System.out.println("The DNI craftsman has not been inserted.");
@@ -793,7 +781,7 @@ public class Factory {
 		}
 		System.out.println("Insert ID of the order you want to confirm: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String str = sc.nextLine();
@@ -827,7 +815,7 @@ public class Factory {
 				if (order.getDNIClient().equals(DNIClient)) {
 					Printer.confirmOrder();
 					if (!sc.hasNextLine()) {
-						System.out.println("Nothing has been inserted.");
+						Printer.nothingHasBeenInserted();
 						return -1;
 					}
 					String str = sc.nextLine();
@@ -885,7 +873,7 @@ public class Factory {
 		String DNI;
 		System.out.println("Insert client DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		DNI = sc.nextLine();
@@ -931,7 +919,7 @@ public class Factory {
 		Craftsman craftsman = null;
 		System.out.println("Insert craftsman DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String DNI = sc.nextLine();
@@ -956,7 +944,7 @@ public class Factory {
 		String DNI;
 		System.out.println("Insert salesman DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		DNI = sc.nextLine();
@@ -973,7 +961,7 @@ public class Factory {
 		int totalFurniture = 0;
 		System.out.println("How many do you want?: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return -1;
 		}
 		String str = sc.nextLine();
@@ -1008,13 +996,13 @@ public class Factory {
 		Entry<String, Integer> newFurniture = null;
 		System.out.println("Insert furniture model: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String furnitureModel = sc.nextLine();
 		System.out.println("Insert price: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String str = sc.nextLine();
@@ -1047,7 +1035,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.chairsTypes();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return -1;
 			}
 			String str = sc.nextLine();
@@ -1098,13 +1086,11 @@ public class Factory {
 				furnitureID = createOfficeChair();
 				mustExit = true;
 				break;
-			case 4:
+			case 4: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-			case -1:
-				continue;
 			}
 		}
 		return furnitureID;
@@ -1113,7 +1099,6 @@ public class Factory {
 	/**
 	 * Create a new OfficeChair and adds it to the internal list
 	 */
-
 	public int createOfficeChair() {
 		int typeOfficeChair = -1;
 		int furnitureID = -1;
@@ -1125,7 +1110,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.officeChairTypes();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return -1;
 			}
 			String str = sc.nextLine();
@@ -1172,17 +1157,19 @@ public class Factory {
 				furnitures.add(officeChairWithoutWheels);
 				mustExit = true;
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 		return furnitureID;
 	}
 
+	/**
+	 * Create a new Tables and adds it to the internal list
+	 */
 	public int createTables() {
 		Entry<String, Integer> table = null;
 		String model;
@@ -1194,7 +1181,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.tableTypes();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return -1;
 			}
 			String str = sc.nextLine();
@@ -1246,17 +1233,19 @@ public class Factory {
 				furnitures.add(diningTable);
 				mustExit = true;
 				break;
-			case 4:
+			case 4: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 		return furnitureID;
 	}
 
+	/**
+	 * Create a new CoffeeTable and adds it to the internal list
+	 */
 	public int createCoffeeTable() {
 		Entry<String, Integer> table = null;
 		String model;
@@ -1268,7 +1257,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.coffeeTableTypes();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return -1;
 			}
 			String str = sc.nextLine();
@@ -1315,12 +1304,11 @@ public class Factory {
 				furnitures.add(woodenCoffeeTable);
 				mustExit = true;
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 		return furnitureID;
@@ -1332,7 +1320,7 @@ public class Factory {
 		System.out.println("Insert boss data: ");
 		System.out.println("Name: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return false;
 		}
 		name = sc.nextLine();
@@ -1349,7 +1337,7 @@ public class Factory {
 		}
 		System.out.println("DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return false;
 		}
 		DNI = sc.nextLine();
@@ -1366,7 +1354,7 @@ public class Factory {
 		boolean exist = false;
 		System.out.println("Insert DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String DNI = sc.nextLine();
@@ -1389,7 +1377,7 @@ public class Factory {
 	public void addSalesman() {
 		System.out.println("Insert name: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String name = sc.nextLine();
@@ -1406,7 +1394,7 @@ public class Factory {
 		}
 		System.out.println("Insert DNI/PASSPORT: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String dni = sc.nextLine();
@@ -1429,7 +1417,7 @@ public class Factory {
 		boolean mustExit = false;
 		System.out.println("Insert name: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String name = sc.nextLine();
@@ -1463,7 +1451,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.menuContractCraftsman();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -1484,12 +1472,11 @@ public class Factory {
 				addPerson(craftsmanHourlyContract);
 				mustExit = true;
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -1501,7 +1488,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.furnitureTypes();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return -1;
 			}
 			String str = sc.nextLine();
@@ -1520,7 +1507,7 @@ public class Factory {
 				furnitureID = createTables();
 				mustExit = true;
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
@@ -1538,7 +1525,7 @@ public class Factory {
 		int price = 0;
 		System.out.println("Insert ID furniture: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String ID = sc.nextLine();
@@ -1552,6 +1539,7 @@ public class Factory {
 		if (furniture == null) {
 			return;
 		}
+		// Get current price
 		for (Order order : orderList) {
 			for (Integer furnitureID : order.getIdsAndItemsFurniture().keySet()) {
 				if (furnitureID == furniture.getId()) {
@@ -1562,6 +1550,7 @@ public class Factory {
 		}
 		modifyPrice = furniture.modifyData();
 		if (modifyPrice) {
+			// Recalculate total price
 			for (Order order : orderList) {
 				for (Integer furnitureID : order.getIdsAndItemsFurniture().keySet()) {
 					if (furnitureID == furniture.getId()) {
@@ -1586,7 +1575,7 @@ public class Factory {
 	private String getName() {
 		System.out.println("Insert Name: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String name = sc.nextLine();
@@ -1632,7 +1621,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.clientTypes();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return null;
 			}
 			String type = sc.nextLine();
@@ -1655,7 +1644,7 @@ public class Factory {
 				addPerson(companyCustomer);
 				mustExit = true;
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
@@ -1670,7 +1659,7 @@ public class Factory {
 		int phoneNumber = 0;
 		System.out.println("Insert Phone number (7 digit): ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return -1;
 		}
 		String str = sc.nextLine();
@@ -1734,6 +1723,8 @@ public class Factory {
 			case 2:
 				mustExit = true;
 				break;
+			default:
+				Printer.isNotValidOption();
 			}
 		}
 		totalPrice = calculateTotalPrice(order.getIdsAndItemsFurniture());
@@ -1753,7 +1744,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.askMoreFurnitureInTheOrder();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return -1;
 			}
 			String str = sc.nextLine();
@@ -1774,7 +1765,6 @@ public class Factory {
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 		return moreFurniture;
@@ -1784,7 +1774,7 @@ public class Factory {
 		String features = null;
 		Printer.askFeatures();
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String str = sc.nextLine();
@@ -1801,7 +1791,7 @@ public class Factory {
 			case 1:
 				System.out.println("Insert features: ");
 				if (!sc.hasNextLine()) {
-					System.out.println("Nothing has been inserted.");
+					Printer.nothingHasBeenInserted();
 					return null;
 				}
 				features = sc.nextLine();
@@ -1813,8 +1803,6 @@ public class Factory {
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
-
 			}
 		}
 		return features;
@@ -1823,7 +1811,7 @@ public class Factory {
 	private String getDNI() {
 		System.out.println("Insert DNI/CIF: ");
 		if (!sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return null;
 		}
 		String DNI = sc.nextLine();
@@ -1849,7 +1837,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.mainFunction();
 			if (!factory.sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = factory.sc.nextLine();
@@ -1872,12 +1860,11 @@ public class Factory {
 			case 4:
 				factory.factorySwitch();
 				break;
-			case 5:
+			case 5: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 		factory.sc.close();
@@ -1889,7 +1876,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.peopleFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -1912,12 +1899,11 @@ public class Factory {
 			case 4:
 				clientSwitch();
 				break;
-			case 5:
+			case 5: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -1928,7 +1914,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.bossFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -1946,12 +1932,11 @@ public class Factory {
 				}
 				boss.assignCraftsman();
 				break;
-			case 2:
+			case 2: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -1962,7 +1947,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.salesmanFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -1988,12 +1973,11 @@ public class Factory {
 				break;
 			case 4:
 				ShowOrderPrice();
-			case 5:
+			case 5: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -2005,7 +1989,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.craftmanFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -2038,12 +2022,11 @@ public class Factory {
 				}
 				craftsman.finishedOrder();
 				break;
-			case 5:
+			case 5: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -2053,7 +2036,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.clientFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -2076,12 +2059,11 @@ public class Factory {
 				}
 				client.confirmOrder();
 				break;
-			case 3:
+			case 3: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -2092,7 +2074,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.furnitureFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -2106,12 +2088,11 @@ public class Factory {
 			case 1:
 				modifyFurnitureData();
 				break;
-			case 2:
+			case 2: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -2121,7 +2102,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.orderFunction();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -2136,12 +2117,11 @@ public class Factory {
 			case 1:
 				createAnOrder();
 				break;
-			case 2:
+			case 2: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}
@@ -2152,7 +2132,7 @@ public class Factory {
 		while (!mustExit) {
 			Printer.factorySwitch();
 			if (!sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = sc.nextLine();
@@ -2181,12 +2161,11 @@ public class Factory {
 			case 6:
 				switchFurnitureHistory();
 				break;
-			case 7:
+			case 7: // Exit
 				mustExit = true;
 				break;
 			default:
 				Printer.isNotValidOption();
-				continue;
 			}
 		}
 	}

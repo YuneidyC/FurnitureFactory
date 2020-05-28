@@ -8,7 +8,7 @@ public class Printer {
 		System.out.println("2. Furniture.");
 		System.out.println("3. Orders.");
 		System.out.println("4. Factory.");
-		option(5);
+		exitOption(5);
 	}
 
 	public static void peopleFunction() {
@@ -17,13 +17,13 @@ public class Printer {
 		System.out.println("2. Salesman.");
 		System.out.println("3. Craftsman.");
 		System.out.println("4. Client.");
-		option(5);
+		exitOption(5);
 	}
 
 	public static void bossFunction() {
 		System.out.println("--Boss Functions--");
 		System.out.println("1. Assign Crafstman.");
-		option(2);
+		exitOption(2);
 	}
 
 	public static void salesmanFunction() {
@@ -33,7 +33,7 @@ public class Printer {
 		System.out.println("3. Notify the customer.");
 		// Show the price to salesman -> notify client.
 		System.out.println("4. Show order's price.");
-		option(5);
+		exitOption(5);
 	}
 
 	public static void craftmanFunction() {
@@ -42,40 +42,40 @@ public class Printer {
 		System.out.println("2. Modify craftman data.");
 		System.out.println("3. New status of furniture.");
 		System.out.println("4. Finished order.");
-		option(5);
+		exitOption(5);
 	}
 
 	public static void menuContractCraftsman() {
 		System.out.println("--Type of contract--");
 		System.out.println("1. Contract in staff.");
 		System.out.println("2. Hourly Contract.");
-		option(3);
+		exitOption(3);
 	}
 
 	public static void clientFunction() {
 		System.out.println("--Client Function--");
 		System.out.println("1. Modify client data.");
 		System.out.println("2. Confirm order.");
-		option(3);
+		exitOption(3);
 	}
 
 	public static void furnitureFunction() {
 		System.out.println("--Furniture Function--");
 		System.out.println("1. Modify furniture data.");
-		option(2);
+		exitOption(2);
 	}
 
 	public static void orderFunction() {
 		System.out.println("--Order Function--");
 		System.out.println("1. Add new order.");
-		option(2);
+		exitOption(2);
 	}
 
 	public static void furnitureTypes() {
 		System.out.println("--Furniture types--");
 		System.out.println("1. Chair.");
 		System.out.println("2. Table.");
-		option(3);
+		exitOption(3);
 	}
 
 	public static void chairsTypes() {
@@ -83,14 +83,14 @@ public class Printer {
 		System.out.println("1. Folding Chair.");
 		System.out.println("2. Kitchen Chair.");
 		System.out.println("3. Office Chair.");
-		option(4);
+		exitOption(4);
 	}
 
 	public static void officeChairTypes() {
 		System.out.println("--Types of office chair--");
 		System.out.println("1. Chair with wheels.");
 		System.out.println("2. Chair without wheels.");
-		option(3);
+		exitOption(3);
 	}
 
 	public static void tableTypes() {
@@ -98,14 +98,14 @@ public class Printer {
 		System.out.println("1. Bedroom.");
 		System.out.println("2. Coffee.");
 		System.out.println("3. Dining.");
-		option(4);
+		exitOption(4);
 	}
 
 	public static void coffeeTableTypes() {
 		System.out.println("--Types of coffee table--");
 		System.out.println("1. Cristal.");
 		System.out.println("2. Wooden.");
-		option(3);
+		exitOption(3);
 	}
 
 	public static void clientTypes() {
@@ -117,7 +117,7 @@ public class Printer {
 
 	public static void DNIMenu() {
 		System.out.println("1. Insert.");
-		option(2);
+		exitOption(2);
 	}
 
 	public static void askFeatures() {
@@ -146,7 +146,7 @@ public class Printer {
 		System.out.println("1. With DNI/PASSPORT.");
 		System.out.println("2. Random.");
 		System.out.println("3. List of Craftsman.");
-		option(4);
+		exitOption(4);
 	}
 
 	public static void statusFurnitureOrder() {
@@ -156,12 +156,12 @@ public class Printer {
 		System.out.println("4. Stopped due to customer confirmation.");
 		System.out.println("5. Test phase.");
 		System.out.println("6. Finished.");
-		option(7);
+		exitOption(7);
 	}
 
 	public static void orderParts() {
 		System.out.println("1. Add new piece.");
-		option(2);
+		exitOption(2);
 	}
 
 	public static void factorySwitch() {
@@ -172,22 +172,25 @@ public class Printer {
 		System.out.println("4. Report in process.");
 		System.out.println("5. Craftsman history.");
 		System.out.println("6. Furniture history.");
-		option(7);
+		exitOption(7);
 	}
 
 	public static void craftsmanHistory() {
 		System.out.println("1. An craftsman.");
 		System.out.println("2. All craftsmans.");
-		option(3);
+		exitOption(3);
 	}
 
 	public static void furnitureHistory() {
 		System.out.println("1. An furniture.");
 		System.out.println("2. All furnitures.");
-		option(3);
+		exitOption(3);
 	}
 
-	public static void option(int option) {
+	/**
+	 * @brief Avoid repeating this code at the end of each menu
+	 */
+	public static void exitOption(int option) {
 		System.out.println(option + "." + " Exit.");
 		insertOption();
 	}
@@ -204,4 +207,7 @@ public class Printer {
 		System.out.println("This is not a number.");
 	}
 
+	public static void nothingHasBeenInserted() {
+		System.out.println("Nothing has been inserted.");
+	}
 }

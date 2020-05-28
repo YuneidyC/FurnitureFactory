@@ -2,6 +2,8 @@ package factory;
 
 import java.util.HashMap;
 
+import people.Craftsman;
+
 public class Order {
 
 	private static int nextID = 0;
@@ -60,6 +62,13 @@ public class Order {
 
 	public void setPendingCustomerConfirmation(boolean pendingCustomerConfirmation) {
 		this.pendingCustomerConfirmation = pendingCustomerConfirmation;
+	}
+
+	public boolean isAssignedToCraftsman(Craftsman craftsman) {
+		if (getEmployeeAssigned().equals(craftsman.getDNI())) {
+			return true;
+		}
+		return false;
 	}
 
 	public String toString() {

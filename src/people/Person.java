@@ -28,10 +28,10 @@ public abstract class Person {
 
 //	If an attribute to be modify is empty, it'll be left unchanged 
 	public void modifyData() {
-		String dniPerson = this.DNI;
+		String dniPerson = DNI;
 		System.out.println("Insert new DNI:");
 		if (!factory.sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		String str = factory.sc.nextLine();
@@ -43,7 +43,7 @@ public abstract class Person {
 		}
 		System.out.println("Insert new NAME");
 		if (!factory.sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		str = factory.sc.nextLine();
@@ -56,7 +56,7 @@ public abstract class Person {
 		int IDsOrder = -1;
 		System.out.println("Choose the order ID: ");
 		if (!factory.sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return -1;
 		}
 		String IDOrder = factory.sc.nextLine();

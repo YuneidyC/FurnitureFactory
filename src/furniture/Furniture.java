@@ -62,7 +62,7 @@ public class Furniture {
 		int priceFurniture = -1;
 		System.out.println("Insert Furniture model: ");
 		if (!factory.sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return false;
 		}
 		String str = getFactory().sc.nextLine();
@@ -71,7 +71,7 @@ public class Furniture {
 		}
 		System.out.println("Insert price: ");
 		if (!factory.sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return false;
 		}
 		str = getFactory().sc.nextLine();
@@ -87,7 +87,7 @@ public class Furniture {
 		}
 		System.out.println("Insert features: ");
 		if (!factory.sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return false;
 		}
 		str = getFactory().addOrNotFeatures();
@@ -136,7 +136,7 @@ public class Furniture {
 		while (!mustExit) {
 			Printer.orderParts();
 			if (!factory.sc.hasNextLine()) {
-				System.out.println("Nothing has been inserted.");
+				Printer.nothingHasBeenInserted();
 				return;
 			}
 			String str = getFactory().sc.nextLine();

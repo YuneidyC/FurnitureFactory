@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import factory.Factory;
+import factory.Printer;
 
 public class Client extends Person {
 	private int telephone;
@@ -30,7 +31,7 @@ public class Client extends Person {
 		super.modifyData();
 		System.out.println("Insert new telephone:");
 		if (!getFactory().sc.hasNextLine()) {
-			System.out.println("Nothing has been inserted.");
+			Printer.nothingHasBeenInserted();
 			return;
 		}
 		int phone = getFactory().sc.nextInt();
