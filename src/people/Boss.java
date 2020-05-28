@@ -15,8 +15,8 @@ public class Boss extends Employee {
 		if (craftsman == null) {
 			return;
 		}
-		int id = getFactory().unassignedOrders();
-		Order order = getFactory().getOrder(id);
+		int ID = getFactory().unassignedOrders();
+		Order order = getFactory().getOrder(ID);
 		if (order == null) {
 			System.out.println("This order does not exist");
 			return;

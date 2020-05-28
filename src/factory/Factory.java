@@ -83,9 +83,6 @@ public class Factory {
 		return null;
 	}
 
-	/**
-	 * This function shows the pieces are missing at the factory
-	 */
 	private void missingPieces() {
 		String missing = null;
 		if (orderList.isEmpty()) {
@@ -115,9 +112,9 @@ public class Factory {
 		}
 	}
 
-	private void processedByEachCraftsman() {
+	private void printOrdersProcessedByEachCraftsman() {
 		if (people.isEmpty()) {
-			System.out.println("Not there is craftsman in the factory.");
+			System.out.println("There is no craftsman in the factory.");
 			return;
 		}
 		for (String craftsmanDNI : ListDNICraftsman) {
@@ -130,8 +127,8 @@ public class Factory {
 						System.out.println("This craftsman does not have any furniture in process.");
 						continue;
 					}
-					String str = "File";
-					if (sizeAssignedOrders <= 1) {
+					String str = "Order";
+					if (sizeAssignedOrders > 1) {
 						str += "s";
 					}
 					str += " processed by this craftsman: ";
@@ -900,7 +897,6 @@ public class Factory {
 		return null;
 	}
 
-	// TODO COMMENT
 	public Set<Integer> getIdFurniture(Order order) {
 		return order.getIdsAndItemsFurniture().keySet();
 	}
@@ -990,7 +986,9 @@ public class Factory {
 		return total;
 	}
 
-	// TODO COMMENT
+	/**
+	 * We take the model and the price of the furniture
+	 */
 	private Entry<String, Integer> modelAndPriceFurniture() {
 		int price = -1;
 		Entry<String, Integer> newFurniture = null;
@@ -1016,8 +1014,8 @@ public class Factory {
 			System.out.println("This price is not valid for a piece of furniture.");
 			return null;
 		}
-		Entry<String, Integer> ans = new SimpleEntry<String, Integer>(furnitureModel, price);
-		newFurniture = ans;
+		Entry<String, Integer> newFurnitureWithModelAndPrice = new SimpleEntry<String, Integer>(furnitureModel, price);
+		newFurniture = newFurnitureWithModelAndPrice;
 		return newFurniture;
 	}
 
@@ -2147,7 +2145,7 @@ public class Factory {
 				missingPieces();
 				break;
 			case 2:
-				processedByEachCraftsman();
+				printOrdersProcessedByEachCraftsman();
 				break;
 			case 3:
 				requestClientToConfirm();

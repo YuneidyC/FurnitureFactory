@@ -56,7 +56,9 @@ public class Furniture {
 		return missingPieces;
 	}
 
-//	If an attribute to be modify is empty, it'll be left unchanged 
+	/*
+	 * If an attribute to be modify is empty, it'll be left unchanged
+	 */
 	public boolean modifyData() {
 		boolean modifyPrice = false;
 		int priceFurniture = -1;
@@ -112,6 +114,8 @@ public class Furniture {
 			return;
 		}
 		if (option == 4) {
+			// Check if the order is confirmed, so you can not change the status to "Stopped
+			// by customer confirmation"
 			List<Order> orders = factory.getOrderList();
 			for (Order order : orders) {
 				if (order.getIdsAndItemsFurniture().keySet().contains(this.ID)) {
@@ -192,6 +196,7 @@ public class Furniture {
 		for (String status : statusHistory) {
 			history += status + ", ";
 		}
+		// We subtract 2 so that the last String does not have ", "
 		System.out.println(history.substring(0, history.length() - 2));
 	}
 

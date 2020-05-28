@@ -9,16 +9,16 @@ public class Salesman extends Employee {
 	}
 
 	public void notifyTheCustomer() {
-		int idOrder = -1;
+		int IDOrder = -1;
 		boolean allFine = getFactory().printIdsOrderHasNotBeenNotified();
 		if (allFine == false) {
 			return;
 		}
-		idOrder = super.chooseIdOrder();
-		if (idOrder == -1) {
+		IDOrder = super.chooseIdOrder();
+		if (IDOrder == -1) {
 			return;
 		}
-		getFactory().notifyCustomer(idOrder);
+		getFactory().notifyCustomer(IDOrder);
 		return;
 	}
 }

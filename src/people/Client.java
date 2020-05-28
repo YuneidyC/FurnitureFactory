@@ -27,6 +27,9 @@ public class Client extends Person {
 		orders.add(IDOrder);
 	}
 
+	/*
+	 * If an attribute to be modify is empty, it'll be left unchanged
+	 */
 	public void modifyData() {
 		super.modifyData();
 		System.out.println("Insert new telephone:");

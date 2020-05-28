@@ -90,6 +90,7 @@ public class Craftsman extends Employee {
 					history += order.getId() + ", ";
 				}
 			}
+			// We subtract 2 so that the last String does not have ", "
 			System.out.println(history.substring(0, history.length() - 2));
 		} else {
 			System.out.println("This craftsman has no orders assigned.");
@@ -103,6 +104,7 @@ public class Craftsman extends Employee {
 					history += order.getId() + ", ";
 				}
 			}
+			// We subtract 2 so that the last String does not have ", "
 			System.out.println(history.substring(0, history.length() - 2));
 		} else {
 			System.out.println("This craftsman has no completed orders.");
