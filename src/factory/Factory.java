@@ -1,10 +1,12 @@
 package factory;
 
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.Set;
@@ -18,7 +20,6 @@ import furniture.KitchenChair;
 import furniture.OfficeChairWithWheels;
 import furniture.OfficeChairWithoutWheels;
 import furniture.WoodenCoffeeTable;
-import javafx.util.Pair;
 import people.Boss;
 import people.Client;
 import people.CompanyCustomer;
@@ -521,7 +522,6 @@ public class Factory {
 		return false;
 	}
 
-	// CHECK
 	public Furniture showAndGetFurnitureOfThisOrder(Order order) {
 		int idFurniture = -1;
 		Furniture furniture = null;
@@ -625,7 +625,6 @@ public class Factory {
 		return piece;
 	}
 
-	// TODO
 	public int unassignedOrders() {
 		int id = -1;
 		String str = null;
@@ -1004,9 +1003,9 @@ public class Factory {
 	}
 
 	// TODO COMMENT
-	private Pair<String, Integer> modelAndPriceFurniture() {
+	private Entry<String, Integer> modelAndPriceFurniture() {
 		int price = -1;
-		Pair<String, Integer> newFurniture = null;
+		Entry<String, Integer> newFurniture = null;
 		System.out.println("Insert furniture model: ");
 		if (!sc.hasNextLine()) {
 			System.out.println("Nothing has been inserted.");
@@ -1029,7 +1028,7 @@ public class Factory {
 			System.out.println("This price is not valid for a piece of furniture.");
 			return null;
 		}
-		Pair<String, Integer> ans = new Pair<String, Integer>(furnitureModel, price);
+		Entry<String, Integer> ans = new SimpleEntry<String, Integer>(furnitureModel, price);
 		newFurniture = ans;
 		return newFurniture;
 	}
@@ -1041,7 +1040,7 @@ public class Factory {
 		int typeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
-		Pair<String, Integer> chair = null;
+		Entry<String, Integer> chair = null;
 		String modelOfChair;
 		String features;
 		int price;
@@ -1119,7 +1118,7 @@ public class Factory {
 		int typeOfficeChair = -1;
 		int furnitureID = -1;
 		boolean mustExit = false;
-		Pair<String, Integer> chair = null;
+		Entry<String, Integer> chair = null;
 		String model;
 		String features;
 		int price;
@@ -1185,7 +1184,7 @@ public class Factory {
 	}
 
 	public int createTables() {
-		Pair<String, Integer> table = null;
+		Entry<String, Integer> table = null;
 		String model;
 		String features;
 		int furnitureID = -1;
@@ -1259,7 +1258,7 @@ public class Factory {
 	}
 
 	public int createCoffeeTable() {
-		Pair<String, Integer> table = null;
+		Entry<String, Integer> table = null;
 		String model;
 		String features;
 		int price;
